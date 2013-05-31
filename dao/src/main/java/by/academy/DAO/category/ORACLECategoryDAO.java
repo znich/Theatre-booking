@@ -127,8 +127,6 @@ public class ORACLECategoryDAO implements CategoryDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	//test comment
-    	// sdgsdgdgsd
-    	//fgdgdfgd
+    	
     }
 }
