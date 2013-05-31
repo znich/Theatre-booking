@@ -1,0 +1,40 @@
+<table class="table table-bordered table-hover">
+						<thead>
+							<tr>
+								<th><fmt:message key="lbl.date" bundle="${bundle}" /></th>
+								<th><fmt:message key="lbl.time" bundle="${bundle}" /></th>
+								<th><fmt:message key="lbl.title" bundle="${bundle}" /></th>
+								<th><fmt:message key="lbl.tickets" bundle="${bundle}" /></th>
+								<th><fmt:message key="lbl.cost" bundle="${bundle}" /></th>
+							</tr>
+						</thead>
+						<tbody>
+						<jsp:useBean id="today" class="java.util.Date" scope="page" />
+						<c:forEach var="event" items="${events}">                        
+                       	<tr class=<c:if test="${event.startTime < today}">"warning"</c:if><c:if test="${event.startTime >= today}">"success"</c:if> onclick="location.href='/Controller?action=PERFORMANCE_SHOW&eventId=${event.id}'">							
+								<td>
+								<fmt:formatDate value="${event.startTime}" pattern="MM/dd/yyyy"/>
+								</td>
+								<td>
+								<fmt:formatDate value="${event.startTime}" pattern="HH:mm"/> - <fmt:formatDate value="${event.endTime}" pattern="HH:mm"/>
+								</td>
+								<td>
+									<strong>${event.performance.name}</strong>
+									<p> ${event.performance.shorDescription }</p>
+								</td>
+								<td>
+								<c:if test="${event.freeTicketsCount<=0}">
+								<fmt:message key="lbl.noticket" bundle="${bundle}" />
+								</c:if>		
+								<c:if test="${event.freeTicketsCount>0}">				
+								<a href="/Controller?action=BOOKING_TICKETS_SHOW&eventId=${event.id}"><fmt:message key="btn.buyTicket" bundle="${bundle}" /></a>
+								</c:if>
+								</td>
+								<td>
+								${event.minPrice} - ${event.maxPrice} <fmt:message key="lbl.rubles" bundle="${bundle}" /></br>
+								${event.freeTicketsCount} <fmt:message key="lbl.ticketsAvailable" bundle="${bundle}" />
+								</td>												
+							
+							</c:forEach>
+						</tbody>
+					</table>

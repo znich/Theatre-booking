@@ -1,0 +1,16 @@
+
+
+<c:forEach var="performance" items="${performances}">   
+ <div class="row">
+			<div class="span12">
+				<div class="span3">
+					<img src="${performance.image}" class="img-polaroid">
+				</div>
+				<div class="span8 perf-text">
+					<a href="Controller?action=show_performance?performanceId=${performance.id}">
+					<h3>${performance.name}</h3></a>
+					<span>${performance.shortDescription}</span>					
+				</div>
+			</div>
+	  </div>
+</c:forEach>

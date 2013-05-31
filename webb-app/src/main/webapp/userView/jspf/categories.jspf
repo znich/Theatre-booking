@@ -1,0 +1,14 @@
+
+<a class="dropdown-toggle" data-toggle="dropdown" href="#"> 
+<fmt:message key="lbl.category" bundle="${bundle}" /> <b class="caret"></b>
+</a>
+<ul class="dropdown-menu">
+	<c:if test="${not empty categories}">
+		<c:forEach var="category" items="${categories}">
+			<li><a tabindex="-1" href="../Controller?action=EVENTS&categoryId=${category.id}">${category.name}</a></li>
+		</c:forEach>
+	</c:if>
+	<li class="divider"></li>
+	<li><a tabindex="-1" href="../Controller?action=EVENTS&categoryId=0">
+	<fmt:message key="lbl.category.all" bundle="${bundle}" /></a></li>
+</ul>

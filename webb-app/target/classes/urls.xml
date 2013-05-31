@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="LOGIN_PAGE">login.jsp</entry>
+    <entry key="REGISTRATION_PAGE">registration.jsp</entry>
+    <entry key="PROFILE_ADMIN_PAGE">profileAdmin.jsp</entry>
+    <entry key="PROFILE_USER_PAGE">profileUser.jsp</entry>
+    <entry key="PERFORMANCE_LIST_PAGE">performances.jsp</entry>
+    <entry key="EVENTS_LIST_PAGE">userView/events.jsp</entry>
+</properties>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
