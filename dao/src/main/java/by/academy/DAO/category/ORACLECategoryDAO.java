@@ -128,6 +128,5 @@ public class ORACLECategoryDAO implements CategoryDAO {
 			e.printStackTrace();
 		}
     	//
-    	//fjyfyfyj
     }
 }
