@@ -18,4 +18,5 @@ public interface CategoryDAO {
     public int addCategory(CategoryData category) throws SQLException;
     public int editCategory(CategoryData category) throws SQLException;
     public int deleteCategory (CategoryData category) throws SQLException;
+    public void closeConnection();
 }
