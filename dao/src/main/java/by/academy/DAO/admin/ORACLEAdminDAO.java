@@ -1,6 +1,7 @@
 package by.academy.DAO.admin;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,5 +16,14 @@ public class ORACLEAdminDAO implements AdminDAO {
 
     public ORACLEAdminDAO(Connection connection) {
         this.connection = connection;
+    }
+    
+    public void closeConnection () {
+    	try {
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 }

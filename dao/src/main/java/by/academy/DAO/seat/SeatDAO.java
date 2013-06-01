@@ -16,4 +16,5 @@ import java.util.List;
 public interface SeatDAO {
     public List<SeatData> getAllSeats();
     public SeatData createSeat(ResultSet rs) throws SQLException;
+    public void closeConnection();
 }

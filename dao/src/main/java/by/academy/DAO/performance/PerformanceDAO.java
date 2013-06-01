@@ -18,4 +18,5 @@ public interface PerformanceDAO {
     public int addPerformance(PerformanceData performance);
     public int editPerformance(PerformanceData performance);
     public int deletePerformance (int id);
+    public void closeConnection();
 }

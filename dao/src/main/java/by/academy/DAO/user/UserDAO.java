@@ -22,5 +22,6 @@ public interface UserDAO {
     public int editUser(UserData user);
     public int deleteUser (int id);
     public UserData createUser(ResultSet rs) throws SQLException;
+    public void closeConnection();
 
 }

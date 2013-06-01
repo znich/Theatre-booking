@@ -22,4 +22,5 @@ public interface TicketDAO {
     public int editTicket (TicketData ticket);
     public int deleteTicket(int id) throws SQLException;
     public int [] addAllTicketsToEvent(EventData event, List<SeatData> seatsList);
+    public void closeConnection();
 }
