@@ -34,4 +34,13 @@ public class ORACLEStatusDAO implements StatusDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public void closeConnection () {
+    	try {
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 }

@@ -22,5 +22,6 @@ public interface EventDAO {
     public int addEvent(EventData event) ;
     public int editEvent(EventData event) ;
     public int deleteEvent (int id) ;
+    public void closeConnection();
 
 }

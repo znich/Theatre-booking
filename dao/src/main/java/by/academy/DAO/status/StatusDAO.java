@@ -15,4 +15,5 @@ import java.sql.SQLException;
 public interface StatusDAO {
     public StatusData createStatus(ResultSet rs) throws SQLException;
     public StatusData getStatusById ( int id);
+    public void closeConnection();
 }

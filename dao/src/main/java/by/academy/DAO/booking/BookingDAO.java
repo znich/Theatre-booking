@@ -21,4 +21,5 @@ public interface BookingDAO {
     public int editBooking(BookingData booking) ;
     public int deleteBooking (int id);
     public List<Integer> deleteExpiredBookings (Date currentDate);
+    public void closeConnection();
 }

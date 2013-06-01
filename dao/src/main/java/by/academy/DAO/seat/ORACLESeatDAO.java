@@ -56,4 +56,13 @@ public class ORACLESeatDAO implements SeatDAO {
 
         return seat;
     }
+    
+    public void closeConnection () {
+    	try {
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 }

@@ -19,4 +19,5 @@ public interface PaymentDAO {
     public int editPaymentMethod(PaymentData payment);
     public int deletePaymentMethod(int id);
     public PaymentData createPayment(ResultSet rs) throws SQLException;
+    public void closeConnection();
 }

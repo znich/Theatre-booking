@@ -8,4 +8,5 @@ package by.academy.DAO.admin;
  * To change this template use File | Settings | File Templates.
  */
 public interface AdminDAO {
+	public void closeConnection();
 }
