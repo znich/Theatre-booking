@@ -6,27 +6,27 @@ import java.util.Set;
 /**
  * Created with IntelliJ IDEA.
  * User: Siarhei Poludvaranin
- * Date: 30.05.13
- * Time: 14:22
+ * Date: 31.05.13
+ * Time: 20:14
  * To change this template use File | Settings | File Templates.
  */
-public class Category implements Serializable {
-
+public class PaymentMethod implements Serializable {
 
     private Integer id;
     private String name;
-    private int pid;
     private int langId;
-    private Set<Performance> performances;
+    private int pid;
+    private Set<Booking> bookings;
 
-    public Category() {
+    public PaymentMethod() {
+
     }
 
     public Integer getId() {
         return id;
     }
 
-    protected void setId(Integer id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -38,14 +38,6 @@ public class Category implements Serializable {
         this.name = name;
     }
 
-    public int getPid() {
-        return pid;
-    }
-
-    public void setPid(int pid) {
-        this.pid = pid;
-    }
-
     public int getLangId() {
         return langId;
     }
@@ -54,20 +46,36 @@ public class Category implements Serializable {
         this.langId = langId;
     }
 
+    public int getPid() {
+        return pid;
+    }
+
+    public void setPid(int pid) {
+        this.pid = pid;
+    }
+
+    public Set<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(Set<Booking> bookings) {
+        this.bookings = bookings;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Category)) return false;
+        if (!(o instanceof PaymentMethod)) return false;
 
-        Category category = (Category) o;
+        PaymentMethod that = (PaymentMethod) o;
 
-        if (id != category.id) return false;
+        if (!id.equals(that.id)) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return id;
+        return id.hashCode();
     }
 }
