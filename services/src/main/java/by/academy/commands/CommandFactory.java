@@ -3,6 +3,10 @@ package by.academy.commands;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+
+
+
 import java.util.List;
 
 /**
@@ -21,10 +25,15 @@ public class CommandFactory {
         SHOW_REG_FORM,
         SHOW_PERF_LIST,
         SHOW_EVENT_LIST,
-        USER_PROFILE
+        USER_PROFILE,
+        ADMIN_SHOW_PERFORMANCES,
+        SHOW_EDIT_PERFORMANCE,
+        EDIT_PERFORMANCE,
+        TEST_COMMAND
     }
     public static ICommand createCommand(HttpServletRequest request, HttpServletResponse response) {
         ICommand command = null;
+        System.out.println("factor-2");
         String commandStr = (String) request.getParameter("action");
         Commands commandEnum;
         try {
@@ -54,6 +63,18 @@ public class CommandFactory {
                 case LOGOUT:
                     command = new LogoutCommand(request, response);
                     break;
+                case ADMIN_SHOW_PERFORMANCES:
+                	command = new AdminShowPerformancesCommand (request, response);
+                	break;
+                case SHOW_EDIT_PERFORMANCE:
+                	command = new ShowEditPerformanceCommand (request, response);
+                	break;
+                case EDIT_PERFORMANCE:
+                	command = new EditPerformanceCommand (request, response);
+                	break;
+                case TEST_COMMAND:
+                	command = new TestCommand(request,response);
+                	break;
                 default:
                     command = new HelloCommand(request, response);
                     break;

@@ -8,7 +8,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<fmt:setLocale value="${locale}"/>
+<fmt:setLocale value="EN"/>
  <fmt:setBundle basename="messages" var="bundle" scope="page"/>
 <title><fmt:message key="title.index" bundle="${bundle}"/></title>
 	<meta name="description" content="">

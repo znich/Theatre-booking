@@ -11,7 +11,11 @@ import java.util.Set;
  * To change this template use File | Settings | File Templates.
  */
 public class Seat implements Serializable {
-    Integer id;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6231252818283198055L;
+	Integer id;
     int row;
     int seatNumber;
     int priceCategory;

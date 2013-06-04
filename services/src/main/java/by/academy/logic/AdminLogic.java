@@ -73,8 +73,8 @@ public class AdminLogic {
         return flag;
     }
 
-     public boolean editPerformance(String title, String shortDescription, String description, Date startDate, Date endDate,
-                                    String image, CategoryData category, int language){
+     public boolean editPerformance(Integer id, String title, String shortDescription, String description, Date startDate, Date endDate,
+                                    String image, CategoryData category, Integer language){
          try {
              perfDAO = oracleFactory.getPerformanceDAO();
          } catch (CannotTakeConnectionException e) {
@@ -82,6 +82,7 @@ public class AdminLogic {
          }
          boolean flag = false;
          PerformanceData performance = new PerformanceData();
+         performance.setId(id);
          performance.setName(title);
          performance.setShortDescription(shortDescription);
          performance.setDescription(description);
@@ -91,15 +92,17 @@ public class AdminLogic {
          performance.setCategory(category);
          performance.setLanguage(language);
 
-         if (perfDAO.editPerformance(performance) < 0) {
-             if(perfDAO.addPerformance(performance) != 0 && perfDAO.editPerformance(performance) > 0){
-                 flag = true;
-                 return flag;
-             }
-         }
-         if (perfDAO.editPerformance(performance) > 0) {
+         int returnedRows = perfDAO.editPerformance(performance);
+         
+         if (returnedRows > 0) {
              flag = true;
          }
+         if ( returnedRows < 0) {
+             if(perfDAO.addPerformance(performance) != 0 ){
+                 flag = true;                 
+             }
+         }
+         
          return flag;
      }
 

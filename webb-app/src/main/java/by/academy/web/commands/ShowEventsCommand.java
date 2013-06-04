@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import by.academy.Model.CategoryData;
 import by.academy.Model.EventData;
 import by.academy.Model.PerformanceData;
-import by.academy.logic.SiteLogic;
+import by.academy.logic111.SiteLogic;
 import by.academy.util.PathProperties;
 
 public class ShowEventsCommand implements ICommand {

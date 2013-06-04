@@ -7,6 +7,7 @@
     <entry key="PROFILE_USER_PAGE">profileUser.jsp</entry>
     <entry key="PERFORMANCE_LIST_PAGE">performances.jsp</entry>
     <entry key="EVENTS_LIST_PAGE">userView/events.jsp</entry>
+    <entry key="ADMIN_PAGE">Admin.jsp</entry>
 </properties>
 
 

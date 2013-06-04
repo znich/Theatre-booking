@@ -29,7 +29,7 @@ public class ORACLECategoryDAO implements CategoryDAO {
     @Override
     public CategoryData getCategoryById(int id, int langId){
 
-        String сategoryByIdQuery = "SELECT * FROM CATEGORY WHERE PARENT_ID = ? AND LANG_ID = ?";
+        String сategoryByIdQuery = "SELECT * FROM CATEGORY WHERE PARENT_ID IN  = ? AND LANG_ID = ?";
         PreparedStatement ps = null;
         ResultSet rs = null;
         CategoryData category = new CategoryData();
@@ -55,7 +55,7 @@ public class ORACLECategoryDAO implements CategoryDAO {
 	@Override
     public List<CategoryData> getAllCategories(int langId) {
 		
-		String allCategoriesQuery = "SELECT * FROM CATEGORY WHERE LANG_ID = ?";
+		String allCategoriesQuery = "SELECT * FROM CATEGORY WHERE  PARENT_ID IN ( SELECT CATEGORY_ID FROM CATEGORY WHERE PARENT_ID=0) AND LANG_ID=?";
         PreparedStatement ps = null;
         ResultSet rs = null;
         CategoryData category = null;
@@ -63,6 +63,7 @@ public class ORACLECategoryDAO implements CategoryDAO {
         try {
             ps = connection.prepareStatement(allCategoriesQuery);
             ps.setInt(1, langId);
+            
 
             rs = ps.executeQuery();
             while(rs.next()){

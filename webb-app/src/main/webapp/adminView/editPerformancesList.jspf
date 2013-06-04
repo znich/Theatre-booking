@@ -1,0 +1,22 @@
+
+
+<c:forEach var="performance" items="${performanceList}">   
+ <div class="row-fluid">
+			
+				<div class="span3">
+					<img src="${performance.image}" class="img-polaroid">
+				</div>
+				<div class="span6 perf-text">
+					<a href="Controller?action=show_performance?performanceId=${performance.id}">
+					<h3>${performance.name}</h3></a>
+					<span>${performance.shortDescription}</span>					
+				</div>
+				<div class="span1">
+					<div class="btn-group">
+  					<a class="btn" href="Controller?action=show_edit_performance&performanceId=${performance.id}"><i class="icon-edit icon-large"></i></a> 			
+ 					<a class="btn" href="Controller?action=delete_performance&performanceId=${performance.id}"><i class="icon-trash icon-large"></i></a>
+					</div>
+				</div>
+			
+	  </div>
+</c:forEach>

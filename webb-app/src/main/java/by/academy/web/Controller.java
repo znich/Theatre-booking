@@ -32,6 +32,7 @@ public class Controller extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html");
+        System.out.println("controller");
         ICommand command = CommandFactory.createCommand(request, response);
         String url = command.execute();
         if (url != null) {

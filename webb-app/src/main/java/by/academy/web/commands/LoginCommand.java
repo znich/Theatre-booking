@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import by.academy.Model.AdminData;
 import by.academy.Model.UserData;
-import by.academy.logic.LoginLogic;
+import by.academy.logic111.LoginLogic;
 import by.academy.util.MessagesProperties;
 import by.academy.util.PathProperties;
 

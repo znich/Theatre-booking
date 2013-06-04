@@ -1,6 +1,6 @@
 package by.academy.web.commands;
 
-import by.academy.logic.RegistratorLogic;
+import by.academy.logic111.RegistratorLogic;
 import by.academy.Model.UserData;
 import by.academy.util.MessagesProperties;
 import by.academy.util.PathProperties;

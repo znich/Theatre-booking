@@ -2,6 +2,14 @@
 	background: #e2e5de; 
 	padding:0;
 }
+bodyAdmin { 
+background-color: #FFFFFF;
+color: #333333;
+font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+font-size: 14px;
+line-height: 20px;
+margin: 100px;
+}
 /* USER NAV */
 #user-nav{
 	margin-top: 10px;

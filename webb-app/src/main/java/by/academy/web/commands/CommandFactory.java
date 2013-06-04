@@ -3,6 +3,10 @@ package by.academy.web.commands;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import by.academy.commands.HelloCommand;
+import by.academy.commands.ShowRegistrationFormCommand;
+
 import java.util.List;
 
 /**
@@ -20,10 +24,12 @@ public class CommandFactory {
         SHOW_LOGIN_FORM,
         SHOW_REG_FORM,
         SHOW_PERF_LIST,
-        SHOW_EVENTS_LIST
+        SHOW_EVENTS_LIST,
+        TEST_COMMAND
     }
     public static ICommand createCommand(HttpServletRequest request, HttpServletResponse response) {
         ICommand command = null;
+        System.out.println("factory");
         String commandStr = (String) request.getParameter("action");
         Commands commandEnum;
         try {
@@ -50,6 +56,7 @@ public class CommandFactory {
                 case SHOW_EVENTS_LIST:
                 	command = new ShowEventsCommand(request, response);
                 	break;
+                
                 default:
                     command = new HelloCommand(request, response);
                     break;

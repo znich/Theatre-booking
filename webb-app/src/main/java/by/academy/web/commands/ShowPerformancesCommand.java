@@ -3,7 +3,7 @@ package by.academy.web.commands;
 import by.academy.Model.CategoryData;
 import by.academy.Model.EventData;
 import by.academy.Model.PerformanceData;
-import by.academy.logic.SiteLogic;
+import by.academy.logic111.SiteLogic;
 import by.academy.util.PathProperties;
 
 import javax.servlet.ServletException;
