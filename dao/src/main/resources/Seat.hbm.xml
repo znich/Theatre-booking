@@ -1,0 +1,16 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="by.academy.domain">
+    <class name="Seat" table="SEATS">
+        <id name="id" type="java.lang.Integer" column="ID">
+            <generator class="sequence">
+                <param name="sequence">SEAT_SEQ</param>
+            </generator>
+        </id>
+        <property name="row"  type="int" column="ROW_NUMBER" not-null="true" />
+        <property name="seatNumber" type="int" column="SEAT_NUMBER" not-null="true" />
+        <property name="sector"  type="int" column="SECTOR_ID" not-null="true" />
+
+    </class>
+</hibernate-mapping>

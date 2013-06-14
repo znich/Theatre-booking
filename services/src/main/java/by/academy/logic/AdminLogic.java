@@ -1,19 +1,29 @@
 package by.academy.logic;
 
-import by.academy.DAO.booking.BookingDAO;
-import by.academy.DAO.event.EventDAO;
-import by.academy.DAO.exception.CannotTakeConnectionException;
-import by.academy.DAO.factory.DAOFactory;
-import by.academy.DAO.performance.PerformanceDAO;
-import by.academy.DAO.seat.SeatDAO;
-import by.academy.DAO.status.StatusDAO;
-import by.academy.DAO.ticket.TicketDAO;
-import by.academy.DAO.ticketsPriceDao.TicketsPriceDAO;
-import by.academy.Model.*;
-
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import by.academy.dao.IEventDao;
+import by.academy.dao.IPerformanceDao;
+import by.academy.dao.ISeatDao;
+import by.academy.dao.IStatusDao;
+import by.academy.dao.ITicketDao;
+import by.academy.dao.ITicketsPriceDao;
+import by.academy.domain.Booking;
+import by.academy.domain.Category;
+import by.academy.domain.Event;
+import by.academy.domain.Performance;
+import by.academy.domain.Property;
+import by.academy.domain.Seat;
+import by.academy.domain.Status;
+import by.academy.domain.Ticket;
+import by.academy.domain.TicketsPrice;
+import by.academy.domain.property_names.PerformancePropertyNames;
+import by.academy.exception.ServiceException;
 
 /**
  * User: Siarhei Poludvaranin
@@ -21,113 +31,92 @@ import java.util.List;
  * Time: 15:26
  * Класс, описывающий логику поведения администратора.
  */
-public class AdminLogic {
-    DAOFactory oracleFactory =
-            DAOFactory.getDAOFactory(DAOFactory.ORACLE); // create the required by.academy.DAO Factory
-    PerformanceDAO perfDAO = null;
-    EventDAO eventDAO = null;
-    TicketDAO ticketDAO = null;
-    SeatDAO seatDAO = null;
-    BookingDAO bookingDAO = null;
-    StatusDAO statusDAO = null;
-    TicketsPriceDAO tiketsPriceDAO = null;
+public class AdminLogic extends DataAccessService {
+    IPerformanceDao perfDao = daoFactory.getPerformanceDao();
+    ITicketDao ticketDao = daoFactory.getTicketDao();
+    ITicketsPriceDao ticketsPriceDao = daoFactory.getTicketsPriceDao();
+    IEventDao eventDao = daoFactory.getEventDao();
+    ISeatDao seatDao = daoFactory.getSeatDao();
+    IStatusDao statusDao = daoFactory.getStatusDao();
 
-    public AdminLogic() {
+    
+
+    public AdminLogic() throws ServiceException {
+        super();
     }
 
-    public boolean addPerformance(String title, String shortDescription, String description, Date startDate, Date endDate,
-                                  String image, CategoryData category, int language) {
-        try {
-            perfDAO = oracleFactory.getPerformanceDAO();
-        } catch (CannotTakeConnectionException e) {
-            e.printStackTrace();
-        }
+    public boolean saveOrUpdatePerformance(Integer id, String title, String shortDescription, String description, Calendar startDate, Calendar endDate,
+                                  String image, Category category, int langId) {
 
         boolean flag = false;
-        PerformanceData performance = new PerformanceData();
-        performance.setName(title);
-        performance.setShortDescription(shortDescription);
-        performance.setDescription(description);
+        Performance performance = null;
+        if(id == null){
+            performance = new Performance();
+        }else{
+            performance = perfDao.getEntityById(id);
+        }
         performance.setStartDate(startDate);
         performance.setEndDate(endDate);
-        performance.setImage(image);
         performance.setCategory(category);
-        performance.setLanguage(language);
 
-        if (perfDAO.addPerformance(performance) != 0) {
+        Set<Property> propertyList = new HashSet<Property>();
+        Property property = new Property();
+
+        for (PerformancePropertyNames e : PerformancePropertyNames.values()){
+            property.setName(e.getId());
+
+            switch (e) {
+                case NAME:
+                    property.setValue(title);
+                    break;
+                case SHORT_DESCRIPTION:
+                    property.setValue(shortDescription);
+                    break;
+                case DESCRIPTION:
+                    property.setValue(description);
+                    break;
+                case IMAGE:
+                    property.setValue(image);
+                    break;
+            }
+
+            property.setLangId(langId);
+            propertyList.add(property);
+        }
+        performance.setProperties(propertyList);
+
+        if (perfDao.save(performance) != null) {
             flag = true;
         }
         return flag;
     }
 
-    public boolean deletePerformance(int perfId){
-
-        try {
-            perfDAO = oracleFactory.getPerformanceDAO();
-        } catch (CannotTakeConnectionException e) {
-            e.printStackTrace();
-        }
+    public boolean deletePerformance(Integer perfId){
         boolean flag = false;
-        if (perfDAO.deletePerformance(perfId) == 1) {
-            flag = true;
-        }
+        perfDao.delEntity(perfId);
         return flag;
     }
 
-     public boolean editPerformance(Integer id, String title, String shortDescription, String description, Date startDate, Date endDate,
-                                    String image, CategoryData category, Integer language){
-         try {
-             perfDAO = oracleFactory.getPerformanceDAO();
-         } catch (CannotTakeConnectionException e) {
-             e.printStackTrace();
-         }
-         boolean flag = false;
-         PerformanceData performance = new PerformanceData();
-         performance.setId(id);
-         performance.setName(title);
-         performance.setShortDescription(shortDescription);
-         performance.setDescription(description);
-         performance.setStartDate(startDate);
-         performance.setEndDate(endDate);
-         performance.setImage(image);
-         performance.setCategory(category);
-         performance.setLanguage(language);
-
-         int returnedRows = perfDAO.editPerformance(performance);
-         
-         if (returnedRows > 0) {
-             flag = true;
-         }
-         if ( returnedRows < 0) {
-             if(perfDAO.addPerformance(performance) != 0 ){
-                 flag = true;                 
-             }
-         }
-         
-         return flag;
-     }
-
-    public boolean addEvent(int langId, int performance, long startTime, long endTime) {
-        try {
-            eventDAO = oracleFactory.getEventDAO();
-            ticketDAO = oracleFactory.getTicketDAO();
-            seatDAO = oracleFactory.getSeatDAO();
-            perfDAO = oracleFactory.getPerformanceDAO();
-        } catch (CannotTakeConnectionException e) {
-            e.printStackTrace();
-        }
+    public boolean addEvent(int langId, int performance, Calendar startTime, Calendar endTime) {
 
         boolean flag = false;
-        EventData event = new EventData();
-        event.setPerformance(perfDAO.getPerformanceById(performance, langId));
-        event.setStartTime(new Date(startTime));
-        event.setEndTime(new Date(endTime));
+        Event event = new Event();
+        event.setPerformance(perfDao.getEntityById(performance));
+        event.setStartTime(startTime);
+        event.setEndTime(endTime);
 
+        List<Seat> seats = seatDao.findAll();
+        Ticket ticket = new Ticket();
+        Set<Ticket> ticketSet = new HashSet<Ticket>();
 
-        if (eventDAO.addEvent(event) != 0) {
-            List<SeatData> seats = seatDAO.getAllSeats();
+        for(Seat s: seats){
+            ticket.setPlace(s);
+            ticket.setStatus();
+        }
 
-            if(ticketDAO.addAllTicketsToEvent(event, seats) != null){
+        if (eventDao.save(event) != null) {
+
+            if(ticketDao.addAllTicketsToEvent(event, seats) != null){
                flag = true;
             }
         }
@@ -136,26 +125,18 @@ public class AdminLogic {
     }
 
     public  int deleteExpiredBookings(){
-    	
-    	try {
-			bookingDAO = oracleFactory.getBookingDAO();
-			ticketDAO = oracleFactory.getTicketDAO();	
-			
-		} catch (CannotTakeConnectionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
     	Date currentDate = new Date(System.currentTimeMillis());
     	ArrayList<Integer> delBookingIDs = (ArrayList<Integer>) bookingDAO.deleteExpiredBookings(currentDate);
-    	StatusData status = new StatusData();
+    	Status status = new Status();
     	if (delBookingIDs!=null){
     		
     		
     		for (Integer bookingId : delBookingIDs ){
     			
-    			List <TicketData> tickets = ticketDAO.getTicketsByBookingId(bookingId, 1);	
+    			List <Ticket> tickets = ticketDAO.getTicketsByBookingId(bookingId, 1);
     			
-    			for (TicketData ticket : tickets){
+    			for (Ticket ticket : tickets){
     				
     				ticket.setBooking(0);    				    				
     				status.setId(1);
@@ -170,20 +151,14 @@ public class AdminLogic {
     	
     }
     public boolean deleteTicketFromBooking(int bookingId, int ticketId, int langId){
-        try {
-            perfDAO = oracleFactory.getPerformanceDAO();
-            ticketDAO = oracleFactory.getTicketDAO();
-            bookingDAO = oracleFactory.getBookingDAO();
-        } catch (CannotTakeConnectionException e) {
-            e.printStackTrace();
-        }
+
         boolean flag = false;
-        BookingData booking = bookingDAO.getBookingById(bookingId, langId);
+        Booking booking = bookingDAO.getBookingById(bookingId, langId);
         if(booking != null){
             booking.setTicketCount(booking.getTicketCount() - 1);
             bookingDAO.editBooking(booking);
-            StatusData status = new StatusData();
-            TicketData ticket = ticketDAO.getTicketById(ticketId, langId);
+            Status status = new Status();
+            Ticket ticket = ticketDAO.getTicketById(ticketId, langId);
             if(ticket != null){
                 status.setId(1);
                 ticket.setStatus(status);
@@ -194,22 +169,14 @@ public class AdminLogic {
         }
     return flag;
     }
-    
-    public boolean editTicketsPriceForPerformance(List<TicketsPriceData> ticketsPrices){
-    	
-    	boolean flar = false;
-    	try {
-			tiketsPriceDAO = oracleFactory.getTicketsPriceDAO();			
-		} catch (CannotTakeConnectionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
-    	if (tiketsPriceDAO.editTicketsPrices(ticketsPrices)>0){
-    		flar = true;
-    	}
-		return flar;
-    	
+
+    public boolean editTicketsPriceForPerformance(List<TicketsPrice> ticketsPrices){
+        boolean flag = false;
+        if (ticketsPriceDao.editTicketsPrices(ticketsPrices)>0){
+            flag = true;
+        }
+        return flag;
+
     }
 
 }

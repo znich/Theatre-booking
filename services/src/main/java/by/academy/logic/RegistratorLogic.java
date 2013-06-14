@@ -1,9 +1,8 @@
 package by.academy.logic;
 
-import by.academy.DAO.exception.CannotTakeConnectionException;
-import by.academy.DAO.factory.DAOFactory;
-import by.academy.DAO.user.UserDAO;
-import by.academy.Model.UserData;
+import by.academy.dao.IUserDao;
+import by.academy.domain.User;
+import by.academy.exception.ServiceException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,35 +13,24 @@ import java.util.regex.Pattern;
  * Time: 11:33
  * Класс, описывающий логику поведения при регистарции пользователя.
  */
-public class RegistratorLogic {
-    DAOFactory oracleFactory =
-            DAOFactory.getDAOFactory(DAOFactory.ORACLE); // create the required by.academy.DAO Factory
-    UserDAO userDAO = null;
+public class RegistratorLogic extends DataAccessService {
+    IUserDao userDao = daoFactory.getUserDao();
 
-    public RegistratorLogic() {
+    public RegistratorLogic() throws ServiceException {
+        super();
     }
 
-    public UserData registerUser(UserData user) {
+    public User registerUser(User user) {
 
-        try {
-            userDAO = oracleFactory.getUserDAO();
-        } catch (CannotTakeConnectionException e) {
-            e.printStackTrace();
-        }
-        userDAO.addUser(user);
+        userDao.save(user);
         return user;
     }
 
     public boolean isEmailExist(String email) {
 
-        try {
-            userDAO = oracleFactory.getUserDAO();
-        } catch (CannotTakeConnectionException e) {
-            e.printStackTrace();
-        }
 
         boolean flag = true;
-        if (userDAO.getUserByEmail(email) == null) {
+        if (userDao.getUserByEmail(email) == null) {
             flag = false;
         }
         return flag;

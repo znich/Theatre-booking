@@ -21,6 +21,9 @@ public class PathProperties {
     public static final String PROFILE_ADMIN_PAGE = "PROFILE_ADMIN_PAGE";
     public static final String PROFILE_USER_PAGE = "PROFILE_USER_PAGE";
     public static final String PERFORMANCE_LIST_PAGE = "PERFORMANCE_LIST_PAGE";
+    public static final String EVENTS_LIST_PAGE="EVENTS_LIST_PAGE";
+    public static final String PERFORMANCE_PAGE = "PERFORMANCE_PAGE";
+    public static final String ADMIN_PAGE = "ADMIN_PAGE";
 
     private PathProperties() throws FileNotFoundException, IOException {
 

@@ -1,10 +1,9 @@
 package by.academy.logic;
 
-import by.academy.DAO.exception.CannotTakeConnectionException;
-import by.academy.DAO.factory.DAOFactory;
-import by.academy.DAO.user.UserDAO;
-import by.academy.Model.AdminData;
-import by.academy.Model.UserData;
+import by.academy.dao.IUserDao;
+import by.academy.domain.Admin;
+import by.academy.domain.User;
+import by.academy.exception.ServiceException;
 
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
@@ -16,39 +15,32 @@ import java.util.regex.Pattern;
  * Time: 12:46
  * Класс, описывающий логику поведения при логинации пользователя.
  */
-public class LoginLogic {
+public class LoginLogic extends DataAccessService {
+    IUserDao userDao = daoFactory.getUserDao();
+    public LoginLogic() throws ServiceException {
+        super();
 
-    DAOFactory oracleFactory =
-            DAOFactory.getDAOFactory(DAOFactory.ORACLE); // create the required by.academy.DAO Factory
-    UserDAO userDAO = null;
-
-    public LoginLogic() {
     }
 
 
-    public UserData logination(String email, String password) {
-        try {
-            userDAO = oracleFactory.getUserDAO();
-        } catch (CannotTakeConnectionException e) {
-            e.printStackTrace();
-        }
+    public User logination(String email, String password) {
 
-        UserData user = null;
+        User user = null;
         if (checkPassword(password) && checkEmail(email)) {
-            user = userDAO.getUserByEmailAndPassword(email, password);
+            user = userDao.getUserByEmailAndPassword(email, password);
         }
         return user;
     }
 
-    public AdminData isAdmin(UserData user) {
-        AdminData admin = null;
+    public Admin isAdmin(User user) {
+        Admin admin = null;
         if (user != null && user.getEmail() != null) {
             ResourceBundle rb = ResourceBundle.getBundle(
                     "properties/admin");
             String adminLogin = rb.getString ("admin.login");
 
             if(adminLogin == user.getEmail()){
-                admin = new AdminData();
+                admin = new Admin();
             }
         }
         return admin;

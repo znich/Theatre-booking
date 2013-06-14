@@ -1,18 +1,15 @@
 package by.academy.logic;
 
-
-import by.academy.DAO.category.CategoryDAO;
-import by.academy.DAO.event.EventDAO;
-import by.academy.DAO.exception.CannotTakeConnectionException;
-import by.academy.DAO.factory.DAOFactory;
-import by.academy.DAO.performance.PerformanceDAO;
-import by.academy.DAO.ticketsPriceDao.TicketsPriceDAO;
-import by.academy.Model.CategoryData;
-import by.academy.Model.EventData;
-import by.academy.Model.PerformanceData;
-import by.academy.Model.TicketsPriceData;
+import by.academy.dao.ICategoryDao;
+import by.academy.dao.IEventDao;
+import by.academy.dao.IPerformanceDao;
+import by.academy.domain.Category;
+import by.academy.domain.Event;
+import by.academy.domain.Performance;
+import by.academy.exception.ServiceException;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -23,99 +20,50 @@ import java.util.List;
  * Time: 15:36
  * To change this template use File | Settings | File Templates.
  */
-public class SiteLogic {
+public class SiteLogic extends DataAccessService {
+    IPerformanceDao perfDao = daoFactory.getPerformanceDao();
+    IEventDao eventDao = daoFactory.getEventDao();
+    ICategoryDao categoryDao = daoFactory.getCategoryDao();
 
-    DAOFactory oracleFactory =
-            DAOFactory.getDAOFactory(DAOFactory.ORACLE); // create the required by.academy.DAO Factory
-    PerformanceDAO perfDAO = null;
-    EventDAO eventDAO = null;
-    CategoryDAO categoryDAO = null;
-    TicketsPriceDAO ticketsPriceDAO = null;
-
-    public SiteLogic() {
-        AdminLogic admLogic = new AdminLogic();
-        admLogic.deleteExpiredBookings();
-        //  testAddPerformance();
+    public SiteLogic() throws ServiceException {
+        super();
     }
 
-    public PerformanceData getPerformancesById(int id, int langId) {
+    public Performance getPerformancesById(int id, int langId) {
 
-        try {
-            perfDAO = oracleFactory.getPerformanceDAO();
-        } catch (CannotTakeConnectionException e) {
-            e.printStackTrace();
-        }
-
-        PerformanceData perf = perfDAO.getPerformanceById(id, langId);
-        System.out.println(perf.toString());
-        if (perf.getName()==null){
-        	perf = perfDAO.getPerformanceById(id);
-        	 System.out.println(perf.toString());
-        }
+        Performance perf = perfDao.getEntityById(id);
         return perf;
     }
 
-    public List<PerformanceData> getPerformancesByCategory(int categoryId, int langId) {
+    public List<Performance> getPerformancesByCategory(Integer categoryId) {
 
-        try {
-            perfDAO = oracleFactory.getPerformanceDAO();
-        } catch (CannotTakeConnectionException e) {
-            e.printStackTrace();
-        }
-
-        ArrayList<PerformanceData> perfList = perfDAO.getPerformancesByCategory(categoryId, langId);
+        List<Performance> perfList = perfDao.getPerformancesByCategory(categoryId);
         return perfList;
     }
 
-    public ArrayList<PerformanceData> getAllPerformances(int langId) {
+    public List<Performance> getAllPerformances(Integer langId) {
 
-        try {
-            perfDAO = oracleFactory.getPerformanceDAO();
-        } catch (CannotTakeConnectionException e) {
-            e.printStackTrace();
-        }
-
-        ArrayList<PerformanceData> performances = perfDAO.getAllPerformances(langId);
+        List<Performance> performances = perfDao.findAll();
         return performances;
     }
 
-    public List<EventData> getAllEvents(int langId) {
+    public List<Event> getAllEvents(Integer langId) {
 
-        try {
-            eventDAO = oracleFactory.getEventDAO();
-        } catch (CannotTakeConnectionException e) {
-            e.printStackTrace();
-        }
-
-        List<EventData> events = eventDAO.getAllEvents(langId);
+        List<Event> events = eventDao.findAll();
         return events;
     }
 
-    public List<EventData> getEventsInDateInterval(Date date1, Date date2, int langID) {
+    public List<Event> getEventsInDateInterval(Calendar begin, Calendar end, int langID) {
 
-        try {
-            eventDAO = oracleFactory.getEventDAO();
-        } catch (CannotTakeConnectionException e) {
-            e.printStackTrace();
-        }
-        long begin;
-        long end;
-        if (date1.before(date2)) {
-            begin = date1.getTime();
-            end = date2.getTime();
-        } else {
-            begin = date2.getTime();
-            end = date1.getTime();
-        }
-        List<EventData> events = eventDAO.getEventsInDateInterval(begin, end, langID);
+        List<Event> events = eventDao.getEventsInDateInterval(begin, end);
         return events;
     }
 
-    public List<EventData> sortEventsByCategory(List<EventData> events, CategoryData category) {
+    public List<Event> sortEventsByCategory(List<Event> events, Category category) {
 
-        List<EventData> sortedEvents = new ArrayList<EventData>();
+        List<Event> sortedEvents = new ArrayList<Event>();
 
-        for (EventData event : events) {
+        for (Event event : events) {
             if (event.getPerformance().getCategory().equals(category)) {
                 sortedEvents.add(event);
             }
@@ -124,81 +72,34 @@ public class SiteLogic {
 
     }
 
-    public List<CategoryData> getAllCategories(int langId) {
+    public List<Category> getAllCategories(Integer langId) {
 
-        try {
-            categoryDAO = oracleFactory.getCategoryDAO();
-        } catch (CannotTakeConnectionException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        List<CategoryData> categories = categoryDAO.getAllCategories(langId);
+        List<Category> categories = categoryDao.findAll(langId);
 
         return categories;
 
     }
 
-    public CategoryData getCategoryById(int id, int langId) {
+    public Category getCategoryById(Integer id, Integer langId) {
 
+        Category category = categoryDao.getEntityById(id, langId);
+
+        return category;
+
+    }
+
+    public List<TicketsPriceData> getTicketsPriceByPerformance(PerformanceData performance) {
         try {
-            categoryDAO = oracleFactory.getCategoryDAO();
+            ticketsPriceDAO = oracleFactory.getTicketsPriceDAO();
         } catch (CannotTakeConnectionException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
-        CategoryData category = categoryDAO.getCategoryById(id, langId);
+        List<TicketsPriceData> ticketsPrices = ticketsPriceDAO.getTicketsPriceForPerformance(performance);
 
-        return category;
+        return ticketsPrices;
 
     }
-    
-    
-    public List<TicketsPriceData> getTicketsPriceByPerformance(PerformanceData performance){
-		 try {
-			ticketsPriceDAO = oracleFactory.getTicketsPriceDAO();
-		} catch (CannotTakeConnectionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		 
-		 List<TicketsPriceData> ticketsPrices = ticketsPriceDAO.getTicketsPriceForPerformance(performance); 
-    	
-    	return ticketsPrices;
-    	
-    }
-    
-    
-    
-    
-
-    public void testAddPerformance(){
-		
-		DAOFactory oracleFactory =
-	            DAOFactory.getDAOFactory(DAOFactory.ORACLE); // create the required by.academy.DAO Factory
-	    PerformanceDAO perfDAO = null;
-	    try {
-			perfDAO = oracleFactory.getPerformanceDAO();
-		} catch (CannotTakeConnectionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	    
-	    PerformanceData perf = new PerformanceData();
-	    CategoryData category = getCategoryById(3,1);
-	    java.sql.Date date1 = new java.sql.Date(213123121);
-	    perf.setName("Набуко");
-	    perf.setDescription("Описание");
-	    perf.setImage("картинка");
-	    perf.setShortDescription("краткое описание");
-	    perf.setLanguage(1);
-	    perf.setId(0);
-	    perf.setCategory(category);
-	    perf.setStartDate(date1);
-	    perf.setEndDate(date1);
-	    
-	    perfDAO.addPerformance(perf);
-	    
-	}
 
 }

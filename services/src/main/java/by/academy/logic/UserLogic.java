@@ -1,11 +1,11 @@
 package by.academy.logic;
 
-import by.academy.DAO.booking.BookingDAO;
-import by.academy.DAO.exception.CannotTakeConnectionException;
-import by.academy.DAO.factory.DAOFactory;
-import by.academy.DAO.payment.PaymentDAO;
-import by.academy.DAO.ticket.TicketDAO;
-import by.academy.DAO.user.UserDAO;
+import by.academy.dao.booking.BookingDAO;
+import by.academy.dao.exception.CannotTakeConnectionException;
+import by.academy.dao.factory.DAOFactory;
+import by.academy.dao.payment.PaymentDAO;
+import by.academy.dao.ticket.TicketDAO;
+import by.academy.dao.user.UserDAO;
 import by.academy.Model.BookingData;
 import by.academy.Model.PaymentData;
 import by.academy.Model.TicketData;
@@ -22,7 +22,7 @@ import java.util.Date;
  */
 public class UserLogic {
     DAOFactory oracleFactory =
-            DAOFactory.getDAOFactory(DAOFactory.ORACLE); // create the required by.academy.DAO Factory
+            DAOFactory.getDAOFactory(DAOFactory.ORACLE); // create the required by.academy.dao Factory
     BookingDAO bookingDAO = null;
     UserDAO userDAO = null;
     PaymentDAO paymentDAO = null;
