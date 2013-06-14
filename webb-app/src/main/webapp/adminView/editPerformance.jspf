@@ -3,7 +3,7 @@
 
 <p class="text-error"><c:out value="${message}"/></p>
 
-<form class="form-horizontal" method="POST" action="Controller">
+<form class="form-horizontal" method="POST" action="/webb-app/Controller">
     <fieldset>
         <legend>${legend }</legend>
         <input type="hidden" name="action" value="edit_performance">
@@ -99,11 +99,11 @@
                                     <select size=1 name="inputLangId" onchange=>
                                         <optgroup label="Язык">
                                             <option value="1"
-                                                    onclick="location.href= 'Controller?action=show_edit_performance&performanceId=${performance.id }&inputLangId=1'"
+                                                    onclick="location.href= '/webb-app/Controller?action=show_edit_performance&performanceId=${performance.id }&inputLangId=1'"
                                                     <c:if test="${langId == 1}">selected</c:if>>русский
                                             </option>
                                             <option value="2"
-                                                    onclick="location.href= 'Controller?action=show_edit_performance&performanceId=${performance.id }&inputLangId=2'"
+                                                    onclick="location.href= '/webb-app/Controller?action=show_edit_performance&performanceId=${performance.id }&inputLangId=2'"
                                                     <c:if test="${langId == 2}">selected</c:if>>english
                                             </option>
                                         </optgroup>

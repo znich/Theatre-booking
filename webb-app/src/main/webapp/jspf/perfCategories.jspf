@@ -1,9 +1,9 @@
  <ul class="nav nav-pills">
- 	<li><a tabindex="-1" href="Controller?action=show_perf_list&categoryId=0">
+ 	<li><a tabindex="-1" href="/webb-app/Controller?action=show_perf_list&categoryId=0">
 	<fmt:message key="lbl.category.all" bundle="${bundle}" /></a></li>
 	<c:if test="${not empty categories}">
 	<c:forEach var="category" items="${categories}">
-	<li><a tabindex="-1" href="Controller?action=show_perf_list&categoryId=${category.id}">${category.name}</a></li>
+	<li><a tabindex="-1" href="/webb-app/Controller?action=show_perf_list&categoryId=${category.id}">${category.name}</a></li>
 	</c:forEach>
 	</c:if>
  </ul>

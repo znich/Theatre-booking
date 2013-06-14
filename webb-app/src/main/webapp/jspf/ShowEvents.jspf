@@ -27,7 +27,7 @@
 								<fmt:message key="lbl.noticket" bundle="${bundle}" />
 								</c:if>		
 								<c:if test="${event.freeTicketsCount>0}">				
-								<a href="/Controller?action=BOOKING_TICKETS_SHOW&eventId=${event.id}"><fmt:message key="btn.buyTicket" bundle="${bundle}" /></a>
+								<a href="/webb-app/Controller?action=BOOKING_TICKETS_SHOW&eventId=${event.id}"><fmt:message key="btn.buyTicket" bundle="${bundle}" /></a>
 								</c:if>
 								</td>
 								<td>
