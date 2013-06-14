@@ -3,10 +3,11 @@
 <properties>
     <entry key="LOGIN_PAGE">login.jsp</entry>
     <entry key="REGISTRATION_PAGE">registration.jsp</entry>
-    <entry key="PROFILE_ADMIN_PAGE">profileAdmin.jsp</entry>
-    <entry key="PROFILE_USER_PAGE">profileUser.jsp</entry>
+    <entry key="ADMIN_PROFILE_PAGE">/adminView/profileAdmin.jsp</entry>
+    <entry key="PROFILE_USER_PAGE">/userView/userProfile.jsp</entry>
     <entry key="PERFORMANCE_LIST_PAGE">performances.jsp</entry>
-    <entry key="EVENTS_LIST_PAGE">userView/events.jsp</entry>
+    <entry key="EVENTS_LIST_PAGE">events.jsp</entry>
+    <entry key="PERFORMANCE_PAGE">performance.jsp</entry>
     <entry key="ADMIN_PAGE">Admin.jsp</entry>
 </properties>
 

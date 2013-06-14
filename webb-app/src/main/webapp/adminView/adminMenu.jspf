@@ -1,18 +1,18 @@
 <%@page language="java" contentType="text/html; UTF-8"
-	pageEncoding="UTF-8"%>
+        pageEncoding="UTF-8" %>
 <ul class="nav nav-list">				
 					<li  <c:if test="${menuItem==\"main\"}">class="active"</c:if> >
-					<a href="Controller?action=admin_show_main">Администрирование</a></li>
+					<a href="/webb-app/Controller?action=admin_show_main">Администрирование</a></li>
 				
 					<li  <c:if test="${menuItem==\"users\"}">class="active"</c:if>>
-					<a href="Controller?action=admin_show_users">Пользователи</a></li>					
+					<a href="/webb-app/Controller?action=admin_show_users">Пользователи</a></li>
 					
 					<li <c:if test="${menuItem==\"performances\"}">class="active"</c:if>>
-					<a href="Controller?action=admin_show_performances">Представления</a></li>
+					<a href="/webb-app/Controller?action=admin_show_performances">Представления</a></li>
 					
 					<li <c:if test="${menuItem==\"events\"}">class="active"</c:if>>
-					<a href="Controller?action=admin_show_events">События</a></li> 
+					<a href="/webb-app/Controller?action=admin_show_events">События</a></li>
 					
 					<li  <c:if test="${menuItem==\"tickets\"}">class="active"</c:if>>
-					<a href="Controller?action=admin_show_events">Билеты</a></li>
+					<a href="/webb-app/Controller?action=admin_show_events">Билеты</a></li>
 </ul>  

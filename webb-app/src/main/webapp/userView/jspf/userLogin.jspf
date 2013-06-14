@@ -1,6 +1,0 @@
-<div class="span8">
-<ul>
-<li><a href="/Controller?action=show_login_form"><fmt:message key="btn.Login" bundle="${bundle}"/></a></li>
-<li><a href="/userView/registration.html"><fmt:message key="btn.Registration" bundle="${bundle}"/></a></li>
-</ul>
-</div>

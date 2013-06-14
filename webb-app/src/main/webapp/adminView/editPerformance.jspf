@@ -1,170 +1,193 @@
 <%@page language="java" contentType="text/html; UTF-8"
-	pageEncoding="UTF-8"%>
-		
-                <p class="text-error"><c:out value="${message}"/></p>
-				<form class="form-horizontal" method="POST" action = "Controller">
-				 <fieldset>
-				 <legend>${legend }</legend>
-                     <input type="hidden" name="action" value="edit_performance">
-                     <input type="hidden" name="performanceId" value="${performance.id}">
-               
-                 
-						<div class="control-group">
-						<div class="row-fluid">
-						<div class="span7">
-						
-						<div class="control-group">
-						<div class="row">
-						
-                     <label class="control-label">Название</label>
-                     <div class="controls">
-                         <div class="input-prepend">
-                             <span class="add-on"><i class="icon-file"></i></span>
-                             <input type="text" class="input-large" name="inputName" id="inputName" value="${performance.name}">
-                         </div>
-                     </div>
-                      
-                     </div>
-                     </div>
-                     
-                     <div class="control-group">
-                     <div class="row">
-					 
-                     <label class="control-label" for="inputCategory">Категория</label>
-					<div class="controls">
-					  <div class="input-prepend">
-						  <span class="add-on"><i class="icon-sort"></i></span>
-						  <select size=1 name="inputCategoryId" > 
-						<optgroup label="Категория">
-						<c:forEach var="category" items="${categoryList}">
-						<option value="${category.id}" <c:if test="${category.id == performance.category.id}">selected</c:if>>${category.name}</option>
-						</c:forEach>
-						</optgroup>
-						</select>
-						</div>
-					</div>
-					 
-                     </div>
-                     </div>
-					
-					<div class="control-group">
-						<div class="row">
-					   
-					  <label class="control-label" for="reservation">Период показа:</label>
-						<div class="controls">	
-					      <div class="input-prepend">
-						  	<span class="add-on"><i class="icon-calendar"></i></span>						 				
-								<input class="input-large" type="text" name="inputDateInteval" id="reservation" value="${dateInterval}" />
-						 </div>
-						</div>
-						
-                    	 </div>
-                    	 </div>
-                    	 
-                    	 
-					<div class="control-group">
-						<div class="row">
-                    	 <label class="control-label" for="inputImage">Изображение</label>	
-                    	 <div class="controls">	
-                    	 <img src="${performance.image}" class="img-rounded">
-					      <div class="input-prepend">
-						  <span class="add-on"><i class="icon-camera"></i></span>							  
-				 	  <input type="text" class="input-large" name="inputImage" id="inputImage" value="${performance.image}">
+        pageEncoding="UTF-8" %>
+
+<p class="text-error"><c:out value="${message}"/></p>
+
+<form class="form-horizontal" method="POST" action="Controller">
+    <fieldset>
+        <legend>${legend }</legend>
+        <input type="hidden" name="action" value="edit_performance">
+        <input type="hidden" name="performanceId" value="${performance.id}">
+
+
+        <div class="control-group">
+            <div class="row-fluid">
+                <div class="span7">
+
+                    <div class="control-group">
+                        <div class="row">
+
+                            <label class="control-label">Название</label>
+
+                            <div class="controls">
+                                <div class="input-prepend">
+                                    <span class="add-on"><i class="icon-file"></i></span>
+                                    <input type="text" class="input-large" name="inputName" id="inputName"
+                                           value="${performance.name}">
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
-						</div> 	
-						</div>
-                    	 </div> 
-                    	 
-                    	 
-                 </div>
-                 
-                 <div class="span3">
-                 <div class="control-group">
-                       <div class="row">          
-                    <label class="control-label" for="inputLanguage">Язык:</label>
-					<div class="controls">
-					  <div class="input-prepend">
-						  <span class="add-on"><i class="icon-comment"></i></span>
-						  <select size=1 name="inputLangId" onchange=  > 
-						<optgroup label="Язык">
-						<option value="1" onclick= "location.href= 'Controller?action=show_edit_performance&performanceId=${performance.id }&inputLangId=1'" <c:if test="${langId == 1}">selected</c:if>>русский</option>
-						<option value="2" onclick= "location.href= 'Controller?action=show_edit_performance&performanceId=${performance.id }&inputLangId=2'" <c:if test="${langId == 2}">selected</c:if>>english</option>
-						</optgroup>
-						</select>
-						</div>
-					</div>
-					</div>
-					</div>
-					
-					<div class="control-group">
-					<div class="row">
-					<label class="control-label" for="inputPrice">Цена билетов:</label>
-					<div class="controls">
-					<table id="inputPrice">
-					<tr><td >Категория:</td><td>Стоимость:</td></tr>		
-					<c:forEach var="ticketsPrice" items="${ticketsPriceList}">
-					<tr><td>${ticketsPrice.priceCategory}</td>
-					<td><input type="text" class="input-medium" name="inputPrice${ticketsPrice.priceCategory}" id="inputprice" value="${ticketsPrice.price}"></td>
-					</tr>				
-					</c:forEach>
-					
-					</table>
-					</div>
-					</div>
-					</div>
-				</div>
-                 
-                
-				
-					</div>	
-					</div>			  
-				  
-				  
-				  
-				 
-                  <div class="control-group">
-                     <label class="control-label"> Краткое описание:</label>
-                     <div class="controls">
-                         <div class="input-prepend">
-                             
-                             <textarea name="inputShortDescription">
-                            ${performance.shortDescription}
-                             </textarea>
-                             
-                             <script>
-   						 CKEDITOR.replace( 'inputShortDescription',
-   								 {
-   							 height : 150,   							
-   								 });
-                        	</script>
-                         </div>
-                     </div>
-                 </div>
-                
-				  <div class="control-group">
-					<label class="control-label" for="inputDescrition">Описание:</label>
-					<div class="controls">
-					  <div class="input-prepend">
-						  
-						  <textarea name="inputDescription">
-                            ${performance.description}
-                             </textarea>
-                             <script>
-   						 CKEDITOR.replace( 'inputDescription',
-   								 {
-   							 height : 500,   							
-   								 });
-                         </script>
-					  </div>
-					</div>
-				  </div>
-				
-				
-				  <div class="control-group">
-					<div class="controls">
-					  <button type="submit" class="btn btn-large btn-primary">Сохранить</button>
-					</div>
-				  </div>
-				   </fieldset>
-				</form>
+
+                    <div class="control-group">
+                        <div class="row">
+
+                            <label class="control-label" for="inputCategory">Категория</label>
+
+                            <div class="controls">
+                                <div class="input-prepend">
+                                    <span class="add-on"><i class="icon-sort"></i></span>
+                                    <select size=1 name="inputCategoryId">
+                                        <optgroup label="Категория">
+                                            <c:forEach var="category" items="${categoryList}">
+                                                <option value="${category.id}"
+                                                        <c:if test="${category.id == performance.category.id}">selected</c:if>>${category.name}</option>
+                                            </c:forEach>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="row">
+
+                            <label class="control-label" for="reservation">Период показа:</label>
+
+                            <div class="controls">
+                                <div class="input-prepend">
+                                    <span class="add-on"><i class="icon-calendar"></i></span>
+                                    <input class="input-large" type="text" name="inputDateInteval" id="reservation"
+                                           value="${dateInterval}"/>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="control-group">
+                        <div class="row">
+                            <label class="control-label" for="inputImage">Изображение</label>
+
+                            <div class="controls">
+                                <img src="${performance.image}" class="img-rounded">
+
+                                <div class="input-prepend">
+                                    <span class="add-on"><i class="icon-camera"></i></span>
+                                    <input type="text" class="input-large" name="inputImage" id="inputImage"
+                                           value="${performance.image}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="span3">
+                    <div class="control-group">
+                        <div class="row">
+                            <label class="control-label" for="inputLanguage">Язык:</label>
+
+                            <div class="controls">
+                                <div class="input-prepend">
+                                    <span class="add-on"><i class="icon-comment"></i></span>
+                                    <select size=1 name="inputLangId" onchange=>
+                                        <optgroup label="Язык">
+                                            <option value="1"
+                                                    onclick="location.href= 'Controller?action=show_edit_performance&performanceId=${performance.id }&inputLangId=1'"
+                                                    <c:if test="${langId == 1}">selected</c:if>>русский
+                                            </option>
+                                            <option value="2"
+                                                    onclick="location.href= 'Controller?action=show_edit_performance&performanceId=${performance.id }&inputLangId=2'"
+                                                    <c:if test="${langId == 2}">selected</c:if>>english
+                                            </option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="row">
+                            <label class="control-label" for="inputPrice">Цена билетов:</label>
+
+                            <div class="controls">
+                                <table id="inputPrice">
+                                    <tr>
+                                        <td>Категория:</td>
+                                        <td>Стоимость:</td>
+                                    </tr>
+                                    <c:forEach var="ticketsPrice" items="${ticketsPriceList}">
+                                        <tr>
+                                            <td>${ticketsPrice.priceCategory}</td>
+                                            <td><input type="text" class="input-medium"
+                                                       name="inputPrice${ticketsPrice.priceCategory}" id="inputPrice"
+                                                       value="${ticketsPrice.price}"></td>
+                                        </tr>
+                                    </c:forEach>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <div class="control-group">
+            <label class="control-label"> Краткое описание:</label>
+
+            <div class="controls">
+                <div class="input-prepend">
+
+                    <textarea name="inputShortDescription">
+                        ${performance.shortDescription}
+                    </textarea>
+
+                    <script>
+                        CKEDITOR.replace('inputShortDescription',
+                                {
+                                    height: 150,
+                                });
+                    </script>
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="inputDescrition">Описание:</label>
+
+            <div class="controls">
+                <div class="input-prepend">
+
+                    <textarea name="inputDescription">
+                        ${performance.description}
+                    </textarea>
+                    <script>
+                        CKEDITOR.replace('inputDescription',
+                                {
+                                    height: 500,
+                                });
+                    </script>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn btn-large btn-primary">Сохранить</button>
+            </div>
+        </div>
+    </fieldset>
+</form>
 			
