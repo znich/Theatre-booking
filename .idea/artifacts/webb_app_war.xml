@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="webb-app:war">
-    <output-path>$PROJECT_DIR$/webb-app/target</output-path>
-    <root id="archive" name="webb-app.war">
-      <element id="artifact" artifact-name="webb-app:war exploded" />
-    </root>
-  </artifact>
-</component>
