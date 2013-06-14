@@ -1,16 +1,20 @@
 <!DOCTYPE hibernate-mapping PUBLIC
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<hibernate-mapping>
-    <class name="by.academy.domain.Category" table="CATEGORY">
-        <id name="id" type="int" column="CATEGORY_ID">
+<hibernate-mapping package="by.academy.domain">
+    <class name="Category" table="CATEGORY">
+        <id name="id" type="java.lang.Integer" column="CATEGORY_ID">
             <generator class="sequence">
                 <param name="sequence">CATEGORY_SEQ</param>
             </generator>
-
         </id>
-        <property name="name" type="string" column="CATEGORY_VALUE"></property>
-        <property name="pid"  type="int" column="PARENT_ID"></property>
-        <property name="langId" type="int" column="LANG_ID"></property>
+        <property name="name" type="string" column="CATEGORY_VALUE" />
+        <property name="pid"  type="int" column="PARENT_ID" />
+        <property name="langId" type="int" column="LANG_ID" />
+
+        <set name="performances" table="PERFORMANCES" inverse="true" fetch="select">
+            <key column="CATEGORY_ID" not-null="true" />
+            <one-to-many class="Performance" />
+        </set>
     </class>
 </hibernate-mapping>

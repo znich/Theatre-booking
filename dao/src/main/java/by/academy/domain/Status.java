@@ -11,6 +11,8 @@ import java.util.Set;
  * To change this template use File | Settings | File Templates.
  */
 public class Status implements Serializable {
+    private static final long serialVersionUID = 6845922418703306184L;
+
     private Integer id;
     private int pid;
     private int langId;
@@ -18,6 +20,7 @@ public class Status implements Serializable {
     private Set<Ticket> tickets;
     public Status() {
     }
+
 
     public Integer getId() {
         return id;

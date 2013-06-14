@@ -1,6 +1,7 @@
 package by.academy.domain;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Set;
 
@@ -12,39 +13,39 @@ import java.util.Set;
  * To change this template use File | Settings | File Templates.
  */
 public class Booking implements Serializable {
-    Integer id;
-    private Date expDate;
-    private Date madeDate;
+    private static final long serialVersionUID = -7726509784741040741L;
+
+    private Integer id;
+    private Calendar expDate;
+    private Calendar madeDate;
     private PaymentMethod paymentMethod;
-    private int ticketCount;
     private User user;
-
-    public int getTicketCount() {
-        return ticketCount;
-    }
-
-    public void setTicketCount(int ticketCount) {
-        this.ticketCount = ticketCount;
-    }
-
     private Set<Ticket> tickets;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Booking() {
     }
 
-    public Date getMadeDate() {
+    public Calendar getMadeDate() {
         return madeDate;
     }
 
-    public void setMadeDate(Date madeDate) {
+    public void setMadeDate(Calendar madeDate) {
         this.madeDate = madeDate;
     }
 
-    public Date getExpDate() {
+    public Calendar getExpDate() {
         return expDate;
     }
 
-    public void setExpDate(Date expDate) {
+    public void setExpDate(Calendar expDate) {
         this.expDate = expDate;
     }
 
@@ -54,14 +55,6 @@ public class Booking implements Serializable {
 
     public void setTickets(Set<Ticket> tickets) {
         this.tickets = tickets;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public PaymentMethod getPaymentMethod() {
@@ -78,5 +71,22 @@ public class Booking implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Booking)) return false;
+
+        Booking booking = (Booking) o;
+
+        if (!id.equals(booking.id)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 }

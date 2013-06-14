@@ -1,7 +1,6 @@
 package by.academy.domain;
 
-import by.academy.Model.SeatData;
-import by.academy.Model.StatusData;
+import java.io.Serializable;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,7 +9,9 @@ import by.academy.Model.StatusData;
  * Time: 15:12
  * To change this template use File | Settings | File Templates.
  */
-public class Ticket {
+public class Ticket implements Serializable {
+    private static final long serialVersionUID = -7762125850874268760L;
+
     private Integer id;
     private Event event;
     private int price;
@@ -19,6 +20,14 @@ public class Ticket {
     private Seat place;
 
     public Ticket() {
+    }
+
+    public Booking getBooking() {
+        return booking;
+    }
+
+    public void setBooking(Booking booking) {
+        this.booking = booking;
     }
 
     public Integer getId() {
@@ -51,5 +60,22 @@ public class Ticket {
 
     public void setEvent(Event event) {
         this.event = event;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Ticket)) return false;
+
+        Ticket ticket = (Ticket) o;
+
+        if (!id.equals(ticket.id)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 }

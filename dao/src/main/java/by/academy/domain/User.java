@@ -11,17 +11,32 @@ import java.util.Set;
  * To change this template use File | Settings | File Templates.
  */
 public class User implements Serializable {
+    private static final long serialVersionUID = -2269045498830506797L;
+
     private Integer id;
-    private String name;
-    private String surname;
     private String email;
     private String password;
-    private String phoneNumber;
-    private String city;
     private Set<Booking> booking;
+    private Set<Property> properties;
 
     public User() {
 
+    }
+
+    public Set<Property> getProperties() {
+        return properties;
+    }
+
+    public void setProperties(Set<Property> properties) {
+        this.properties = properties;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Set<Booking> getBooking() {
@@ -30,31 +45,6 @@ public class User implements Serializable {
 
     public void setBooking(Set<Booking> booking) {
         this.booking = booking;
-    }
-
-    public Integer getId() {
-
-        return id;
-    }
-
-    protected void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
     }
 
     public String getEmail() {
@@ -73,22 +63,6 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -105,5 +79,4 @@ public class User implements Serializable {
     public int hashCode() {
         return id.hashCode();
     }
-
 }

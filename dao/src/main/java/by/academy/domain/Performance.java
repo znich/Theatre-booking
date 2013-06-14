@@ -1,33 +1,24 @@
 package by.academy.domain;
 
+import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Set;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Siarhei Poludvaranin
- * Date: 31.05.13
- * Time: 15:34
- * To change this template use File | Settings | File Templates.
+ * Class for Performance entity.
+ * @author Siarhei Poludvaranin
+ *
  */
-public class Performance {
+public class Performance implements Serializable {
+    private static final long serialVersionUID = -8226959475559515701L;
+
     private Integer id;
-    private String name;
-    private String shortDescription;
-    private String description;
-    private Date startDate;
-    private Date endDate;
-    private String image;
+    private Calendar startDate;
+    private Calendar endDate;
     private Category category;
     private Set<Event> events;
-
-    public Set getEvents() {
-        return events;
-    }
-
-    public void setEvents(Set events) {
-        this.events = events;
-    }
+    private Set<Property> properties;
 
     public Performance() {
     }
@@ -36,56 +27,40 @@ public class Performance {
         return id;
     }
 
-    protected void setId(Integer id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Set<Property> getProperties() {
+        return properties;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProperties(Set<Property> properties) {
+        this.properties = properties;
     }
 
-    public String getShortDescription() {
-        return shortDescription;
+    public Set<Event> getEvents() {
+        return events;
     }
 
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
+    public void setEvents(Set<Event> events) {
+        this.events = events;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Date getStartDate() {
+    public Calendar getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(Calendar startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public Calendar getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(Calendar endDate) {
         this.endDate = endDate;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public Category getCategory() {
@@ -94,5 +69,22 @@ public class Performance {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Performance)) return false;
+
+        Performance that = (Performance) o;
+
+        if (!id.equals(that.id)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 }

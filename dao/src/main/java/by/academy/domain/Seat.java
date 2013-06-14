@@ -11,36 +11,23 @@ import java.util.Set;
  * To change this template use File | Settings | File Templates.
  */
 public class Seat implements Serializable {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = -6231252818283198055L;
-	Integer id;
-    int row;
-    int seatNumber;
-    int priceCategory;
-    int sector;
+    private static final long serialVersionUID = -6231252818283198055L;
 
-    public Set<Ticket> getTickets() {
-        return tickets;
-    }
-
-    public void setTickets(Set<Ticket> tickets) {
-        this.tickets = tickets;
-    }
-
-    Set<Ticket> tickets;
+    private Integer id;
+    private int row;
+    private int seatNumber;
+    private int priceCategory;
+    private int sector;
 
     public Seat() {
 
     }
 
     public Integer getId() {
-
         return id;
     }
 
-    protected void setId(Integer id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

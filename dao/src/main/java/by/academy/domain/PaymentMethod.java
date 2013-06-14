@@ -11,12 +11,12 @@ import java.util.Set;
  * To change this template use File | Settings | File Templates.
  */
 public class PaymentMethod implements Serializable {
+    private static final long serialVersionUID = -7681565045835513129L;
 
     private Integer id;
     private String name;
     private int langId;
     private int pid;
-    private Set<Booking> bookings;
 
     public PaymentMethod() {
 
@@ -52,14 +52,6 @@ public class PaymentMethod implements Serializable {
 
     public void setPid(int pid) {
         this.pid = pid;
-    }
-
-    public Set<Booking> getBookings() {
-        return bookings;
-    }
-
-    public void setBookings(Set<Booking> bookings) {
-        this.bookings = bookings;
     }
 
     @Override

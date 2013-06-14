@@ -11,7 +11,7 @@ import java.util.Set;
  * To change this template use File | Settings | File Templates.
  */
 public class Category implements Serializable {
-
+    private static final long serialVersionUID = -6296850408268982290L;
 
     private Integer id;
     private String name;
@@ -22,11 +22,19 @@ public class Category implements Serializable {
     public Category() {
     }
 
+    public Set<Performance> getPerformances() {
+        return performances;
+    }
+
+    public void setPerformances(Set<Performance> performances) {
+        this.performances = performances;
+    }
+
     public Integer getId() {
         return id;
     }
 
-    protected void setId(Integer id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -61,13 +69,13 @@ public class Category implements Serializable {
 
         Category category = (Category) o;
 
-        if (id != category.id) return false;
+        if (!id.equals(category.id)) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return id;
+        return id.hashCode();
     }
 }
