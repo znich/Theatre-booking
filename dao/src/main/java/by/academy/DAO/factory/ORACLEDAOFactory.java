@@ -13,6 +13,8 @@ import by.academy.DAO.performance.ORACLEPerformanceDAO;
 import by.academy.DAO.performance.PerformanceDAO;
 import by.academy.DAO.ticket.ORACLETicketDAO;
 import by.academy.DAO.ticket.TicketDAO;
+import by.academy.DAO.ticketsPriceDao.ORACLETicketsPriceDAO;
+import by.academy.DAO.ticketsPriceDao.TicketsPriceDAO;
 import by.academy.DAO.user.ORACLEUserDAO;
 import by.academy.DAO.user.UserDAO;
 import by.academy.DAO.seat.ORACLESeatDAO;
@@ -20,6 +22,7 @@ import by.academy.DAO.seat.SeatDAO;
 import by.academy.DAO.status.ORACLEStatusDAO;
 import by.academy.DAO.status.StatusDAO;
 import by.academy.DAO.util.ConnectionPool;
+import by.academy.Model.TicketsPriceData;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -122,4 +125,13 @@ public class ORACLEDAOFactory extends DAOFactory {
                 }
                 return new ORACLECategoryDAO(con);
             }
+
+			@Override
+			public TicketsPriceDAO getTicketsPriceDAO()
+					throws CannotTakeConnectionException {
+				if (con == null){
+                    throw new CannotTakeConnectionException();
+                }
+				return new ORACLETicketsPriceDAO(con);
+			}
         }

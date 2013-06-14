@@ -18,7 +18,7 @@ public class MessagesProperties {
     public static final String WRONG_SECOND_NAME = "msg.wrongSecondName";
     public static final String WRONG_PASS = "msg.wrongPass";
     public static final String EMAIL_EXIST = "msg.emailExist";
-    public static final String REGISTER_SUCCESSFUL = "msg.registerSuccessful";
+    public static final String REGISTER_SUCCESSFUL = "msg.editPerformSucces";
     public static final String ERROR_LOGIN = "msg.errorLogin";
     public static final String MAIN_PAGE = "menu.main";
     public static final String EDIT_PERFORMANCE_SUCESS = "msg.editPerformSucces";

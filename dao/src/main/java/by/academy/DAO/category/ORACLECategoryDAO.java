@@ -29,7 +29,7 @@ public class ORACLECategoryDAO implements CategoryDAO {
     @Override
     public CategoryData getCategoryById(int id, int langId){
 
-        String сategoryByIdQuery = "SELECT * FROM CATEGORY WHERE PARENT_ID IN  = ? AND LANG_ID = ?";
+        String сategoryByIdQuery = "SELECT * FROM CATEGORY WHERE PARENT_ID   = ? AND LANG_ID = ?";
         PreparedStatement ps = null;
         ResultSet rs = null;
         CategoryData category = new CategoryData();

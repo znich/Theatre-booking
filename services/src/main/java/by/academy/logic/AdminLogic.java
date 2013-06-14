@@ -8,6 +8,7 @@ import by.academy.DAO.performance.PerformanceDAO;
 import by.academy.DAO.seat.SeatDAO;
 import by.academy.DAO.status.StatusDAO;
 import by.academy.DAO.ticket.TicketDAO;
+import by.academy.DAO.ticketsPriceDao.TicketsPriceDAO;
 import by.academy.Model.*;
 
 import java.sql.Date;
@@ -29,7 +30,7 @@ public class AdminLogic {
     SeatDAO seatDAO = null;
     BookingDAO bookingDAO = null;
     StatusDAO statusDAO = null;
-    
+    TicketsPriceDAO tiketsPriceDAO = null;
 
     public AdminLogic() {
     }
@@ -192,6 +193,23 @@ public class AdminLogic {
             }
         }
     return flag;
+    }
+    
+    public boolean editTicketsPriceForPerformance(List<TicketsPriceData> ticketsPrices){
+    	
+    	boolean flar = false;
+    	try {
+			tiketsPriceDAO = oracleFactory.getTicketsPriceDAO();			
+		} catch (CannotTakeConnectionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	if (tiketsPriceDAO.editTicketsPrices(ticketsPrices)>0){
+    		flar = true;
+    	}
+		return flar;
+    	
     }
 
 }

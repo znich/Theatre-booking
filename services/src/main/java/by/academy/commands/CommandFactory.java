@@ -29,11 +29,11 @@ public class CommandFactory {
         ADMIN_SHOW_PERFORMANCES,
         SHOW_EDIT_PERFORMANCE,
         EDIT_PERFORMANCE,
+        SHOW_ADD_PERFORMANCE,
         TEST_COMMAND
     }
     public static ICommand createCommand(HttpServletRequest request, HttpServletResponse response) {
         ICommand command = null;
-        System.out.println("factor-2");
         String commandStr = (String) request.getParameter("action");
         Commands commandEnum;
         try {
@@ -71,6 +71,9 @@ public class CommandFactory {
                 	break;
                 case EDIT_PERFORMANCE:
                 	command = new EditPerformanceCommand (request, response);
+                	break;
+                case SHOW_ADD_PERFORMANCE:
+                	command = new ShowAddPerformanceCommand (request, response);
                 	break;
                 case TEST_COMMAND:
                 	command = new TestCommand(request,response);

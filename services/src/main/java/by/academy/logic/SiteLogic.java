@@ -1,13 +1,16 @@
 package by.academy.logic;
 
+
 import by.academy.DAO.category.CategoryDAO;
 import by.academy.DAO.event.EventDAO;
 import by.academy.DAO.exception.CannotTakeConnectionException;
 import by.academy.DAO.factory.DAOFactory;
 import by.academy.DAO.performance.PerformanceDAO;
+import by.academy.DAO.ticketsPriceDao.TicketsPriceDAO;
 import by.academy.Model.CategoryData;
 import by.academy.Model.EventData;
 import by.academy.Model.PerformanceData;
+import by.academy.Model.TicketsPriceData;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,10 +30,12 @@ public class SiteLogic {
     PerformanceDAO perfDAO = null;
     EventDAO eventDAO = null;
     CategoryDAO categoryDAO = null;
+    TicketsPriceDAO ticketsPriceDAO = null;
 
     public SiteLogic() {
         AdminLogic admLogic = new AdminLogic();
         admLogic.deleteExpiredBookings();
+        //  testAddPerformance();
     }
 
     public PerformanceData getPerformancesById(int id, int langId) {
@@ -42,6 +47,11 @@ public class SiteLogic {
         }
 
         PerformanceData perf = perfDAO.getPerformanceById(id, langId);
+        System.out.println(perf.toString());
+        if (perf.getName()==null){
+        	perf = perfDAO.getPerformanceById(id);
+        	 System.out.println(perf.toString());
+        }
         return perf;
     }
 
@@ -142,5 +152,53 @@ public class SiteLogic {
         return category;
 
     }
+    
+    
+    public List<TicketsPriceData> getTicketsPriceByPerformance(PerformanceData performance){
+		 try {
+			ticketsPriceDAO = oracleFactory.getTicketsPriceDAO();
+		} catch (CannotTakeConnectionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
+		 List<TicketsPriceData> ticketsPrices = ticketsPriceDAO.getTicketsPriceForPerformance(performance); 
+    	
+    	return ticketsPrices;
+    	
+    }
+    
+    
+    
+    
+
+    public void testAddPerformance(){
+		
+		DAOFactory oracleFactory =
+	            DAOFactory.getDAOFactory(DAOFactory.ORACLE); // create the required by.academy.DAO Factory
+	    PerformanceDAO perfDAO = null;
+	    try {
+			perfDAO = oracleFactory.getPerformanceDAO();
+		} catch (CannotTakeConnectionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+	    PerformanceData perf = new PerformanceData();
+	    CategoryData category = getCategoryById(3,1);
+	    java.sql.Date date1 = new java.sql.Date(213123121);
+	    perf.setName("Набуко");
+	    perf.setDescription("Описание");
+	    perf.setImage("картинка");
+	    perf.setShortDescription("краткое описание");
+	    perf.setLanguage(1);
+	    perf.setId(0);
+	    perf.setCategory(category);
+	    perf.setStartDate(date1);
+	    perf.setEndDate(date1);
+	    
+	    perfDAO.addPerformance(perf);
+	    
+	}
 
 }

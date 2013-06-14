@@ -1,5 +1,7 @@
 package by.academy.DAO.util;
 
+import java.util.Locale;
+
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -19,7 +21,8 @@ public class HibernateUtil {
     private final ThreadLocal sessions = new ThreadLocal();
 
     private HibernateUtil(){
-        try {
+    	Locale.setDefault(Locale.ENGLISH);
+    	try {
             sessionFactory = new Configuration().configure().buildSessionFactory();
         } catch (Throwable ex) {
             log.error("Initial SessionFactory creation failed." + ex);

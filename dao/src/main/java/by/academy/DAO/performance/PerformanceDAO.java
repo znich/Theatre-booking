@@ -13,6 +13,7 @@ import java.util.ArrayList;
  */
 public interface PerformanceDAO {
     public PerformanceData getPerformanceById(int id, int langID);
+    public PerformanceData getPerformanceById(int id);
     public ArrayList<PerformanceData> getAllPerformances(int langID);
     public ArrayList<PerformanceData> getPerformancesByCategory(int categoryId, int langId);
     public int addPerformance(PerformanceData performance);

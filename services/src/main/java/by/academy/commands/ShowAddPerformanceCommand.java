@@ -19,7 +19,7 @@ import by.academy.domain.Performance;
 import by.academy.logic.SiteLogic;
 import by.academy.util.PathProperties;
 
-public class ShowEditPerformanceCommand implements ICommand {
+public class ShowAddPerformanceCommand implements ICommand {
 
 	private HttpServletRequest request;
 	private HttpServletResponse response;
@@ -35,10 +35,9 @@ public class ShowEditPerformanceCommand implements ICommand {
 	private final String DATE_INTERVAL = "dateInterval";
 	private final String TICKETS_PRICE_ATTRIBUTE = "ticketsPriceList";
 	private final String LEGEND_ATTRIBUTE = "legend";
-	private final String LEGEND = "Редактирование представления";
-	
+	private final String LEGEND = "Добавление представления";
 
-	public ShowEditPerformanceCommand(HttpServletRequest request,
+	public ShowAddPerformanceCommand(HttpServletRequest request,
 			HttpServletResponse response) {
 		this.request = request;
 		this.response = response;
@@ -60,32 +59,24 @@ public class ShowEditPerformanceCommand implements ICommand {
 			langId = 1;
 		}
 		
-		Integer performanceId = Integer.parseInt(request
-				.getParameter(PERFORMANCE_ID_ATTRIBUTE));
 
-		PerformanceData performance = siteLogic.getPerformancesById(
-				performanceId, langId);
+
+		
 		List<CategoryData> categoryList = siteLogic.getAllCategories(langId);
-		List<TicketsPriceData> ticketsPrices = siteLogic.getTicketsPriceByPerformance(performance);
 		
-		Calendar cal = GregorianCalendar.getInstance();
-		Date startDate = performance.getStartDate();
-		Date endDate = performance.getEndDate();
-		cal.setTime(startDate);
-		StringBuilder dateIntervalBulder = new StringBuilder();
-		dateIntervalBulder.append((cal.get(Calendar.MONTH) + 1) + "/"
-				+ cal.get(Calendar.DATE) + "/" + cal.get(Calendar.YEAR));
-		dateIntervalBulder.append(" - ");
-		cal.setTime(endDate);
-		dateIntervalBulder.append((cal.get(Calendar.MONTH) + 1) + "/"
-				+ cal.get(Calendar.DATE) + "/" + cal.get(Calendar.YEAR));
-		String dateInterval = dateIntervalBulder.toString();
+		List<TicketsPriceData> ticketsPrices = new ArrayList<TicketsPriceData>();
+		
+		for (int i=1;i<=7;i++){
+		TicketsPriceData ticketsPrice = new TicketsPriceData();
+		ticketsPrice.setPriceCategory(i);
+		ticketsPrices.add(ticketsPrice);
+		}
 		
 		
 
-		request.setAttribute(PERFORMANCE_ATTRIBUTE, performance);
+		
 		request.setAttribute(CATEGORY_LIST_ATTRIBUTE, categoryList);
-		request.setAttribute(DATE_INTERVAL, dateInterval);
+		
 		session.setAttribute(TICKETS_PRICE_ATTRIBUTE, ticketsPrices);
 		request.setAttribute(MENU_ITEM_ATTRIBUTE, PERFORMANCES_ATTRIBUTE);
 		request.setAttribute(ANSWER_ATTRIBUTE, PERFORMANCE_ANSWER_ATTRIBUTE);

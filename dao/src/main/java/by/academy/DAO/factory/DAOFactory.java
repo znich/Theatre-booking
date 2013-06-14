@@ -9,7 +9,9 @@ import by.academy.DAO.performance.PerformanceDAO;
 import by.academy.DAO.seat.SeatDAO;
 import by.academy.DAO.status.StatusDAO;
 import by.academy.DAO.ticket.TicketDAO;
+import by.academy.DAO.ticketsPriceDao.TicketsPriceDAO;
 import by.academy.DAO.user.UserDAO;
+import by.academy.Model.TicketsPriceData;
 
 
 /**
@@ -37,6 +39,7 @@ public abstract class DAOFactory {
     public abstract SeatDAO getSeatDAO() throws CannotTakeConnectionException;
     public abstract StatusDAO getStatusDAO() throws CannotTakeConnectionException;
     public abstract CategoryDAO getCategoryDAO() throws CannotTakeConnectionException;
+    public abstract TicketsPriceDAO getTicketsPriceDAO() throws CannotTakeConnectionException;
 
     public static DAOFactory getDAOFactory(int whichFactory){
         switch(whichFactory){

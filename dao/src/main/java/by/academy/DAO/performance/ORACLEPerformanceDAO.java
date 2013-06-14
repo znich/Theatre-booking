@@ -58,6 +58,37 @@ public class ORACLEPerformanceDAO implements PerformanceDAO {
 	return performance;
 	
 	}
+	
+	@Override
+	public PerformanceData getPerformanceById(int id) {
+		 String performanceByIdQuery =
+				 "SELECT PERFORMANCE_ID, START_DATE, END_DATE, CATEGORY.CATEGORY_VALUE, CATEGORY.PARENT_ID "+
+				 "FROM PERFORMANCES INNER JOIN CATEGORY ON PERFORMANCES.CATEGORY_ID = CATEGORY.PARENT_ID AND CATEGORY.LANG_ID = 1  " +
+				 "WHERE PERFORMANCES.PERFORMANCE_ID = ?";
+		 	System.out.println("simple performance");
+		 	PreparedStatement ps = null;
+	        ResultSet rs = null;
+	        
+	        PerformanceData performance = new PerformanceData();
+
+	        try{
+	            ps = connection.prepareStatement(performanceByIdQuery,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+	            ps.setInt(1, id);
+	            rs = ps.executeQuery();
+	            if (rs.next()){
+	                performance = createPerformance(rs);
+	            }
+
+	        }catch (SQLException e){
+	            e.printStackTrace();
+	        }
+	        finally {
+	        	closeAll(rs, ps, null);
+	        }
+
+		return performance;
+	}
+	
     @Override
     public ArrayList<PerformanceData> getPerformancesByCategory(int categoryId, int langId)  {
         String getPerformancesByCategoryQuery ="SELECT PERFORMANCE_ID FROM PERFORMANCES WHERE CATEGORY_ID = ?";
@@ -126,6 +157,7 @@ public class ORACLEPerformanceDAO implements PerformanceDAO {
 		int rowsProp=0;
 		int perfId = performance.getId();
 		
+		
 		/*
 		 * тут выполняется проверка, для чего вызван метод add: для добавления нового PERFORMANCE 
 		 * или же для добавления новой записи в PROPERTIES на отсутвующем языке.
@@ -135,7 +167,7 @@ public class ORACLEPerformanceDAO implements PerformanceDAO {
 /** 1*/	
 		if (perfId==0){ // PERFORMANCE отсутвует в базе   	
 			
-			String addQuery= "INSERT INTO PERFORMANCES (START_DATE, END_DATE, CATEGORY_ID) VALUES (?, ?. ?)";
+			String addQuery= "INSERT INTO PERFORMANCES (START_DATE, END_DATE, CATEGORY_ID) VALUES (?, ?, ?)";
     	
 			try {
 				pStatement = connection.prepareStatement(addQuery, new String [] {"PERFORMANCE_ID"} );
@@ -498,5 +530,7 @@ public class ORACLEPerformanceDAO implements PerformanceDAO {
 			e.printStackTrace();
 		}
     }
+
+	
     
 }

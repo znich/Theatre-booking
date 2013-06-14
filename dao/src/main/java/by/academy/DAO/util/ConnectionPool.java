@@ -20,11 +20,12 @@ public class ConnectionPool {
     private static DataSource ds;
 
     private ConnectionPool() {
+    	
     }
 
     static public DataSource getConnectionPool() {
         if (ds == null) {
-            Locale.setDefault(Locale.ENGLISH);
+        	Locale.setDefault(Locale.ENGLISH);
             try {
                 Context initContext = new InitialContext();
                 Context envContext  = (Context)initContext.lookup("java:/comp/env");

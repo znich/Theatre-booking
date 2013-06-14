@@ -1,15 +1,23 @@
 package by.academy.commands;
 
 import java.io.IOException;
+import java.sql.SQLData;
+import java.sql.SQLException;
+import java.sql.SQLInput;
+import java.sql.SQLOutput;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import by.academy.Model.CategoryData;
+import by.academy.Model.TicketsPriceData;
 import by.academy.logic.AdminLogic;
 import by.academy.logic.SiteLogic;
 import by.academy.util.MessagesProperties;
@@ -36,6 +44,9 @@ public class EditPerformanceCommand implements ICommand {
 	private final String INPUT_DATE_INTERVAL = "inputDateInteval";
 	private final String INPUT_CATEGORY_ATTRIBUTE = "inputCategoryId";
 	private final String DATE_FORMAT = "MM/dd/yyyy";
+	private final String TICKETS_PRICE_ATTRIBUTE = "ticketsPriceList";
+	private final String INPUT_TICKETS_PRICE_ATTRIBUTE = "inputPrice";
+
 
 	public EditPerformanceCommand(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -46,6 +57,7 @@ public class EditPerformanceCommand implements ICommand {
 	@Override
 	public String execute() throws ServletException, IOException {
 
+		session = request.getSession();
 		String inputLangId = request.getParameter(INPUT_LANG_ID);
 
 		Integer langId = null;
@@ -82,9 +94,15 @@ public class EditPerformanceCommand implements ICommand {
 			date1 = new Date();
 			date2 = new Date();
 		}
-
-		Integer performanceId = Integer.parseInt(request
-				.getParameter(PERFORMANCE_ID_ATTRIBUTE));
+	
+		java.sql.Date sqlDate1 = new java.sql.Date(date1.getTime()) ;
+		java.sql.Date sqlDate2 = new java.sql.Date(date2.getTime()) ;
+			
+		Integer performanceId = 0;
+		String idOfPerformance = request
+				.getParameter(PERFORMANCE_ID_ATTRIBUTE);
+		if (idOfPerformance.length()>0){ 
+			performanceId = Integer.parseInt(idOfPerformance);}		
 		Integer categoryId = Integer.parseInt(request
 				.getParameter(INPUT_CATEGORY_ATTRIBUTE));
 		String name = request.getParameter(INPUT_NAME_ATTRIBUTE);
@@ -92,14 +110,26 @@ public class EditPerformanceCommand implements ICommand {
 				.getParameter(INPUT_SHORTDESCRIPTION_ATTRIBUTE);
 		String description = request.getParameter(INPUT_DESCRIPTION_ATTRIBUTE);
 		String image = request.getParameter(INPUT_IMAGE_ATTRIBUTE);
+		
+		List<TicketsPriceData> ticketsPrices = new ArrayList<TicketsPriceData>();
+		ticketsPrices =  (List<TicketsPriceData>) session.getAttribute(TICKETS_PRICE_ATTRIBUTE);
+
+		System.out.println(ticketsPrices.size());
+
+		for (TicketsPriceData ticketsPrice : ticketsPrices){
+			ticketsPrice.setPrice(Integer.parseInt(request.getParameter(INPUT_TICKETS_PRICE_ATTRIBUTE+ticketsPrice.getPriceCategory())));
+			}
 
 		CategoryData category = siteLogic.getCategoryById(categoryId, langId);
 		
-	//	boolean flag = adminLogic.editPerformance(performanceId, name, shortDescription, description, date1, date2, image, category, langId);
+		boolean flag = adminLogic.editPerformance(performanceId, name, shortDescription, description, sqlDate1, sqlDate2, image, category, langId);
 		String message = null;
 		
 		if (flag){
-		message = MessagesProperties.createPathProperties().getProperties(MessagesProperties.REGISTER_SUCCESSFUL, "ru");
+			flag = adminLogic.editTicketsPriceForPerformance(ticketsPrices);			
+		}
+		if (flag){
+			message = MessagesProperties.createPathProperties().getProperties(MessagesProperties.REGISTER_SUCCESSFUL, "ru");
 		}
 		
 		request.setAttribute(MENU_ITEM_ATTRIBUTE, PERFORMANCES_ATTRIBUTE);
