@@ -22,7 +22,7 @@ public class AdminShowPerformancesCommand implements ICommand {
 	private final String PERFORMANCES_ATTRIBUTE = "performances";
 	private final String ANSWER_ATTRIBUTE = "answer";
 	private final String PERFORMANCE_ANSWER_ATTRIBUTE = "editPerformanceList";
-
+ 
 	public AdminShowPerformancesCommand(HttpServletRequest request,
 			HttpServletResponse response) {
 		this.request = request;

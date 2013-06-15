@@ -23,7 +23,7 @@
 </head>
 <body id="body">
 <div class="container">
-    <jsp:include page="Head.jsp"></jsp:include>
+    <jsp:include page="jspf/head.jspf"></jsp:include>
 
     <div class="contentWrapper">
         <div class="row">
