@@ -24,7 +24,7 @@ public class LoginLogic extends DataAccessService {
 
 
     public User logination(String email, String password) {
-
+        int test = 0;
         User user = null;
         if (checkPassword(password) && checkEmail(email)) {
             user = userDao.getUserByEmailAndPassword(email, password);
