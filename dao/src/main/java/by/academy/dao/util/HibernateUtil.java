@@ -14,7 +14,7 @@ import org.hibernate.cfg.Configuration;
  */
 public enum HibernateUtil {
     ;
-    private static final ThreadLocal sessions = new ThreadLocal();
+    private static final ThreadLocal<Session> sessions = new ThreadLocal<Session>();
     private static SessionFactory sessionFactory;
     private static Logger log = Logger.getLogger(HibernateUtil.class);
 
@@ -34,6 +34,7 @@ public enum HibernateUtil {
         if (session == null) {
             HibernateUtil.getSessionFactory();
             session = sessionFactory.openSession();
+            sessions.set(session);
         }
         return session;
     }
