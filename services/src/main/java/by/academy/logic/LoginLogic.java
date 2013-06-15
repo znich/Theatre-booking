@@ -25,7 +25,7 @@ public class LoginLogic extends DataAccessService {
 
     public User logination(String email, String password) {
         /*git test*/
-        int test;
+        int test2;
 
         User user = null;
         if (checkPassword(password) && checkEmail(email)) {
