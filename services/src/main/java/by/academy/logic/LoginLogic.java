@@ -24,6 +24,8 @@ public class LoginLogic extends DataAccessService {
 
 
     public User logination(String email, String password) {
+        /*git test*/
+
         User user = null;
         if (checkPassword(password) && checkEmail(email)) {
             user = userDao.getUserByEmailAndPassword(email, password);
