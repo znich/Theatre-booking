@@ -28,7 +28,7 @@ public class AdminShowPerformancesCommand implements ICommand {
 		this.request = request;
 		this.response = response;
 	}
-
+         //
 	@Override
 	public String execute() throws ServletException, IOException {
 

@@ -16,9 +16,6 @@ public class Property implements Serializable {
     private PropertyNameEnum name;
     private String value;
     private int langId;
-    private int parentId;
-
-
 
     private Property rootProperty;
     private Set<Property> childProperties = new HashSet<Property>();
@@ -64,14 +61,6 @@ public class Property implements Serializable {
         this.langId = langId;
     }
 
-    public int getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(int parentId) {
-        this.parentId = parentId;
-    }
-
     public Set<Property> getChildProperties() {
         return childProperties;
     }
@@ -111,7 +100,6 @@ public class Property implements Serializable {
                 ", name=" + name +
                 ", value='" + value + '\'' +
                 ", langId=" + langId +
-                ", parentId=" + parentId +
                 ", rootProperty=" + rootProperty +
                 ", childProperties=" + childProperties +
                 '}';
