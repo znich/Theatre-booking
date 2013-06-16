@@ -46,15 +46,16 @@ public class AdminLogic extends DataAccessService {
         performance.setEndDate(endDate);
         performance.setCategory(category);
 
-        Property parentProperty = new Property();
-        Property childProperty = new Property();
-
         for (PerformancePropertyNames e : PerformancePropertyNames.values()) {
-            parentProperty.setName(e.getId());
+        	
+        	Property parentProperty = new Property();
+            Property childProperty = new Property();
+        	parentProperty.setName(e.getId());
 
             childProperty.setName(e.getId());
             childProperty.setLangId(langId);
             childProperty.setRootProperty(parentProperty);
+            
 
             switch (e) {
                 case NAME:
@@ -102,9 +103,10 @@ public class AdminLogic extends DataAccessService {
         event.setEndTime(endTime);
 
         List<Seat> seats = seatDao.findAll();
-        Ticket ticket = new Ticket();
+        
 
         for (Seat s : seats) {
+        	Ticket ticket = new Ticket();
             ticket.setPlace(s);
             ticket.setStatus(statusDao.getEntityById(1));
             ticket.setEvent(event);
@@ -117,6 +119,8 @@ public class AdminLogic extends DataAccessService {
         return flag;
     }
 
+    
+    
     public int deleteExpiredBookings() {
 
         ITicketDao ticketDao = daoFactory.getTicketDao();
