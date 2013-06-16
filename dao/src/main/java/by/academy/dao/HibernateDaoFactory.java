@@ -102,10 +102,7 @@ public class HibernateDaoFactory extends DaoFactory {
     public static class StatusDaoImpl
             extends GenericDaoImpl<Status, Integer>
             implements IStatusDao {}
-            
 
-    public static class TicketsPriceDaoImpl
-            extends GenericDaoImpl<TicketsPrice, Integer>
-            implements ITicketsPriceDao {}
+ 
 
 }
