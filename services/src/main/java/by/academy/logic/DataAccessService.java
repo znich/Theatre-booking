@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
  * To change this template use File | Settings | File Templates.
  */
 public abstract class DataAccessService {
-    public DaoFactory daoFactory;
+    protected DaoFactory daoFactory;
 
     public DataAccessService() throws ServiceException {
         ResourceBundle res = ResourceBundle.getBundle(

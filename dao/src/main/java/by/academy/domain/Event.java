@@ -65,6 +65,10 @@ public class Event implements Serializable {
         this.tickets = tickets;
     }
 
+    public void setTicket(Ticket ticket) {
+        this.tickets.add(ticket);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

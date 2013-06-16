@@ -3,9 +3,11 @@ package by.academy.logic;
 import by.academy.dao.ICategoryDao;
 import by.academy.dao.IEventDao;
 import by.academy.dao.IPerformanceDao;
+import by.academy.dao.ITicketsPriceDao;
 import by.academy.domain.Category;
 import by.academy.domain.Event;
 import by.academy.domain.Performance;
+import by.academy.domain.TicketsPrice;
 import by.academy.exception.ServiceException;
 
 import java.util.ArrayList;
@@ -21,40 +23,37 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class SiteLogic extends DataAccessService {
-    IPerformanceDao perfDao = daoFactory.getPerformanceDao();
-    IEventDao eventDao = daoFactory.getEventDao();
-    ICategoryDao categoryDao = daoFactory.getCategoryDao();
 
     public SiteLogic() throws ServiceException {
         super();
     }
 
     public Performance getPerformancesById(int id, int langId) {
-
+        IPerformanceDao perfDao = daoFactory.getPerformanceDao();
         Performance perf = perfDao.getEntityById(id);
         return perf;
     }
 
     public List<Performance> getPerformancesByCategory(Integer categoryId) {
-
+        IPerformanceDao perfDao = daoFactory.getPerformanceDao();
         List<Performance> perfList = perfDao.getPerformancesByCategory(categoryId);
         return perfList;
     }
 
     public List<Performance> getAllPerformances(Integer langId) {
-
+        IPerformanceDao perfDao = daoFactory.getPerformanceDao();
         List<Performance> performances = perfDao.findAll();
         return performances;
     }
 
     public List<Event> getAllEvents(Integer langId) {
-
+        IEventDao eventDao = daoFactory.getEventDao();
         List<Event> events = eventDao.findAll();
         return events;
     }
 
     public List<Event> getEventsInDateInterval(Calendar begin, Calendar end, int langID) {
-
+        IEventDao eventDao = daoFactory.getEventDao();
         List<Event> events = eventDao.getEventsInDateInterval(begin, end);
         return events;
     }
@@ -73,7 +72,7 @@ public class SiteLogic extends DataAccessService {
     }
 
     public List<Category> getAllCategories(Integer langId) {
-
+        ICategoryDao categoryDao = daoFactory.getCategoryDao();
         List<Category> categories = categoryDao.findAll(langId);
 
         return categories;
@@ -81,22 +80,17 @@ public class SiteLogic extends DataAccessService {
     }
 
     public Category getCategoryById(Integer id, Integer langId) {
-
+        ICategoryDao categoryDao = daoFactory.getCategoryDao();
         Category category = categoryDao.getEntityById(id, langId);
 
         return category;
 
     }
 
-    public List<TicketsPriceData> getTicketsPriceByPerformance(PerformanceData performance) {
-        try {
-            ticketsPriceDAO = oracleFactory.getTicketsPriceDAO();
-        } catch (CannotTakeConnectionException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+    public List<TicketsPrice> getTicketsPriceByPerformance(Performance performance) {
+        ITicketsPriceDao ticketsPriceDao = daoFactory.getTicketsPriceDao();
 
-        List<TicketsPriceData> ticketsPrices = ticketsPriceDAO.getTicketsPriceForPerformance(performance);
+        List<TicketsPrice> ticketsPrices = ticketsPriceDao.getTicketsPriceForPerformance(performance);
 
         return ticketsPrices;
 

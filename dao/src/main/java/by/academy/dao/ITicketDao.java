@@ -1,6 +1,9 @@
 package by.academy.dao;
 
+import by.academy.domain.Booking;
 import by.academy.domain.Ticket;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,4 +13,5 @@ import by.academy.domain.Ticket;
  * To change this template use File | Settings | File Templates.
  */
 public interface ITicketDao extends IGenericDao<Ticket, Integer> {
+    List<Ticket> getTicketsByBookingId(Booking booking);
 }
