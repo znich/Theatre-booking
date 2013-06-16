@@ -1,6 +1,9 @@
 package by.academy.dao;
 
+import java.util.List;
+
 import by.academy.dao.IGenericDao;
+import by.academy.domain.Performance;
 import by.academy.domain.TicketsPrice;
 
 /**
@@ -11,4 +14,6 @@ import by.academy.domain.TicketsPrice;
  * To change this template use File | Settings | File Templates.
  */
 public interface ITicketsPriceDao extends IGenericDao<TicketsPrice, Integer> {
+
+	List<TicketsPrice> getTicketsPriceForPerformance(Performance performance);
 }
