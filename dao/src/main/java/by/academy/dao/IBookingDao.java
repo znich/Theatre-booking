@@ -3,6 +3,8 @@ package by.academy.dao;
 import by.academy.domain.Booking;
 import by.academy.domain.User;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -14,4 +16,5 @@ import java.util.List;
  */
 public interface IBookingDao extends IGenericDao<Booking, Integer> {
     List<Booking> getBookingByUser(User user);
+    List<Booking> getExpiredBooking(Calendar currentDate);
 }

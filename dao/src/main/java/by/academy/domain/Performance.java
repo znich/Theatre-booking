@@ -38,6 +38,9 @@ public class Performance implements Serializable {
     public void setProperties(Set<Property> properties) {
         this.properties = properties;
     }
+    public void setProperty(Property property) {
+        this.properties.add(property);
+    }
 
     public Set<Event> getEvents() {
         return events;

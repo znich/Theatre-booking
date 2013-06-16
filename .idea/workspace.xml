@@ -2,18 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list readonly="true" id="51523ad9-650e-481f-8ef3-c20796f74aae" name="Default" comment="" />
-    <list default="true" id="a4c4a5d1-6d19-4e36-a837-659a04522de1" name="View" comment="test5">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/src/main/resources/Booking.hbm.xml" afterPath="$PROJECT_DIR$/dao/src/main/resources/Booking.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/src/main/resources/Category.hbm.xml" afterPath="$PROJECT_DIR$/dao/src/main/resources/Category.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/src/main/resources/Event.hbm.xml" afterPath="$PROJECT_DIR$/dao/src/main/resources/Event.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/src/main/resources/PaymentMethod.hbm.xml" afterPath="$PROJECT_DIR$/dao/src/main/resources/PaymentMethod.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/src/main/resources/Performance.hbm.xml" afterPath="$PROJECT_DIR$/dao/src/main/resources/Performance.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/src/main/resources/Property.hbm.xml" afterPath="$PROJECT_DIR$/dao/src/main/resources/Property.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/src/main/resources/Seat.hbm.xml" afterPath="$PROJECT_DIR$/dao/src/main/resources/Seat.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/src/main/resources/Status.hbm.xml" afterPath="$PROJECT_DIR$/dao/src/main/resources/Status.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/src/main/resources/Ticket.hbm.xml" afterPath="$PROJECT_DIR$/dao/src/main/resources/Ticket.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/src/main/resources/TicketsPrice.hbm.xml" afterPath="$PROJECT_DIR$/dao/src/main/resources/TicketsPrice.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/src/main/resources/User.hbm.xml" afterPath="$PROJECT_DIR$/dao/src/main/resources/User.hbm.xml" />
+    <list default="true" id="a4c4a5d1-6d19-4e36-a837-659a04522de1" name="View" comment="логика админа">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/services/src/main/java/by/academy/logic/AdminLogic.java" afterPath="$PROJECT_DIR$/services/src/main/java/by/academy/logic/AdminLogic.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/src/main/java/by/academy/domain/Booking.java" afterPath="$PROJECT_DIR$/dao/src/main/java/by/academy/domain/Booking.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/src/main/java/by/academy/dao/impl/BookingDaoImpl.java" afterPath="$PROJECT_DIR$/dao/src/main/java/by/academy/dao/impl/BookingDaoImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/services/src/main/java/by/academy/logic/DataAccessService.java" afterPath="$PROJECT_DIR$/services/src/main/java/by/academy/logic/DataAccessService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/src/main/java/by/academy/domain/Event.java" afterPath="$PROJECT_DIR$/dao/src/main/java/by/academy/domain/Event.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/src/main/java/by/academy/dao/HibernateDaoFactory.java" afterPath="$PROJECT_DIR$/dao/src/main/java/by/academy/dao/HibernateDaoFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/src/main/java/by/academy/dao/IBookingDao.java" afterPath="$PROJECT_DIR$/dao/src/main/java/by/academy/dao/IBookingDao.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/src/main/java/by/academy/dao/ITicketDao.java" afterPath="$PROJECT_DIR$/dao/src/main/java/by/academy/dao/ITicketDao.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/src/main/java/by/academy/domain/Performance.java" afterPath="$PROJECT_DIR$/dao/src/main/java/by/academy/domain/Performance.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/services/src/main/java/by/academy/logic/SiteLogic.java" afterPath="$PROJECT_DIR$/services/src/main/java/by/academy/logic/SiteLogic.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/src/main/java/by/academy/domain/Status.java" afterPath="$PROJECT_DIR$/dao/src/main/java/by/academy/domain/Status.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/src/main/java/by/academy/dao/impl/TicketDaoImpl.java" afterPath="$PROJECT_DIR$/dao/src/main/java/by/academy/dao/impl/TicketDaoImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <list id="cab8f303-e604-4ada-bb0f-3dba427cadf1" name="view" comment="" />
@@ -21,7 +23,7 @@
     <ignored path=".idea/workspace.xml" />
     <file path="/PerformanceData.java" changelist="51523ad9-650e-481f-8ef3-c20796f74aae" time="1367871950430" ignored="false" />
     <file path="/DaoInterface.java" changelist="51523ad9-650e-481f-8ef3-c20796f74aae" time="1367858271523" ignored="false" />
-    <file path="/Dummy.txt" changelist="a4c4a5d1-6d19-4e36-a837-659a04522de1" time="1371303669866" ignored="false" />
+    <file path="/Dummy.txt" changelist="a4c4a5d1-6d19-4e36-a837-659a04522de1" time="1371371420207" ignored="false" />
     <file path="/ORACLEDAOfactory.java" changelist="51523ad9-650e-481f-8ef3-c20796f74aae" time="1368099336169" ignored="false" />
     <file path="/DAOfactory.java" changelist="51523ad9-650e-481f-8ef3-c20796f74aae" time="1368099494775" ignored="false" />
     <file path="/CannotTakeConnectionException.java" changelist="51523ad9-650e-481f-8ef3-c20796f74aae" time="1368099932183" ignored="false" />
@@ -72,6 +74,18 @@
     <file path="/Booking.hbm.xml" changelist="a4c4a5d1-6d19-4e36-a837-659a04522de1" time="1371303972707" ignored="false" />
     <file path="/PaymentMethod.hbm.xml" changelist="a4c4a5d1-6d19-4e36-a837-659a04522de1" time="1371304205206" ignored="false" />
     <file path="/User.hbm.xml" changelist="a4c4a5d1-6d19-4e36-a837-659a04522de1" time="1371304749165" ignored="false" />
+    <file path="/SiteLogic.java" changelist="a4c4a5d1-6d19-4e36-a837-659a04522de1" time="1371306891965" ignored="false" />
+    <file path="/Performance.java" changelist="a4c4a5d1-6d19-4e36-a837-659a04522de1" time="1371307390738" ignored="false" />
+    <file path="/AdminLogic.java" changelist="a4c4a5d1-6d19-4e36-a837-659a04522de1" time="1371371048916" ignored="false" />
+    <file path="/Event.java" changelist="a4c4a5d1-6d19-4e36-a837-659a04522de1" time="1371308601483" ignored="false" />
+    <file path="/GenericDaoImpl.java" changelist="a4c4a5d1-6d19-4e36-a837-659a04522de1" time="1371311546635" ignored="false" />
+    <file path="/IBookingDao.java" changelist="a4c4a5d1-6d19-4e36-a837-659a04522de1" time="1371312174949" ignored="false" />
+    <file path="/BookingDaoImpl.java" changelist="a4c4a5d1-6d19-4e36-a837-659a04522de1" time="1371312389325" ignored="false" />
+    <file path="/ITicketDao.java" changelist="a4c4a5d1-6d19-4e36-a837-659a04522de1" time="1371312838415" ignored="false" />
+    <file path="/TicketDaoImpl.java" changelist="a4c4a5d1-6d19-4e36-a837-659a04522de1" time="1371312892770" ignored="false" />
+    <file path="/Booking.java" changelist="a4c4a5d1-6d19-4e36-a837-659a04522de1" time="1371314212061" ignored="false" />
+    <file path="/DataAccessService.java" changelist="a4c4a5d1-6d19-4e36-a837-659a04522de1" time="1371367656713" ignored="false" />
+    <file path="/HibernateDaoFactory.java" changelist="a4c4a5d1-6d19-4e36-a837-659a04522de1" time="1371371579360" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,91 +151,91 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Property.hbm.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dao/src/main/resources/Property.hbm.xml">
+      <file leaf-file-name="AdminLogic.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/services/src/main/java/by/academy/logic/AdminLogic.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="21" selection-start="255" selection-end="255" vertical-scroll-proportion="0.0">
+            <state line="7" column="56" selection-start="104" selection-end="104" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Category.hbm.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dao/src/main/resources/Category.hbm.xml">
+      <file leaf-file-name="GenericDaoImpl.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dao/src/main/java/by/academy/dao/impl/GenericDaoImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="32" selection-start="530" selection-end="530" vertical-scroll-proportion="0.0">
+            <state line="114" column="26" selection-start="3371" selection-end="3375" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Booking.hbm.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dao/src/main/resources/Booking.hbm.xml">
+      <file leaf-file-name="HibernateUtil.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dao/src/main/java/by/academy/dao/util/HibernateUtil.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="32" selection-start="788" selection-end="788" vertical-scroll-proportion="0.0">
+            <state line="16" column="66" selection-start="374" selection-end="436" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PaymentMethod.hbm.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dao/src/main/resources/PaymentMethod.hbm.xml">
+      <file leaf-file-name="DaoFactory.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dao/src/main/java/by/academy/dao/DaoFactory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="28" selection-start="524" selection-end="524" vertical-scroll-proportion="0.0">
+            <state line="12" column="22" selection-start="302" selection-end="302" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Performance.hbm.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dao/src/main/resources/Performance.hbm.xml">
+      <file leaf-file-name="HibernateDaoFactory.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/dao/src/main/java/by/academy/dao/HibernateDaoFactory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="40" selection-start="649" selection-end="672" vertical-scroll-proportion="0.0">
+            <state line="71" column="41" selection-start="1899" selection-end="1899" vertical-scroll-proportion="0.71647507">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Seat.hbm.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dao/src/main/resources/Seat.hbm.xml">
+      <file leaf-file-name="DataAccessService.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/services/src/main/java/by/academy/logic/DataAccessService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="31" selection-start="523" selection-end="523" vertical-scroll-proportion="0.0">
+            <state line="19" column="17" selection-start="520" selection-end="520" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Status.hbm.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dao/src/main/resources/Status.hbm.xml">
+      <file leaf-file-name="Status.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dao/src/main/java/by/academy/domain/Status.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="27" selection-start="522" selection-end="522" vertical-scroll-proportion="0.0">
+            <state line="21" column="5" selection-start="520" selection-end="520" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Ticket.hbm.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dao/src/main/resources/Ticket.hbm.xml">
+      <file leaf-file-name="ITicketDao.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dao/src/main/java/by/academy/dao/ITicketDao.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="21" selection-start="253" selection-end="253" vertical-scroll-proportion="0.0">
+            <state line="15" column="54" selection-start="406" selection-end="406" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TicketsPrice.hbm.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dao/src/main/resources/TicketsPrice.hbm.xml">
+      <file leaf-file-name="Booking.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dao/src/main/java/by/academy/domain/Booking.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="30" selection-start="478" selection-end="478" vertical-scroll-proportion="0.0">
+            <state line="59" column="28" selection-start="1234" selection-end="1246" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="User.hbm.xml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/dao/src/main/resources/User.hbm.xml">
+      <file leaf-file-name="SiteLogic.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/services/src/main/java/by/academy/logic/SiteLogic.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="27" selection-start="551" selection-end="551" vertical-scroll-proportion="0.37918216">
+            <state line="24" column="13" selection-start="648" selection-end="648" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -251,22 +265,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/webb-app/src/main/webapp/WEB-INF/web.xml" />
-        <option value="$PROJECT_DIR$/webb-app/src/main/webapp/userView/registration.jsp" />
-        <option value="$PROJECT_DIR$/jarModule/src/main/java/by/academy/web/Controller.java" />
-        <option value="$PROJECT_DIR$/services/src/main/java/by/academy/logic/LoginLogic.java" />
-        <option value="$PROJECT_DIR$/dao/src/main/java/by/academy/domain/Property.java" />
-        <option value="$PROJECT_DIR$/dao/src/main/resources/Property.hbm.xml" />
-        <option value="$PROJECT_DIR$/dao/src/main/resources/Category.hbm.xml" />
-        <option value="$PROJECT_DIR$/dao/src/main/resources/PaymentMethod.hbm.xml" />
-        <option value="$PROJECT_DIR$/dao/src/main/resources/Performance.hbm.xml" />
-        <option value="$PROJECT_DIR$/dao/src/main/resources/Event.hbm.xml" />
-        <option value="$PROJECT_DIR$/dao/src/main/resources/Booking.hbm.xml" />
-        <option value="$PROJECT_DIR$/dao/src/main/resources/Seat.hbm.xml" />
-        <option value="$PROJECT_DIR$/dao/src/main/resources/Status.hbm.xml" />
         <option value="$PROJECT_DIR$/dao/src/main/resources/Ticket.hbm.xml" />
         <option value="$PROJECT_DIR$/dao/src/main/resources/TicketsPrice.hbm.xml" />
         <option value="$PROJECT_DIR$/dao/src/main/resources/User.hbm.xml" />
+        <option value="$PROJECT_DIR$/services/src/main/java/by/academy/logic/SiteLogic.java" />
+        <option value="$PROJECT_DIR$/dao/src/main/java/by/academy/domain/Performance.java" />
+        <option value="$PROJECT_DIR$/dao/src/main/java/by/academy/domain/Event.java" />
+        <option value="$PROJECT_DIR$/dao/src/main/java/by/academy/dao/impl/GenericDaoImpl.java" />
+        <option value="$PROJECT_DIR$/dao/src/main/java/by/academy/dao/IBookingDao.java" />
+        <option value="$PROJECT_DIR$/dao/src/main/java/by/academy/dao/impl/BookingDaoImpl.java" />
+        <option value="$PROJECT_DIR$/dao/src/main/java/by/academy/dao/impl/TicketDaoImpl.java" />
+        <option value="$PROJECT_DIR$/dao/src/main/java/by/academy/dao/ITicketDao.java" />
+        <option value="$PROJECT_DIR$/dao/src/main/java/by/academy/domain/Status.java" />
+        <option value="$PROJECT_DIR$/dao/src/main/java/by/academy/domain/Booking.java" />
+        <option value="$PROJECT_DIR$/services/src/main/java/by/academy/logic/DataAccessService.java" />
+        <option value="$PROJECT_DIR$/services/src/main/java/by/academy/logic/AdminLogic.java" />
+        <option value="$PROJECT_DIR$/dao/src/main/java/by/academy/dao/HibernateDaoFactory.java" />
       </list>
     </option>
   </component>
@@ -351,10 +365,8 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1382" />
-    <option name="height" value="744" />
+    <option name="width" value="1366" />
+    <option name="height" value="728" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -418,6 +430,84 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Theatre-booking" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="theatre-booking" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Theatre-booking" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="theatre-booking" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Theatre-booking" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="academy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="theatre-booking" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Theatre-booking" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="academy" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -567,6 +657,44 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="theatre-booking" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Theatre-booking" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dao" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="academy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dao" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="impl" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="PackagesPane" />
@@ -579,20 +707,20 @@
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth1" value="164" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="165" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="75" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="165" />
     <property name="OverrideImplement.combined" value="true" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="165" />
     <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder3" value="3" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder2" value="2" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth2" value="142" />
     <property name="recentsLimit" value="5" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth2" value="142" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder5" value="5" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder4" value="4" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth1" value="141" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/webb-app/target/webb-app.war" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth0" value="142" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth5" value="816" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth4" value="142" />
@@ -600,30 +728,30 @@
     <property name="Database.TableEditor.Splitter" value="0.9" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="MemberChooser.showClasses" value="true" />
     <property name="FullScreen" value="false" />
+    <property name="MemberChooser.showClasses" value="true" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth4" value="116" />
-    <property name="GoToClass.includeLibraries" value="false" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth5" value="839" />
+    <property name="GoToClass.includeLibraries" value="false" />
     <property name="JdbcConsole.Extract.IncludeRowNumbers" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/jarModule/src/main/java/by/academy/DAO" />
+    <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="Database.TableEditor.PageSize" value="50" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder5" value="5" />
     <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder3" value="3" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder5" value="5" />
     <property name="JdbcConsole.Extract.OpeningQuote" value="'" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder3" value="3" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder4" value="4" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder1" value="1" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder2" value="2" />
     <property name="JdbcConsole.Extract.ClosingQuote" value="'" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
     <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
     <property name="JdbcConsole.Extract.IncludeHeader" value="true" />
     <property name="restartRequiresConfirmation" value="true" />
-    <property name="dynamic.classpath" value="false" />
     <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -732,19 +860,6 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -771,6 +886,19 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -809,17 +937,17 @@
       <patterns />
       <method />
     </configuration>
-    <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
-      <option name="VM_PARAMETERS" value="-Duser.region=us -Duser.language=en" />
-      <option name="USER_CFG_CLASS" />
-      <option name="CONTEXT_PROVIDER" />
-      <method />
-    </configuration>
     <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local">
       <deployment />
       <server-settings />
       <predefined_log_file id="Tomcat" enabled="true" />
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <method />
+    </configuration>
+    <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
+      <option name="VM_PARAMETERS" value="-Duser.region=us -Duser.language=en" />
+      <option name="USER_CFG_CLASS" />
+      <option name="CONTEXT_PROVIDER" />
       <method />
     </configuration>
     <configuration default="false" name="Tomcat 7.0" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 7.0">
@@ -1099,7 +1227,11 @@
       <created>1371303687722</created>
       <updated>1371303687722</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="поправил маппинги">
+      <created>1371304803300</created>
+      <updated>1371304803300</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -1123,7 +1255,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
+    <frame x="0" y="0" width="1366" height="728" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21709402" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1137,7 +1269,7 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32947233" sideWeight="0.6707819" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.43418804" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32991454" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32864675" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22727273" sideWeight="0.24020442" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32820514" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1145,7 +1277,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26969698" sideWeight="0.53162396" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32820514" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27727273" sideWeight="0.565812" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28067484" sideWeight="0.6713533" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.46837607" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36472604" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1197,7 +1329,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="test5" />
+    <option name="LAST_COMMIT_MESSAGE" value="логика админа" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1222,6 +1354,8 @@
     <MESSAGE value="test git -3" />
     <MESSAGE value="test4" />
     <MESSAGE value="test5" />
+    <MESSAGE value="поправил маппинги" />
+    <MESSAGE value="логика админа" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1231,114 +1365,114 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/dao/src/main/java/by/academy/dao/IEventDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="17" selection-start="294" selection-end="294" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dao/src/main/java/by/academy/dao/impl/BookingDaoImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="16" selection-start="791" selection-end="791" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dao/src/main/java/by/academy/dao/impl/PerformanceDaoImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="69" selection-start="545" selection-end="605" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dao/src/main/java/by/academy/domain/Ticket.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="27" selection-start="455" selection-end="470" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dao/src/main/java/by/academy/dao/impl/TicketDaoImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="46" selection-start="521" selection-end="536" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dao/src/main/java/by/academy/dao/IBookingDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="58" selection-start="512" selection-end="512" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dao/src/main/java/by/academy/dao/ITicketDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="54" selection-start="406" selection-end="406" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dao/src/main/java/by/academy/domain/Status.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="5" selection-start="520" selection-end="520" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dao/src/main/java/by/academy/domain/Booking.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="59" column="28" selection-start="1234" selection-end="1246" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dao/src/main/java/by/academy/dao/DaoFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="22" selection-start="302" selection-end="302" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/services/src/main/java/by/academy/logic/DataAccessService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="17" selection-start="520" selection-end="520" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/services/src/main/java/by/academy/logic/SiteLogic.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="13" selection-start="569" selection-end="569" vertical-scroll-proportion="0.0">
+        <state line="24" column="13" selection-start="648" selection-end="648" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/services/src/main/java/by/academy/logic/LoginLogic.java">
+    <entry file="file://$PROJECT_DIR$/dao/src/main/java/by/academy/dao/util/HibernateUtil.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="59" selection-start="640" selection-end="640" vertical-scroll-proportion="0.0">
+        <state line="16" column="66" selection-start="374" selection-end="436" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dao/src/main/java/by/academy/dao/util/CustomNamingStrategy.java">
+    <entry file="file://$PROJECT_DIR$/dao/src/main/java/by/academy/dao/impl/GenericDaoImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="33" selection-start="259" selection-end="279" vertical-scroll-proportion="0.0">
+        <state line="114" column="26" selection-start="3371" selection-end="3375" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dao/src/main/java/by/academy/domain/Property.java">
+    <entry file="file://$PROJECT_DIR$/services/src/main/java/by/academy/logic/AdminLogic.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="101" column="38" selection-start="2154" selection-end="2154" vertical-scroll-proportion="0.0">
+        <state line="7" column="56" selection-start="104" selection-end="104" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dao/src/main/resources/hibernate.cfg.xml">
+    <entry file="file://$PROJECT_DIR$/dao/src/main/java/by/academy/dao/HibernateDaoFactory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="4.08">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dao/src/main/resources/Event.hbm.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="17" selection-start="652" selection-end="675" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dao/src/main/resources/PaymentMethod.hbm.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="28" selection-start="524" selection-end="524" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dao/src/main/resources/Category.hbm.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="32" selection-start="530" selection-end="530" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dao/src/main/resources/Booking.hbm.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="32" selection-start="788" selection-end="788" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dao/src/main/resources/Performance.hbm.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="40" selection-start="649" selection-end="672" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dao/src/main/resources/Property.hbm.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="21" selection-start="255" selection-end="255" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dao/src/main/resources/Seat.hbm.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="31" selection-start="523" selection-end="523" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dao/src/main/resources/Status.hbm.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="27" selection-start="522" selection-end="522" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dao/src/main/resources/Ticket.hbm.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="21" selection-start="253" selection-end="253" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dao/src/main/resources/TicketsPrice.hbm.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="30" selection-start="478" selection-end="478" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dao/src/main/resources/User.hbm.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="27" selection-start="551" selection-end="551" vertical-scroll-proportion="0.37918216">
+        <state line="71" column="41" selection-start="1899" selection-end="1899" vertical-scroll-proportion="0.71647507">
           <folding />
         </state>
       </provider>

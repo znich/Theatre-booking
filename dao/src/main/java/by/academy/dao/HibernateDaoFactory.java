@@ -68,7 +68,9 @@ public class HibernateDaoFactory extends DaoFactory {
     public IUserDao getUserDao() {
         return (IUserDao)instantiateDao(UserDaoImpl.class);
     }
-
+    protected Session getCurrentSession() {
+        return HibernateUtil.getSession();
+    }
 
     private GenericDaoImpl instantiateDao(Class daoClass) {
         try {
@@ -78,10 +80,6 @@ public class HibernateDaoFactory extends DaoFactory {
         } catch (Exception ex) {
             throw new RuntimeException("Can not instantiate DAO: " + daoClass, ex);
         }
-    }
-
-    protected Session getCurrentSession() {
-        return HibernateUtil.getSession();
     }
 
     public static class CategoryDaoImpl
@@ -104,10 +102,6 @@ public class HibernateDaoFactory extends DaoFactory {
     public static class StatusDaoImpl
             extends GenericDaoImpl<Status, Integer>
             implements IStatusDao {}
-
-    public static class TicketDaoImpl
-            extends GenericDaoImpl<Ticket, Integer>
-            implements ITicketDao {}
 
     public static class TicketsPriceDaoImpl
             extends GenericDaoImpl<TicketsPrice, Integer>

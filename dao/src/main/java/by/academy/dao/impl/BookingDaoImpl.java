@@ -5,6 +5,7 @@ import by.academy.domain.Booking;
 import by.academy.domain.User;
 import org.hibernate.criterion.Restrictions;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -21,4 +22,11 @@ public class BookingDaoImpl extends GenericDaoImpl<Booking, Integer> implements 
     public List<Booking> getBookingByUser(User user) {
         return findByCriteria(Restrictions.eq("user", user));
     }
+
+    @Override
+    public List<Booking> getExpiredBooking(Calendar currentDate) {
+        return findByCriteria(Restrictions.lt("expDate", currentDate));
+    }
+
+
 }

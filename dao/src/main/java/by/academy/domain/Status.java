@@ -21,7 +21,6 @@ public class Status implements Serializable {
     public Status() {
     }
 
-
     public Integer getId() {
         return id;
     }
