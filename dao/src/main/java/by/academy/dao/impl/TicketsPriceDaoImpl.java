@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.criterion.Restrictions;
 
 import by.academy.dao.ITicketsPriceDao;
+import by.academy.domain.Event;
 import by.academy.domain.Performance;
 import by.academy.domain.TicketsPrice;
 
@@ -23,6 +24,24 @@ public class TicketsPriceDaoImpl extends GenericDaoImpl<TicketsPrice, Integer> i
 		 return findByCriteria(Restrictions.eq("perfId", performance.getId()));
 		
 	}
+/*
+	@Override
+	public List<TicketsPrice> getFreeTickets(Event event) {
+		 return findByCriteria(Restrictions.eq("perfId", event.getPerformance().getId(),Restrictions.);
+		return null;
+	}
+
+	@Override
+	public List<TicketsPrice> getMaxFreeTicketPrice(Event event) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<TicketsPrice> getMinFreeTicketPrice(Event event) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
-	
+	*/
 }

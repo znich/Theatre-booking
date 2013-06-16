@@ -22,7 +22,7 @@ import by.academy.exception.ServiceException;
  */
 public class AdminLogic extends DataAccessService {
 
-	public AdminLogic() throws ServiceException {
+	public AdminLogic()  {
 		super();
 	}
 

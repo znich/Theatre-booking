@@ -14,5 +14,7 @@ import java.util.List;
  */
 public interface IEventDao extends IGenericDao<Event, Integer>  {
     List<Event> getEventsInDateInterval(Calendar begin, Calendar end);
+   
+    
 
 }

@@ -2,9 +2,6 @@ package by.academy.commands;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -12,10 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import by.academy.Model.CategoryData;
-import by.academy.Model.PerformanceData;
-import by.academy.Model.TicketsPriceData;
-import by.academy.domain.Performance;
+import by.academy.domain.Category;
+import by.academy.domain.TicketsPrice;
 import by.academy.logic.SiteLogic;
 import by.academy.util.PathProperties;
 
@@ -25,14 +20,11 @@ public class ShowAddPerformanceCommand implements ICommand {
 	private HttpServletResponse response;
 	private SiteLogic siteLogic = new SiteLogic();
 	private final String INPUT_LANG_ID = "inputLangId";
-	private final String PERFORMANCE_ID_ATTRIBUTE = "performanceId";
 	private final String MENU_ITEM_ATTRIBUTE = "menuItem";
-	private final String PERFORMANCE_ATTRIBUTE = "performance";
 	private final String PERFORMANCES_ATTRIBUTE = "performances";
 	private final String CATEGORY_LIST_ATTRIBUTE = "categoryList";
 	private final String ANSWER_ATTRIBUTE = "answer";
 	private final String PERFORMANCE_ANSWER_ATTRIBUTE = "editPerformance";
-	private final String DATE_INTERVAL = "dateInterval";
 	private final String TICKETS_PRICE_ATTRIBUTE = "ticketsPriceList";
 	private final String LEGEND_ATTRIBUTE = "legend";
 	private final String LEGEND = "Добавление представления";
@@ -62,12 +54,12 @@ public class ShowAddPerformanceCommand implements ICommand {
 
 
 		
-		List<CategoryData> categoryList = siteLogic.getAllCategories(langId);
+		List<Category> categoryList = siteLogic.getAllCategories(langId);
 		
-		List<TicketsPriceData> ticketsPrices = new ArrayList<TicketsPriceData>();
+		List<TicketsPrice> ticketsPrices = new ArrayList<TicketsPrice>();
 		
 		for (int i=1;i<=7;i++){
-		TicketsPriceData ticketsPrice = new TicketsPriceData();
+		TicketsPrice ticketsPrice = new TicketsPrice();
 		ticketsPrice.setPriceCategory(i);
 		ticketsPrices.add(ticketsPrice);
 		}

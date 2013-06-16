@@ -41,7 +41,7 @@ public class ShowPerformancesCommand implements ICommand {
         if(cat != null && Integer.parseInt(cat) != 0){
             int selectedCategory = Integer.parseInt(cat);
             request.setAttribute(CATEGORY_ID, selectedCategory);
-            request.setAttribute(PERFORMANCE_LIST_ATTRIBUTE, siteLogic.getPerformancesByCategory(selectedCategory, langId));
+            request.setAttribute(PERFORMANCE_LIST_ATTRIBUTE, siteLogic.getPerformancesByCategory(selectedCategory));
         }else{
             request.setAttribute(PERFORMANCE_LIST_ATTRIBUTE, siteLogic.getAllPerformances(langId));
         }

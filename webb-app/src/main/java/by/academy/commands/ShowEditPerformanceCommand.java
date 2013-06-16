@@ -1,9 +1,7 @@
 package by.academy.commands;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -12,10 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import by.academy.Model.CategoryData;
-import by.academy.Model.PerformanceData;
-import by.academy.Model.TicketsPriceData;
+import by.academy.domain.Category;
 import by.academy.domain.Performance;
+import by.academy.domain.TicketsPrice;
 import by.academy.logic.SiteLogic;
 import by.academy.util.PathProperties;
 
@@ -36,7 +33,6 @@ public class ShowEditPerformanceCommand implements ICommand {
 	private final String TICKETS_PRICE_ATTRIBUTE = "ticketsPriceList";
 	private final String LEGEND_ATTRIBUTE = "legend";
 	private final String LEGEND = "Редактирование представления";
-	
 
 	public ShowEditPerformanceCommand(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -54,34 +50,33 @@ public class ShowEditPerformanceCommand implements ICommand {
 
 			langId = Integer.parseInt(inputLangId);
 		}
-		
+
 		if (langId == null) {
 
 			langId = 1;
 		}
-		
+
 		Integer performanceId = Integer.parseInt(request
 				.getParameter(PERFORMANCE_ID_ATTRIBUTE));
 
-		PerformanceData performance = siteLogic.getPerformancesById(
-				performanceId, langId);
-		List<CategoryData> categoryList = siteLogic.getAllCategories(langId);
-		List<TicketsPriceData> ticketsPrices = siteLogic.getTicketsPriceByPerformance(performance);
-		
-		Calendar cal = GregorianCalendar.getInstance();
-		Date startDate = performance.getStartDate();
-		Date endDate = performance.getEndDate();
-		cal.setTime(startDate);
+		Performance performance = siteLogic.getPerformancesById(performanceId,
+				langId);
+		List<Category> categoryList = siteLogic.getAllCategories(langId);
+		List<TicketsPrice> ticketsPrices = siteLogic
+				.getTicketsPriceByPerformance(performance);
+
+		Calendar startDate = performance.getStartDate();
+		Calendar endDate = performance.getEndDate();
 		StringBuilder dateIntervalBulder = new StringBuilder();
-		dateIntervalBulder.append((cal.get(Calendar.MONTH) + 1) + "/"
-				+ cal.get(Calendar.DATE) + "/" + cal.get(Calendar.YEAR));
+		dateIntervalBulder.append((startDate.get(Calendar.MONTH) + 1) + "/"
+				+ startDate.get(Calendar.DATE) + "/"
+				+ startDate.get(Calendar.YEAR));
 		dateIntervalBulder.append(" - ");
-		cal.setTime(endDate);
-		dateIntervalBulder.append((cal.get(Calendar.MONTH) + 1) + "/"
-				+ cal.get(Calendar.DATE) + "/" + cal.get(Calendar.YEAR));
+		dateIntervalBulder
+				.append((endDate.get(Calendar.MONTH) + 1) + "/"
+						+ endDate.get(Calendar.DATE) + "/"
+						+ endDate.get(Calendar.YEAR));
 		String dateInterval = dateIntervalBulder.toString();
-		
-		
 
 		request.setAttribute(PERFORMANCE_ATTRIBUTE, performance);
 		request.setAttribute(CATEGORY_LIST_ATTRIBUTE, categoryList);

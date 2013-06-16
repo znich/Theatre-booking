@@ -18,6 +18,7 @@ public class Status implements Serializable {
     private int langId;
     private String value;
     private Set<Ticket> tickets;
+   
     public Status() {
     }
 

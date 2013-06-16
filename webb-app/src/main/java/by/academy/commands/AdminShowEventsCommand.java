@@ -3,7 +3,6 @@ package by.academy.commands;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -19,18 +18,23 @@ import by.academy.domain.Event;
 import by.academy.logic.SiteLogic;
 import by.academy.util.PathProperties;
 
-public class ShowEventsCommand implements ICommand {
+public class AdminShowEventsCommand implements ICommand {
+
 	private HttpServletRequest request;
 	private HttpServletResponse response;
+	private SiteLogic siteLogic = new SiteLogic();
 	private HttpSession session = null;
-	private SiteLogic siteLogic = new SiteLogic();	
+	private final String LOCALE_ID_ATTRIBUTE = "langId";	
+	private final String MENU_ITEM_ATTRIBUTE = "menuItem";
+	private final String EVENTS_ATTRIBUTE = "events";
+	private final String ANSWER_ATTRIBUTE = "answer";
+	private final String EVENT_ANSWER_ATTRIBUTE = "editEventsList";
 	private final String EVENTS_LIST_ATTRIBUTE = "eventList";
-	private final String LOCALE_ID_ATTRIBUTE = "langId";
 	private final String CATEGORY_ID = "categoryId";
 	private final String DATE_INTERVAL = "dateInteval";
 	private final String CATEGORIES_LIST_ATTRIBUTE = "categories";
 
-	public ShowEventsCommand(HttpServletRequest request,
+	public AdminShowEventsCommand(HttpServletRequest request,
 			HttpServletResponse response) {
 		this.request = request;
 		this.response = response;
@@ -38,7 +42,6 @@ public class ShowEventsCommand implements ICommand {
 
 	@Override
 	public String execute() throws ServletException, IOException {
-
 		int langId = (Integer) request.getSession().getAttribute(
 				LOCALE_ID_ATTRIBUTE);
 
@@ -93,12 +96,14 @@ public class ShowEventsCommand implements ICommand {
 		}
 
 		request.setAttribute(EVENTS_LIST_ATTRIBUTE, eventList);
+		request.setAttribute(MENU_ITEM_ATTRIBUTE, EVENTS_ATTRIBUTE);
+		request.setAttribute(ANSWER_ATTRIBUTE, EVENT_ANSWER_ATTRIBUTE);
 
 		session.setAttribute(CATEGORIES_LIST_ATTRIBUTE,
 				siteLogic.getAllCategories(langId));
 
 		return PathProperties.createPathProperties().getProperty(
-				PathProperties.EVENTS_LIST_PAGE);
+				PathProperties.ADMIN_PAGE);
 
 	}
 

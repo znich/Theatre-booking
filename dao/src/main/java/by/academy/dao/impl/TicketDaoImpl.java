@@ -2,6 +2,8 @@ package by.academy.dao.impl;
 
 import by.academy.dao.ITicketDao;
 import by.academy.domain.Booking;
+import by.academy.domain.Event;
+import by.academy.domain.Status;
 import by.academy.domain.Ticket;
 import org.hibernate.criterion.Restrictions;
 
@@ -20,4 +22,16 @@ public class TicketDaoImpl extends GenericDaoImpl<Ticket, Integer> implements IT
     public List<Ticket> getTicketsByBookingId(Booking booking) {
         return findByCriteria( Restrictions.eq("booking", booking) );
     }
+
+	@Override
+	public List<Ticket> getTicketsByEvent(Event event) {
+		 return findByCriteria( Restrictions.eq("event", event) );
+		
+	}
+
+	@Override
+	public List<Ticket> getTicketsByStatus(Event event, Status status) {
+		return findByCriteria( Restrictions.eq("event", event), Restrictions.eq("status", status) );
+		
+	}
 }

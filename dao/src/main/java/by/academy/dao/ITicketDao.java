@@ -1,6 +1,8 @@
 package by.academy.dao;
 
 import by.academy.domain.Booking;
+import by.academy.domain.Event;
+import by.academy.domain.Status;
 import by.academy.domain.Ticket;
 
 import java.util.List;
@@ -14,4 +16,6 @@ import java.util.List;
  */
 public interface ITicketDao extends IGenericDao<Ticket, Integer> {
     List<Ticket> getTicketsByBookingId(Booking booking);
+    List<Ticket> getTicketsByEvent(Event event);
+	List<Ticket> getTicketsByStatus(Event event, Status status);
 }

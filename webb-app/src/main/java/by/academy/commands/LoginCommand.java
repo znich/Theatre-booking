@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import by.academy.Model.AdminData;
-import by.academy.Model.UserData;
+import by.academy.domain.Admin;
+import by.academy.domain.User;
 import by.academy.logic.LoginLogic;
 import by.academy.util.MessagesProperties;
 import by.academy.util.PathProperties;
@@ -42,7 +42,7 @@ public class LoginCommand implements ICommand {
 
     public String execute() throws ServletException, IOException {
         HttpSession session = request.getSession();
-        UserData user;
+        User user;
         String url = PathProperties.createPathProperties().getProperty(PathProperties.LOGIN_PAGE);
         String locale = (String) session.getAttribute(LOCALE_ATTRIBUTE);
         if (locale == null) {
@@ -64,10 +64,10 @@ public class LoginCommand implements ICommand {
                 message = MessagesProperties.createPathProperties().getProperties(MessagesProperties.ERROR_LOGIN, locale);
                 url = PathProperties.createPathProperties().getProperty(PathProperties.LOGIN_PAGE);
             } else if (loginLogic.isAdmin(user) != null) {
-                AdminData admin = loginLogic.isAdmin(user);
+                Admin admin = loginLogic.isAdmin(user);
                 message = "";
                 url = PathProperties.createPathProperties().getProperty(PathProperties.PROFILE_ADMIN_PAGE);
-                session.setAttribute(ADMIN_ATTRIBUTE, admin.getAdminId());
+                session.setAttribute(ADMIN_ATTRIBUTE, admin.getId());
             } else {
                 message = "";
                 url = PathProperties.createPathProperties().getProperty(PathProperties.PROFILE_USER_PAGE);

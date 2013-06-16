@@ -62,7 +62,15 @@ public class Ticket implements Serializable {
         this.event = event;
     }
 
-    @Override
+    public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Ticket)) return false;

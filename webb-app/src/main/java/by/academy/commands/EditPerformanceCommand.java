@@ -8,7 +8,9 @@ import java.sql.SQLOutput;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -16,8 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import by.academy.Model.CategoryData;
-import by.academy.Model.TicketsPriceData;
+import by.academy.domain.*;
 import by.academy.logic.AdminLogic;
 import by.academy.logic.SiteLogic;
 import by.academy.util.MessagesProperties;
@@ -47,7 +48,6 @@ public class EditPerformanceCommand implements ICommand {
 	private final String TICKETS_PRICE_ATTRIBUTE = "ticketsPriceList";
 	private final String INPUT_TICKETS_PRICE_ATTRIBUTE = "inputPrice";
 
-
 	public EditPerformanceCommand(HttpServletRequest request,
 			HttpServletResponse response) {
 		this.request = request;
@@ -71,8 +71,8 @@ public class EditPerformanceCommand implements ICommand {
 			langId = 1;
 		}
 
-		Date date1 = null;
-		Date date2 = null;
+		Calendar date1 = new GregorianCalendar();
+		Calendar date2 = new GregorianCalendar();
 		String dateFirst;
 		String dateLast;
 
@@ -84,25 +84,23 @@ public class EditPerformanceCommand implements ICommand {
 			dateLast = dates[1];
 
 			try {
-				date1 = new SimpleDateFormat(DATE_FORMAT).parse(dateFirst);
-				date2 =  new SimpleDateFormat(DATE_FORMAT).parse(dateLast);
+				date1.setTime(new SimpleDateFormat(DATE_FORMAT)
+						.parse(dateFirst));
+				date2.setTime(new SimpleDateFormat(DATE_FORMAT).parse(dateLast));
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else {
-			date1 = new Date();
-			date2 = new Date();
+			date1.setTime(new Date());
+			date2.setTime(new Date());
 		}
-	
-		java.sql.Date sqlDate1 = new java.sql.Date(date1.getTime()) ;
-		java.sql.Date sqlDate2 = new java.sql.Date(date2.getTime()) ;
-			
+
 		Integer performanceId = 0;
-		String idOfPerformance = request
-				.getParameter(PERFORMANCE_ID_ATTRIBUTE);
-		if (idOfPerformance.length()>0){ 
-			performanceId = Integer.parseInt(idOfPerformance);}		
+		String idOfPerformance = request.getParameter(PERFORMANCE_ID_ATTRIBUTE);
+		if (idOfPerformance.length() > 0) {
+			performanceId = Integer.parseInt(idOfPerformance);
+		}
 		Integer categoryId = Integer.parseInt(request
 				.getParameter(INPUT_CATEGORY_ATTRIBUTE));
 		String name = request.getParameter(INPUT_NAME_ATTRIBUTE);
@@ -110,33 +108,38 @@ public class EditPerformanceCommand implements ICommand {
 				.getParameter(INPUT_SHORTDESCRIPTION_ATTRIBUTE);
 		String description = request.getParameter(INPUT_DESCRIPTION_ATTRIBUTE);
 		String image = request.getParameter(INPUT_IMAGE_ATTRIBUTE);
-		
-		List<TicketsPriceData> ticketsPrices = new ArrayList<TicketsPriceData>();
-		ticketsPrices =  (List<TicketsPriceData>) session.getAttribute(TICKETS_PRICE_ATTRIBUTE);
+
+		List<TicketsPrice> ticketsPrices = new ArrayList<TicketsPrice>();
+		ticketsPrices = (List<TicketsPrice>) session
+				.getAttribute(TICKETS_PRICE_ATTRIBUTE);
 
 		System.out.println(ticketsPrices.size());
 
-		for (TicketsPriceData ticketsPrice : ticketsPrices){
-			ticketsPrice.setPrice(Integer.parseInt(request.getParameter(INPUT_TICKETS_PRICE_ATTRIBUTE+ticketsPrice.getPriceCategory())));
-			}
+		for (TicketsPrice ticketsPrice : ticketsPrices) {
+			ticketsPrice.setPrice(Integer.parseInt(request
+					.getParameter(INPUT_TICKETS_PRICE_ATTRIBUTE
+							+ ticketsPrice.getPriceCategory())));
+		}
 
-		CategoryData category = siteLogic.getCategoryById(categoryId, langId);
-		
-		boolean flag = adminLogic.editPerformance(performanceId, name, shortDescription, description, sqlDate1, sqlDate2, image, category, langId);
+		Category category = siteLogic.getCategoryById(categoryId, langId);
+
+		boolean flag = adminLogic.saveOrUpdatePerformance(performanceId, name,
+				shortDescription, description, date1, date2, image, category,
+				langId);
 		String message = null;
-		
-		if (flag){
-			flag = adminLogic.editTicketsPriceForPerformance(ticketsPrices);			
+
+		if (flag) {
+			flag = adminLogic.editTicketsPriceForPerformance(ticketsPrices);
 		}
-		if (flag){
-			message = MessagesProperties.createPathProperties().getProperties(MessagesProperties.REGISTER_SUCCESSFUL, "ru");
+		if (flag) {
+			message = MessagesProperties.createPathProperties().getProperties(
+					MessagesProperties.REGISTER_SUCCESSFUL, "ru");
 		}
-		
+
 		request.setAttribute(MENU_ITEM_ATTRIBUTE, PERFORMANCES_ATTRIBUTE);
 		request.setAttribute(ANSWER_ATTRIBUTE, PERFORMANCE_ANSWER_ATTRIBUTE);
-		request.setAttribute(MESSAGE_ATTRIBUTE,message) ;
-		
-		
+		request.setAttribute(MESSAGE_ATTRIBUTE, message);
+
 		return PathProperties.createPathProperties().getProperty(
 				PathProperties.ADMIN_PAGE);
 	}

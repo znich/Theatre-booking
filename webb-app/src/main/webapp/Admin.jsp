@@ -7,7 +7,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <fmt:setLocale value="EN"/>
+    <fmt:setLocale value="RU"/>
     <fmt:setBundle basename="messages" var="bundle" scope="page"/>
     <title><fmt:message key="title.admin" bundle="${bundle}"/></title>
     <meta name="description" content="">
@@ -56,8 +56,8 @@
                     <c:when test="${answer==\"editPerformance\"}">
                         <%@include file="adminView/editPerformance.jspf" %>
                     </c:when>
-                    <c:when test="${answer==\"editEvents\"}">
-
+                    <c:when test="${answer==\"editEventsList\"}">
+						<%@include file="adminView/editEventsList.jspf" %>
                     </c:when>
                     <c:otherwise>
                         <%@include file="adminView/adminInfo.jspf" %>

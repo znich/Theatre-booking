@@ -1,5 +1,6 @@
 package by.academy.commands;
 
+import by.academy.domain.User;
 import by.academy.logic.RegistratorLogic;
 import by.academy.Model.UserData;
 import by.academy.util.MessagesProperties;
@@ -57,7 +58,7 @@ public class RegistratorCommand implements ICommand {
             email = null;
             message = MessagesProperties.createPathProperties().getProperties(MessagesProperties.EMAIL_EXIST, locale);
         }else {
-            UserData user = new UserData();
+            User user = new User();
             user.setEmail(email);
             email = null;
             user.setPassword(password);

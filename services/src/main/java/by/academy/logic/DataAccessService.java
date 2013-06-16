@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 public abstract class DataAccessService {
     protected DaoFactory daoFactory;
 
-    public DataAccessService() throws ServiceException {
+    public DataAccessService()  {
         ResourceBundle res = ResourceBundle.getBundle(
                 "properties/daoFactory");
         String daoFactoryName = res.getString("daoFactory");
@@ -28,7 +28,12 @@ public abstract class DataAccessService {
                 throw new ServiceException("Configure daoFactory.properties with a daoFactoryClass parameter!");
             }
         } catch (Exception ex) {
-            throw new ServiceException("Can't find DAOFactory: " + daoFactoryName);
+            try {
+				throw new ServiceException("Can't find DAOFactory: " + daoFactoryName);
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         }
     }
 }
