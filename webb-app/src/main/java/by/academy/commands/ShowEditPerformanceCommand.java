@@ -89,5 +89,5 @@ public class ShowEditPerformanceCommand implements ICommand {
 		return PathProperties.createPathProperties().getProperty(
 				PathProperties.ADMIN_PAGE);
 	}
-
+	
 }

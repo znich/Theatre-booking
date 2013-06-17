@@ -43,12 +43,19 @@ public class SiteLogic extends DataAccessService {
         return perfList;
     }
 
+    
     public List<Performance> getAllPerformances(Integer langId) {
         IPerformanceDao perfDao = daoFactory.getPerformanceDao();
         List<Performance> performances = perfDao.findAll();
         return performances;
     }
 
+    public Event getEventById(int id, int langId) {
+        IEventDao eventDao = daoFactory.getEventDao();
+        Event event = eventDao.getEntityById(id);
+        return event;
+    }
+    
     public List<Event> getAllEvents(Integer langId) {
         IEventDao eventDao = daoFactory.getEventDao();
         List<Event> events = eventDao.findAll();
@@ -59,8 +66,10 @@ public class SiteLogic extends DataAccessService {
         IEventDao eventDao = daoFactory.getEventDao();
         List<Event> events = eventDao.getEventsInDateInterval(begin, end);
         
+        
         for (Event event : events){
         	List<Ticket> freeTickets = getFreeTickets(event);
+        	freeTickets = setPricesForTikets(freeTickets);
         	event.setFreeTicketsCount(freeTickets.size());
         	event.setMaxTicketPrice(getMaxTicketPrice(freeTickets));
         	event.setMinTicketPrice(getMinTicketPrice(freeTickets));

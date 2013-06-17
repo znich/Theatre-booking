@@ -50,22 +50,16 @@ public class ShowAddPerformanceCommand implements ICommand {
 
 			langId = 1;
 		}
-		
 
-
-		
 		List<Category> categoryList = siteLogic.getAllCategories(langId);
 		
 		List<TicketsPrice> ticketsPrices = new ArrayList<TicketsPrice>();
 		
-		for (int i=1;i<=7;i++){
+		for (int i=1;i<=5;i++){
 		TicketsPrice ticketsPrice = new TicketsPrice();
 		ticketsPrice.setPriceCategory(i);
 		ticketsPrices.add(ticketsPrice);
 		}
-		
-		
-
 		
 		request.setAttribute(CATEGORY_LIST_ATTRIBUTE, categoryList);
 		

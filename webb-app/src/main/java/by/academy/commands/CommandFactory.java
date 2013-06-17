@@ -30,7 +30,10 @@ public class CommandFactory {
         ADMIN_SHOW_EVENTS,
         SHOW_EDIT_PERFORMANCE,
         EDIT_PERFORMANCE,
-        SHOW_ADD_PERFORMANCE,       
+        SHOW_ADD_PERFORMANCE,
+        SHOW_EDIT_EVENT,
+        EDIT_EVENT,
+        SHOW_ADD_EVENT,
         TEST_COMMAND
     }
     public static ICommand createCommand(HttpServletRequest request, HttpServletResponse response) {
@@ -78,6 +81,15 @@ public class CommandFactory {
                 	break;
                 case ADMIN_SHOW_EVENTS:
                 	command = new AdminShowEventsCommand(request, response);
+                	break;
+                case SHOW_EDIT_EVENT:
+                	command = new ShowEditEventCommand (request, response);
+                	break;
+                case EDIT_EVENT:
+                	command = new EditEventCommand (request , response);
+                	break;
+                case SHOW_ADD_EVENT:
+                	command = new ShowAddEventCommand (request, response);
                 	break;
                 case TEST_COMMAND:
                 	command = new TestCommand(request,response);

@@ -14,6 +14,8 @@
     <meta name="author" content="">
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
     <link href="../static/css/daterangepicker.css" rel="stylesheet" type="text/css"/>
+    <link href="../static/css/datepicker.css" rel="stylesheet" type="text/css"/>
+    <link href="../static/css/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css"/>
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
     <script src="../static/js/html5shiv.js"></script>
@@ -24,9 +26,13 @@
     <script src="../static/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../static/js/moment.js"></script>
     <script type="text/javascript" src="../static/js/daterangepicker.js"></script>
+    <script type="text/javascript" src="../static/js/bootstrap-datepicker.js"></script>
+     <script type="text/javascript" src="../static/js/bootstrap-timepicker.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $('#reservation').daterangepicker();
+            $('#datepicker').datepicker();
+
         });
     </script>
 </head>
@@ -58,6 +64,9 @@
                     </c:when>
                     <c:when test="${answer==\"editEventsList\"}">
 						<%@include file="adminView/editEventsList.jspf" %>
+                    </c:when>
+                    <c:when test="${answer==\"editEvent\"}">
+						<%@include file="adminView/editEvent.jspf" %>
                     </c:when>
                     <c:otherwise>
                         <%@include file="adminView/adminInfo.jspf" %>
