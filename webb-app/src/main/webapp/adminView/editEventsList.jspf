@@ -47,7 +47,7 @@
 					- <fmt:formatDate value="${event.endTime}" pattern="HH:mm" /></td>
 				<td><strong> <c:forEach var="property"
 							items="${event.performance.properties}">
-							<c:if test="${property.name==name}">${property.childProperties[0].value}</c:if>
+							<c:if test="${property.name==NAME}">${property.childProperties[0].value}</c:if>
 						</c:forEach>
 				</strong>
 					<p>

@@ -11,6 +11,7 @@ public enum PropertyNameEnum {
     NAME(1), SHORT_DESCRIPTION(2), DESCRIPTION(3), IMAGE(4), FIRST_NAME(5), SURNAME(6), PHONE_NUMBER(7), CITY(8);
 
     private int id;
+    
     private PropertyNameEnum(int id){
         this.id = id;
     }
