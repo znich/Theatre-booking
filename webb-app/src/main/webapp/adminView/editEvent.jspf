@@ -31,7 +31,7 @@
 												<option value="${performance.id}"
 													<c:if test="${performence.id == event.performance.id}">selected</c:if>>
 													<c:forEach var="property" items="${performance.properties}">
-														<c:if test="${property.name==name}">${property.childProperties[0].value}</c:if>
+														<c:if test="${property.name==NAME}">${property.childProperties[0].value}</c:if>
 													</c:forEach>
 												</option>
 											</c:forEach>

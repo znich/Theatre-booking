@@ -52,7 +52,7 @@
 				</strong>
 					<p>
 						<c:forEach var="property" items="${event.performance.properties}">
-							<c:if test="${property.name==short_description}">${property.childProperties[0].value}</c:if>
+							<c:if test="${property.name==SHORT_DESCRIPTION}">${property.childProperties[0].value}</c:if>
 						</c:forEach>
 					</p></td>
 				<td><c:if test="${event.freeTicketsCount<=0}">

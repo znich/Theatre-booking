@@ -18,8 +18,16 @@
 						pattern="MM/dd/yyyy" /></td>
 				<td><fmt:formatDate value="${event.startTime}" pattern="HH:mm" />
 					- <fmt:formatDate value="${event.endTime}" pattern="HH:mm" /></td>
-				<td><strong>${event.performance.name}</strong>
-					<p>${event.performance.shortDescription}</p></td>
+				<td><c:forEach var="property"
+							items="${event.performance.properties}">
+							<c:if test="${property.name==NAME}">${property.childProperties[0].value}</c:if>
+						</c:forEach>
+				</strong>
+					<p>
+						<c:forEach var="property" items="${event.performance.properties}">
+							<c:if test="${property.name==SHORT_DESCRIPTION}">${property.childProperties[0].value}</c:if>
+						</c:forEach>
+					</p></td>
 				<td><c:if test="${event.freeTicketsCount<=0}">
 						<fmt:message key="lbl.noticket" bundle="${bundle}" />
 					</c:if> <c:if test="${event.freeTicketsCount>0}">
