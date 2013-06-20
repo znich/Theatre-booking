@@ -16,18 +16,18 @@ import java.util.List;
  */
 public interface IGenericDao<T, ID extends Serializable> {
 
-    void delEntity(ID id) throws IllegalArgumentException;
+    void delEntity(ID id) throws IllegalArgumentException, DaoException;
 
-    void delEntity(T entity) throws IllegalArgumentException;
+    void delEntity(T entity) throws IllegalArgumentException, DaoException;
 
-    T save(T entity) throws IllegalArgumentException;
+    T save(T entity) throws IllegalArgumentException, DaoException;
 
-    T getEntityById(ID id) throws IllegalArgumentException;
+    T getEntityById(ID id) throws IllegalArgumentException, DaoException;
 
-    T getEntityById(ID id, int langId) throws IllegalArgumentException;
+    T getEntityById(ID id, int langId) throws IllegalArgumentException, DaoException;
 
-    List<T> findAll();
+    List<T> findAll() throws DaoException;
 
-    List<T> findAll(int langId);
+    List<T> findAll(int langId) throws DaoException;
 
 }

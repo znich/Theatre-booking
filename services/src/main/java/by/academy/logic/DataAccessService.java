@@ -2,8 +2,9 @@ package by.academy.logic;
 
 import by.academy.dao.DaoFactory;
 import by.academy.exception.ServiceException;
-
-import java.util.ResourceBundle;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import java.util.Properties;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,21 +15,28 @@ import java.util.ResourceBundle;
  */
 public abstract class DataAccessService {
     protected DaoFactory daoFactory;
+    private static Log log = LogFactory.getLog(DataAccessService.class);
 
     public DataAccessService() throws ServiceException {
-        ResourceBundle res = ResourceBundle.getBundle(
-                "properties/daoFactory");
-        String daoFactoryName = res.getString("daoFactory");
+        String daoFactoryName = null;
 
         try {
+            Properties prop = new Properties();
+            prop.load(getClass().getClassLoader().getResourceAsStream("daoFactory.properties"));
+            daoFactoryName = prop.getProperty("daoFactory");
+
             if (daoFactoryName != null) {
                 Class daoFactoryClass = Class.forName(daoFactoryName);
                 daoFactory = DaoFactory.instance(daoFactoryClass);
             } else {
-                throw new ServiceException("Configure daoFactory.properties with a daoFactoryClass parameter!");
+                log.error("DataAccessService Error: Configure daoFactory.properties with a daoFactory parameter!");
+                throw new ServiceException();
             }
-        } catch (Exception ex) {
-            throw new ServiceException("Can't find DAOFactory: " + daoFactoryName);
+        }catch (ClassNotFoundException ex){
+            log.error("Can't find DAOFactory: " + daoFactoryName, ex);
+        }
+        catch (Exception ex) {
+            throw new ServiceException();
         }
     }
 }

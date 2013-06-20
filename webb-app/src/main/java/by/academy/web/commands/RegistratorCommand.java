@@ -1,42 +1,48 @@
 package by.academy.web.commands;
 
-import by.academy.logic111.RegistratorLogic;
-import by.academy.Model.UserData;
-import by.academy.util.MessagesProperties;
-import by.academy.util.PathProperties;
+import by.academy.domain.User;
+import by.academy.exception.ServiceException;
+import by.academy.logic.RegistratorLogic;
+import by.academy.web.util.MessagesProperties;
+import by.academy.web.util.PathProperties;
+import by.academy.web.util.SessionConstants;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 //import MessagesProperties;
 //import PathProperties;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class RegistratorCommand implements ICommand {
-
+    private static Log log = LogFactory.getLog(RegistratorCommand.class);
     private HttpServletRequest request;
     private HttpServletResponse response;
-    private RegistratorLogic registratorLogic = new RegistratorLogic();
-    private List<String> rights = new ArrayList<String>();
-    private final String MESSAGE_ATTRIBUTE = "message";
+    private RegistratorLogic registratorLogic;
 
     public RegistratorCommand(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
         this.response = response;
     }
- 
-    public String execute() throws ServletException, IOException {
-        String url = PathProperties.createPathProperties().getProperty(PathProperties.REGISTRATION_PAGE);
-        String firstName = request.getParameter("inputName");
-        String secondName = request.getParameter("inputSurname");
-        String email = request.getParameter("inputEmail");
-        String password = request.getParameter("inputPassword");
-        String city = request.getParameter("inputCity");
-        String phone = request.getParameter("inputPhone");
 
-       // для использования других языков
+    public String execute() throws ServletException, IOException, ServiceException {
+        String url = PathProperties.createPathProperties().getProperty(PathProperties.REGISTRATION_PAGE);
+        String firstName = request.getParameter(SessionConstants.FIRST_NAME_ATTRIBUTE.getName());
+        String secondName = request.getParameter(SessionConstants.SECOND_NAME_ATTRIBUTE.getName());
+        String email = request.getParameter(SessionConstants.EMAIL_ATTRIBUTE.getName());
+        String password = request.getParameter(SessionConstants.PASSWORD_ATTRIBUTE.getName());
+        String city = request.getParameter(SessionConstants.CITY_ATTRIBUTE.getName());
+        String phone = request.getParameter(SessionConstants.PHONE_ATTRIBUTE.getName());
+
+        try {
+            registratorLogic = new RegistratorLogic();
+        } catch (ServiceException e) {
+            log.error("Can't create registration Logic", e);
+            throw new ServiceException("Can't create registration Logic", e);
+        }
+        // для использования других языков
         String locale = (String) request.getSession().getAttribute("lang");
             if (locale == null) {
                 locale = request.getLocale().getLanguage();
@@ -60,35 +66,32 @@ public class RegistratorCommand implements ICommand {
             email = null;
             message = MessagesProperties.createPathProperties().getProperties(MessagesProperties.EMAIL_EXIST, locale);
         }else {
-            UserData user = new UserData();
+            User user = new User();
             user.setEmail(email);
             email = null;
             user.setPassword(password);
             password=null;
-            user.setName(firstName);
+            /*user.setName(firstName);
             firstName = null;
             user.setSurname(secondName);
             secondName = null;
             user.setCity(city);
             city = null;
-            user.setPhoneNumber(phone);
+            user.setPhoneNumber(phone);*/
             phone = null;
             user = registratorLogic.registerUser(user);
             url = PathProperties.createPathProperties().getProperty(PathProperties.LOGIN_PAGE);
             message = MessagesProperties.createPathProperties().getProperties(MessagesProperties.REGISTER_SUCCESSFUL, locale);
         }
 
-        request.setAttribute("inputName", firstName);
-        request.setAttribute("inputSurname", secondName);
-        request.setAttribute("inputEmail", email);
-        request.setAttribute("inputPassword", password);
-        request.setAttribute("inputAddress", city);
-        request.setAttribute("inputPhone", phone);
-        request.setAttribute(MESSAGE_ATTRIBUTE, message);
+        request.setAttribute(SessionConstants.FIRST_NAME_ATTRIBUTE.getName(), firstName);
+        request.setAttribute(SessionConstants.SECOND_NAME_ATTRIBUTE.getName(), secondName);
+        request.setAttribute(SessionConstants.EMAIL_ATTRIBUTE.getName(), email);
+        request.setAttribute(SessionConstants.PASSWORD_ATTRIBUTE.getName(), password);
+        request.setAttribute(SessionConstants.CITY_ATTRIBUTE.getName(), city);
+        request.setAttribute(SessionConstants.PHONE_ATTRIBUTE.getName(), phone);
+        request.setAttribute(SessionConstants.MESSAGE_ATTRIBUTE.getName(), message);
         return url;
     }
 
-    public List<String> getRights() {
-        return rights;
-    }
 }

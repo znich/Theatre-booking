@@ -1,8 +1,11 @@
 package by.academy.logic;
 
 import by.academy.dao.IUserDao;
+import by.academy.dao.exception.DaoException;
 import by.academy.domain.User;
 import by.academy.exception.ServiceException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,24 +17,35 @@ import java.util.regex.Pattern;
  * Класс, описывающий логику поведения при регистарции пользователя.
  */
 public class RegistratorLogic extends DataAccessService {
+    private static Log log = LogFactory.getLog(RegistratorLogic.class);
     IUserDao userDao = daoFactory.getUserDao();
 
     public RegistratorLogic() throws ServiceException {
         super();
     }
 
-    public User registerUser(User user) {
+    public User registerUser(User user) throws ServiceException {
 
-        userDao.save(user);
+        try {
+            userDao.save(user);
+        } catch (DaoException e) {
+            log.error("DaoException in RegistratorLogic. Can't register user", e);
+            throw new ServiceException("DaoException in RegistratorLogic. Can't register user", e);
+        }
         return user;
     }
 
-    public boolean isEmailExist(String email) {
+    public boolean isEmailExist(String email) throws ServiceException {
 
 
         boolean flag = true;
-        if (userDao.getUserByEmail(email) == null) {
-            flag = false;
+        try {
+            if (userDao.getUserByEmail(email) == null) {
+                flag = false;
+            }
+        } catch (DaoException e) {
+            log.error("DaoException in RegistratorLogic. Can't get user by email", e);
+            throw new ServiceException("DaoException in RegistratorLogic. Can't get user by email", e);
         }
         return flag;
     }

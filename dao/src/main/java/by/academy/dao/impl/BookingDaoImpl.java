@@ -1,6 +1,7 @@
 package by.academy.dao.impl;
 
 import by.academy.dao.IBookingDao;
+import by.academy.dao.exception.DaoException;
 import by.academy.domain.Booking;
 import by.academy.domain.User;
 import org.hibernate.criterion.Restrictions;
@@ -19,12 +20,12 @@ public class BookingDaoImpl extends GenericDaoImpl<Booking, Integer> implements 
 
 
     @Override
-    public List<Booking> getBookingByUser(User user) {
+    public List<Booking> getBookingByUser(User user) throws DaoException {
         return findByCriteria(Restrictions.eq("user", user));
     }
 
     @Override
-    public List<Booking> getExpiredBooking(Calendar currentDate) {
+    public List<Booking> getExpiredBooking(Calendar currentDate) throws DaoException {
         return findByCriteria(Restrictions.lt("expDate", currentDate));
     }
 

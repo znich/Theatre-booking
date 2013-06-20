@@ -21,9 +21,36 @@ public class Event implements Serializable {
     private Calendar endTime;
     private Set<Ticket> tickets;
 
+    private Integer freeTicketsCount;
+    private Integer maxTicketPrice;
+    private Integer minTicketPrice;
+
     public Event() {
     }
 
+    public Integer getFreeTicketsCount() {
+        return freeTicketsCount;
+    }
+
+    public void setFreeTicketsCount(Integer freeTicketsCount) {
+        this.freeTicketsCount = freeTicketsCount;
+    }
+
+    public Integer getMaxTicketPrice() {
+        return maxTicketPrice;
+    }
+
+    public void setMaxTicketPrice(Integer maxTicketPrice) {
+        this.maxTicketPrice = maxTicketPrice;
+    }
+
+    public Integer getMinTicketPrice() {
+        return minTicketPrice;
+    }
+
+    public void setMinTicketPrice(Integer minTicketPrice) {
+        this.minTicketPrice = minTicketPrice;
+    }
 
     public Integer getId() {
         return id;

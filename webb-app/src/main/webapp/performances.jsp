@@ -10,16 +10,16 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
  <fmt:setLocale value="${locale}"/>
  <fmt:setBundle basename="messages" var="bundle" scope="page"/>
-	<title><fmt:message key="title.performanceList" bundle="${bundle}"/></title>
+	<title><fmt:message key="title.repertoire" bundle="${bundle}"/></title>
 	<meta name="description" content="">
     <meta name="author" content="">
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
 	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
-      <script src="js/html5shiv.js"></script>
+      <script src="../static/js/html5shiv.js"></script>
     <![endif]-->
-	<link href="css/style.css" rel="stylesheet">
+	<link href="../static/css/style.css" rel="stylesheet">
   </head>
   <body id="body">
     <div class="container">
@@ -29,7 +29,7 @@
 	  <div class="row">
 			<div class="span12">
 				<div class="span3">
-					<img src="img/thumbnail/1.jpg" class="img-polaroid">
+					<img src="../static/img/thumbnail/1.jpg" class="img-polaroid">
 				</div>
 				<div class="span8 perf-text">
 					<a href="http://localhost:8080/userView/performance.jsp"><h3>Аида</h3></a>
@@ -70,6 +70,6 @@
 	</div>
 	</div>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
   </body>
 </html>

@@ -1,7 +1,10 @@
-package by.academy.web;
+package by.academy.web.filter;
+
+import by.academy.web.util.SessionConstants;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -35,27 +38,28 @@ public class LocaleFilter implements Filter {
         request.setCharacterEncoding("UTF8");
         response.setCharacterEncoding("UTF8");
         HttpServletRequest httpReq = (HttpServletRequest) request;
+        HttpSession session = httpReq.getSession();
         String lang = "ru";
-        if (request.getParameter("lang") != null) {
-            lang = request.getParameter("lang");
-            httpReq.getSession().setAttribute("lang", lang);
+        if (request.getParameter(SessionConstants.LOCALE_ATTRIBUTE.getName()) != null) {
+            lang = request.getParameter(SessionConstants.LOCALE_ATTRIBUTE.getName());
+            session.setAttribute(SessionConstants.LOCALE_ATTRIBUTE.getName(), lang);
 
         }
-        if (httpReq.getSession().getAttribute("lang") == null) {
+        if (session.getAttribute(SessionConstants.LOCALE_ATTRIBUTE.getName()) == null) {
             lang = httpReq.getLocale().getLanguage();
-            httpReq.getSession().setAttribute("lang", lang);
+            session.setAttribute(SessionConstants.LOCALE_ATTRIBUTE.getName(), lang);
 
         }
 
         switch (Languages.valueOf(lang.toUpperCase())) {
             case RU:
-                httpReq.getSession().setAttribute("langId", 1);
+                session.setAttribute(SessionConstants.LOCALE_ID_ATTRIBUTE.getName(), 1);
                 break;
             case EN:
-                httpReq.getSession().setAttribute("langId", 2);
+                session.setAttribute(SessionConstants.LOCALE_ID_ATTRIBUTE.getName(), 2);
                 break;
             default:
-                httpReq.getSession().setAttribute("langId", 2);
+                session.setAttribute(SessionConstants.LOCALE_ID_ATTRIBUTE.getName(), 2);
                 break;
         }
         doBeforeProcessing(request, response);

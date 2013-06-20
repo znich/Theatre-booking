@@ -3,6 +3,7 @@ package by.academy.dao;
 import java.util.List;
 
 import by.academy.dao.IGenericDao;
+import by.academy.dao.exception.DaoException;
 import by.academy.domain.Performance;
 import by.academy.domain.TicketsPrice;
 
@@ -15,5 +16,5 @@ import by.academy.domain.TicketsPrice;
  */
 public interface ITicketsPriceDao extends IGenericDao<TicketsPrice, Integer> {
 
-	List<TicketsPrice> getTicketsPriceForPerformance(Performance performance);
+	List<TicketsPrice> getTicketsPriceForPerformance(Performance performance) throws DaoException;
 }

@@ -1,5 +1,6 @@
 package by.academy.dao;
 
+import by.academy.dao.exception.DaoException;
 import by.academy.domain.User;
 
 /**
@@ -10,6 +11,6 @@ import by.academy.domain.User;
  * To change this template use File | Settings | File Templates.
  */
 public interface IUserDao extends IGenericDao<User, Integer> {
-    User getUserByEmail(String email);
-    User getUserByEmailAndPassword(String email, String password);
+    User getUserByEmail(String email) throws DaoException;
+    User getUserByEmailAndPassword(String email, String password) throws DaoException;
 }

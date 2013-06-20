@@ -5,183 +5,215 @@ import java.util.Calendar;
 import java.util.List;
 
 import by.academy.dao.*;
-import by.academy.domain.Booking;
-import by.academy.domain.Category;
-import by.academy.domain.Event;
-import by.academy.domain.Performance;
-import by.academy.domain.Property;
-import by.academy.domain.Seat;
-import by.academy.domain.Ticket;
-import by.academy.domain.TicketsPrice;
-import by.academy.domain.property_names.PerformancePropertyNames;
+import by.academy.dao.exception.DaoException;
+import by.academy.domain.*;
 import by.academy.exception.ServiceException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * User: Siarhei Poludvaranin Date: 18.05.13 Time: 15:26 Класс, описывающий
  * логику поведения администратора.
  */
 public class AdminLogic extends DataAccessService {
+    private static Log log = LogFactory.getLog(AdminLogic.class);
 
-	public AdminLogic() throws ServiceException {
-		super();
-	}
+    public AdminLogic() throws ServiceException {
+        super();
+    }
 
-	public boolean saveOrUpdatePerformance(Integer id, String title,
-			String shortDescription, String description, Calendar startDate,
-			Calendar endDate, String image, Category category, int langId) {
+    public boolean saveOrUpdatePerformance(Integer id, String title,
+                                           String shortDescription, String description, Calendar startDate,
+                                           Calendar endDate, String image, Category category, int langId) throws ServiceException {
 
-		boolean flag = false;
-		IPerformanceDao perfDao = daoFactory.getPerformanceDao();
-		Performance performance;
+        boolean flag = false;
+        IPerformanceDao perfDao = daoFactory.getPerformanceDao();
+        Performance performance;
+        try {
+            if (id == null) {
+                performance = new Performance();
+            } else {
+                performance = perfDao.getEntityById(id);
+            }
+            performance.setStartDate(startDate);
+            performance.setEndDate(endDate);
+            performance.setCategory(category);
 
-		if (id == null) {
-			performance = new Performance();
-		} else {
-			performance = perfDao.getEntityById(id);
-		}
-		performance.setStartDate(startDate);
-		performance.setEndDate(endDate);
-		performance.setCategory(category);
+            for (PropertyNameEnum e : PropertyNameEnum.values()) {
+                Property parentProperty = new Property();
+                Property childProperty = new Property();
+                childProperty.setLangId(langId);
+                childProperty.setRootProperty(parentProperty);
 
-		for (PerformancePropertyNames e : PerformancePropertyNames.values()) {
+                switch (e) {
+                    case NAME:
+                        parentProperty.setName(e);
+                        childProperty.setName(e);
+                        childProperty.setValue(title);
+                        break;
+                    case SHORT_DESCRIPTION:
+                        parentProperty.setName(e);
+                        childProperty.setName(e);
+                        childProperty.setValue(shortDescription);
+                        break;
+                    case DESCRIPTION:
+                        parentProperty.setName(e);
+                        childProperty.setName(e);
+                        childProperty.setValue(description);
+                        break;
+                    case IMAGE:
+                        parentProperty.setName(e);
+                        childProperty.setName(e);
+                        childProperty.setValue(image);
+                        break;
+                }
 
-			Property parentProperty = new Property();
-			Property childProperty = new Property();
-			parentProperty.setName(e.getId());
+                parentProperty.getChildProperties().add(childProperty);
+                if(parentProperty.getName() != null){
+                    performance.setProperty(parentProperty);
+                }
+            }
 
-			childProperty.setName(e.getId());
-			childProperty.setLangId(langId);
-			childProperty.setRootProperty(parentProperty);
+            if (perfDao.save(performance) != null) {
+                flag = true;
+            }
+        } catch (DaoException e) {
+            log.error("DaoException in AdminLogic. Can't save Performance", e);
+            throw new ServiceException("DaoException in AdminLogic. Can't save Performance", e);
+        }
+        return flag;
+    }
 
-			switch (e) {
-			case NAME:
-				childProperty.setValue(title);
-				break;
-			case SHORT_DESCRIPTION:
-				childProperty.setValue(shortDescription);
-				break;
-			case DESCRIPTION:
-				childProperty.setValue(description);
-				break;
-			case IMAGE:
-				childProperty.setValue(image);
-				break;
-			}
+    public boolean deletePerformance(Integer perfId) throws ServiceException {
+        boolean flag = false;
+        IPerformanceDao perfDao = daoFactory.getPerformanceDao();
 
-			performance.setProperty(parentProperty);
-		}
+        try {
+            perfDao.delEntity(perfId);
+        } catch (DaoException e) {
+            log.error("DaoException in AdminLogic. Can't delete Performance", e);
+            throw new ServiceException("DaoException in AdminLogic. Can't delete Performance", e);
+        }
+        return flag;
+    }
 
-		if (perfDao.save(performance) != null) {
-			flag = true;
-		}
-		return flag;
-	}
+    public boolean saveOrUpdateEvent(Integer eventId, int perfId,
+                                     Calendar startTime, Calendar endTime) throws ServiceException {
 
-	public boolean deletePerformance(Integer perfId) {
-		boolean flag = false;
-		IPerformanceDao perfDao = daoFactory.getPerformanceDao();
+        IPerformanceDao perfDao = daoFactory.getPerformanceDao();
+        IStatusDao statusDao = daoFactory.getStatusDao();
+        ISeatDao seatDao = daoFactory.getSeatDao();
+        IEventDao eventDao = daoFactory.getEventDao();
 
-		perfDao.delEntity(perfId);
-		return flag;
-	}
+        Event event;
 
-	public boolean saveOrUpdateEvent(Integer eventId, int perfId,
-			Calendar startTime, Calendar endTime) {
+        boolean flag = false;
+        try {
+            if (eventId == null) {
 
-		IPerformanceDao perfDao = daoFactory.getPerformanceDao();
-		IStatusDao statusDao = daoFactory.getStatusDao();
-		ISeatDao seatDao = daoFactory.getSeatDao();
-		IEventDao eventDao = daoFactory.getEventDao();
+                event = new Event();
 
-		Event event;
+                List<Seat> seats = seatDao.findAll();
 
-		boolean flag = false;
-		if (eventId == null) {
-			
-			event = new Event();
+                for (Seat s : seats) {
+                    Ticket ticket = new Ticket();
+                    ticket.setPlace(s);
+                    ticket.setStatus(statusDao.getEntityById(1));
+                    ticket.setEvent(event);
+                    event.setTicket(ticket);
+                }
+            } else {
+                event = eventDao.getEntityById(eventId);
+            }
 
-			List<Seat> seats = seatDao.findAll();
+            event.setPerformance(perfDao.getEntityById(perfId));
+            event.setStartTime(startTime);
+            event.setEndTime(endTime);
 
-			for (Seat s : seats) {
-				Ticket ticket = new Ticket();
-				ticket.setPlace(s);
-				ticket.setStatus(statusDao.getEntityById(1));
-				ticket.setEvent(event);
-				event.setTicket(ticket);
-			}
-		} else {
-			event = eventDao.getEntityById(eventId);
-		}
+            if (eventDao.save(event) != null) {
+                flag = true;
+            }
+        } catch (DaoException e) {
+            log.error("DaoException in AdminLogic. Can't save Event", e);
+            throw new ServiceException("DaoException in AdminLogic. Can't save Event", e);
+        }
+        return flag;
+    }
 
-		event.setPerformance(perfDao.getEntityById(perfId));
-		event.setStartTime(startTime);
-		event.setEndTime(endTime);
+    public int deleteExpiredBookings() throws ServiceException {
 
-		if (eventDao.save(event) != null) {
-			flag = true;
-		}
-		return flag;
-	}
+        ITicketDao ticketDao = daoFactory.getTicketDao();
+        IBookingDao bookingDao = daoFactory.getBookingDao();
+        IStatusDao statusDao = daoFactory.getStatusDao();
+        Calendar currentDate = Calendar.getInstance();
+        List<Booking> expiredBookingList = null;
 
-	public int deleteExpiredBookings() {
+        try{
 
-		ITicketDao ticketDao = daoFactory.getTicketDao();
-		IBookingDao bookingDao = daoFactory.getBookingDao();
-		IStatusDao statusDao = daoFactory.getStatusDao();
-		Calendar currentDate = Calendar.getInstance();
+        expiredBookingList = bookingDao.getExpiredBooking(currentDate);
+        for (Booking b : expiredBookingList) {
+            bookingDao.delEntity(b.getId());
 
-		List<Booking> expiredBookingList;
-		expiredBookingList = bookingDao.getExpiredBooking(currentDate);
-		for (Booking b : expiredBookingList) {
-			bookingDao.delEntity(b.getId());
+            List<Ticket> tickets = ticketDao.getTicketsByBookingId(b);
+            for (Ticket ticket : tickets) {
 
-			List<Ticket> tickets = ticketDao.getTicketsByBookingId(b);
-			for (Ticket ticket : tickets) {
+                ticket.setBooking(null);
+                ticket.setStatus(statusDao.getEntityById(1));
+                ticketDao.save(ticket);
+            }
+        }
+        }catch (DaoException e) {
+            log.error("DaoException in AdminLogic. Can't delete Expired Bookings", e);
+            throw new ServiceException("DaoException in AdminLogic. Can't delete Expired Bookings", e);
+        }
+        return expiredBookingList.size();
 
-				ticket.setBooking(null);
-				ticket.setStatus(statusDao.getEntityById(1));
-				ticketDao.save(ticket);
-			}
-		}
+    }
 
-		return expiredBookingList.size();
+    public boolean deleteTicketFromBooking(int bookingId, int ticketId,
+                                           int langId) throws ServiceException {
 
-	}
+        IBookingDao bookingDao = daoFactory.getBookingDao();
+        ITicketDao ticketDao = daoFactory.getTicketDao();
+        IStatusDao statusDao = daoFactory.getStatusDao();
 
-	public boolean deleteTicketFromBooking(int bookingId, int ticketId,
-			int langId) {
+        boolean flag = false;
+        try{
+        Booking booking = bookingDao.getEntityById(bookingId);
+        Ticket ticket = ticketDao.getEntityById(ticketId);
 
-		IBookingDao bookingDao = daoFactory.getBookingDao();
-		ITicketDao ticketDao = daoFactory.getTicketDao();
-		IStatusDao statusDao = daoFactory.getStatusDao();
+        if (booking != null && ticket == null) {
 
-		boolean flag = false;
-		Booking booking = bookingDao.getEntityById(bookingId);
-		Ticket ticket = ticketDao.getEntityById(ticketId);
+            booking.deleteTicket(ticket);
+            ticket.setStatus(statusDao.getEntityById(1));
+            ticket.setBooking(null);
+            ticketDao.save(ticket);
+            flag = true;
+            bookingDao.save(booking);
+        }
+        }catch (DaoException e) {
+            log.error("DaoException in AdminLogic. Can't delete ticket from booking", e);
+            throw new ServiceException("DaoException in AdminLogic. Can't delete ticket from booking", e);
+        }
+        return flag;
+    }
 
-		if (booking != null && ticket == null) {
+    public boolean editTicketsPriceForPerformance(
+            List<TicketsPrice> ticketsPrices) throws ServiceException {
+        boolean flag = false;
+        ITicketsPriceDao ticketsPriceDao = daoFactory.getTicketsPriceDao();
 
-			booking.deleteTicket(ticket);
-			ticket.setStatus(statusDao.getEntityById(1));
-			ticket.setBooking(null);
-			ticketDao.save(ticket);
-			flag = true;
-			bookingDao.save(booking);
-		}
-		return flag;
-	}
+        for (TicketsPrice tp : ticketsPrices) {
+            try {
+                ticketsPriceDao.save(tp);
+            } catch (DaoException e) {
+                log.error("DaoException in AdminLogic. Can't save tickets price for performance", e);
+                throw new ServiceException("DaoException in AdminLogic. Can't save tickets price for performance", e);
+            }
+            flag = true;
+        }
+        return flag;
 
-	public boolean editTicketsPriceForPerformance(
-			List<TicketsPrice> ticketsPrices) {
-		boolean flag = false;
-		ITicketsPriceDao ticketsPriceDao = daoFactory.getTicketsPriceDao();
-
-		for (TicketsPrice tp : ticketsPrices) {
-			ticketsPriceDao.save(tp);
-			flag = true;
-		}
-		return flag;
-
-	}
+    }
 
 }

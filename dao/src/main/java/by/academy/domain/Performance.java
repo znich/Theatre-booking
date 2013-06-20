@@ -90,4 +90,16 @@ public class Performance implements Serializable {
     public int hashCode() {
         return id.hashCode();
     }
+
+    @Override
+    public String toString() {
+        return "Performance{" +
+                "id=" + id +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", category=" + category +
+                ", events=" + events +
+                ", properties=" + properties +
+                '}';
+    }
 }

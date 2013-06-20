@@ -1,9 +1,13 @@
 package by.academy.dao.util;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+
+import java.util.Locale;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,7 +20,7 @@ public enum HibernateUtil {
     ;
     private static final ThreadLocal<Session> sessions = new ThreadLocal<Session>();
     private static SessionFactory sessionFactory;
-    private static Logger log = Logger.getLogger(HibernateUtil.class);
+    public static Log log = LogFactory.getLog(HibernateUtil.class);
 
     private static void getSessionFactory() {
         try {
@@ -30,6 +34,7 @@ public enum HibernateUtil {
     }
 
     public static Session getSession() {
+        Locale.setDefault(Locale.ENGLISH);
         Session session = (Session) sessions.get();
         if (session == null) {
             HibernateUtil.getSessionFactory();

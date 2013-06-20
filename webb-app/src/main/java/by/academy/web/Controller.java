@@ -1,7 +1,8 @@
 package by.academy.web;
 
-import by.academy.commands.CommandFactory;
-import by.academy.commands.ICommand;
+import by.academy.exception.ServiceException;
+import by.academy.web.commands.CommandFactory;
+import by.academy.web.commands.ICommand;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,32 +22,22 @@ import java.io.IOException;
 public class Controller extends HttpServlet {
     private static final long serialVersionUID = -787399415436802178L;
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws java.io.IOException if an I/O error occurs
-     */
+
+
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html");
-        System.out.println("controller");
         ICommand command = CommandFactory.createCommand(request, response);
-        String url = command.execute();
+        String url = null;
+        try {
+            url = command.execute();
+        } catch (ServiceException e) {
+            throw new ServletException();
+        }
         if (url != null) {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
-
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -54,17 +45,15 @@ public class Controller extends HttpServlet {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+    }
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
     }
 
 }

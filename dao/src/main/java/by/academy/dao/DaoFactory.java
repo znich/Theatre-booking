@@ -2,6 +2,8 @@ package by.academy.dao;
 
 import by.academy.dao.impl.BookingDaoImpl;
 import by.academy.dao.impl.GenericDaoImpl;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,13 +13,15 @@ import by.academy.dao.impl.GenericDaoImpl;
  * To change this template use File | Settings | File Templates.
  */
 public abstract class DaoFactory {
-    public static final Class HIBERNATE = by.academy.dao.HibernateDaoFactory.class;
+    private static Log log = LogFactory.getLog(DaoFactory.class);
 
     public static DaoFactory instance(Class factory) {
+
         try {
             return (DaoFactory)factory.newInstance();
         } catch (Exception ex) {
-            throw new RuntimeException("Couldn't create DAOFactory: " + factory);
+            log.error("Couldn't create DAOFactory: " + factory);
+            throw new RuntimeException();
         }
     }
 

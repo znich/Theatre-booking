@@ -1,5 +1,6 @@
 package by.academy.dao;
 
+import by.academy.dao.exception.DaoException;
 import by.academy.domain.Performance;
 
 import java.util.List;
@@ -12,5 +13,5 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public interface IPerformanceDao extends IGenericDao<Performance, Integer> {
-    List<Performance> getPerformancesByCategory(Integer catId);
+    List<Performance> getPerformancesByCategory(Integer catId) throws DaoException;
 }

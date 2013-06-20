@@ -1,4 +1,4 @@
-package by.academy.util;
+package by.academy.web.util;
 
 import java.util.Locale;
 import java.util.ResourceBundle;

@@ -3,6 +3,8 @@ package by.academy.dao;
 import by.academy.dao.impl.*;
 import by.academy.dao.util.HibernateUtil;
 import by.academy.domain.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 
 /**
@@ -13,6 +15,7 @@ import org.hibernate.Session;
  * To change this template use File | Settings | File Templates.
  */
 public class HibernateDaoFactory extends DaoFactory {
+    private static Log log = LogFactory.getLog(HibernateDaoFactory.class);
 
     @Override
     public IBookingDao getBookingDao() {
@@ -78,7 +81,8 @@ public class HibernateDaoFactory extends DaoFactory {
             dao.setSession(getCurrentSession());
             return dao;
         } catch (Exception ex) {
-            throw new RuntimeException("Can not instantiate DAO: " + daoClass, ex);
+            log.error("Can not instantiate DAO: " + daoClass, ex);
+            throw new RuntimeException();
         }
     }
 

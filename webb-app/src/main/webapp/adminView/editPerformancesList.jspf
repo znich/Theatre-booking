@@ -1,17 +1,29 @@
 <%@page language="java" contentType="text/html; UTF-8"
-        pageEncoding="UTF-8" %>
-<a href="/webb-app/Controller?action=show_add_performance" class="btn btn-primary">Добавить представление</a>
+        pageEncoding="UTF-8"%>
+<a href="/webb-app/Controller?action=show_add_performance"
+   class="btn btn-primary">Добавить представление</a>
 <c:forEach var="performance" items="${performanceList}">
     <div class="row-fluid">
 
         <div class="span3">
-            <img src="${performance.image}" class="img-polaroid">
+            <img
+            <c:forEach var="property"
+                       items="${performance.properties}">
+            <c:if test="${property.name==IMAGE}"> src="${property.childProperties[0].value}"</c:if>
+            </c:forEach>
+                                                  class="img-rounded" width="300" height="200">
         </div>
         <div class="span6 perf-text">
             <a
                     href="/webb-app/Controller?action=show_performance?performanceId=${performance.id}">
-                <h3>${performance.name}</h3>
-            </a> <span>${performance.shortDescription}</span>
+                <h3><c:forEach var="property"
+                               items="${performance.properties}">
+                    <c:if test="${property.name==NAME}">${property.childProperties[0].value}"</c:if>
+                </c:forEach></h3>
+            </a> <span><c:forEach var="property"
+                                  items="${performance.properties}">
+            <c:if test="${property.name==SHORT_DESCRIPTION}">${property.childProperties[0].value}"</c:if>
+        </c:forEach></span>
         </div>
         <div class="span1">
             <div class="btn-group">

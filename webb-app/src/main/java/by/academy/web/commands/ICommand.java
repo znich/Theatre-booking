@@ -1,8 +1,9 @@
+package by.academy.web.commands;
 
+import by.academy.exception.ServiceException;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,6 +13,5 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public interface ICommand {
-    public List<String> getRights();
-    public String execute() throws ServletException, IOException;
+    public String execute() throws ServletException, IOException, ServiceException;
 }

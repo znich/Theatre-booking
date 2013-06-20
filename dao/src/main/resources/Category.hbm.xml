@@ -13,7 +13,7 @@
         <property name="langId" />
 
         <set name="performances" inverse="true" fetch="select">
-            <key column="CATEGORY_ID" not-null="true" />
+            <key column="F_CATEGORY_ID" not-null="true" />
             <one-to-many class="Performance" />
         </set>
     </class>

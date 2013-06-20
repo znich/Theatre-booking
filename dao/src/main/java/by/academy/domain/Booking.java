@@ -61,6 +61,10 @@ public class Booking implements Serializable {
         this.tickets.remove(ticket);
     }
 
+    public void addTicket(Ticket ticket){
+        this.tickets.add(ticket);
+    }
+
     public PaymentMethod getPaymentMethod() {
         return paymentMethod;
     }

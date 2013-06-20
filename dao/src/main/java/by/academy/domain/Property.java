@@ -15,7 +15,7 @@ public class Property implements Serializable {
     private Integer id;
     private PropertyNameEnum name;
     private String value;
-    private int langId;
+    private Integer langId;
 
     private Property rootProperty;
     private Set<Property> childProperties = new HashSet<Property>();
@@ -28,6 +28,9 @@ public class Property implements Serializable {
         return name;
     }
 
+    public void setName(PropertyNameEnum name) {
+        this.name = name;
+    }
 
     public Integer getId() {
         return id;
@@ -35,14 +38,6 @@ public class Property implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public void setName(int id) {
-        for (PropertyNameEnum e : PropertyNameEnum.values()){
-            if (e.getId() == id){
-                this.name = e;
-            }
-        }
     }
 
     public String getValue() {
@@ -53,11 +48,11 @@ public class Property implements Serializable {
         this.value = value;
     }
 
-    public int getLangId() {
+    public Integer getLangId() {
         return langId;
     }
 
-    public void setLangId(int langId) {
+    public void setLangId(Integer langId) {
         this.langId = langId;
     }
 
@@ -76,6 +71,7 @@ public class Property implements Serializable {
     public void setRootProperty(Property rootProperty) {
         this.rootProperty = rootProperty;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -83,14 +79,24 @@ public class Property implements Serializable {
 
         Property property = (Property) o;
 
-        if (!id.equals(property.id)) return false;
+        if (id != null ? !id.equals(property.id) : property.id != null) return false;
+        if (langId != null ? !langId.equals(property.langId) : property.langId != null) return false;
+        if (name != property.name) return false;
+        if (rootProperty != null ? !rootProperty.equals(property.rootProperty) : property.rootProperty != null)
+            return false;
+        if (value != null ? !value.equals(property.value) : property.value != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (value != null ? value.hashCode() : 0);
+        result = 31 * result + (langId != null ? langId.hashCode() : 0);
+        result = 31 * result + (rootProperty != null ? rootProperty.hashCode() : 0);
+        return result;
     }
 
     @Override
@@ -101,7 +107,7 @@ public class Property implements Serializable {
                 ", value='" + value + '\'' +
                 ", langId=" + langId +
                 ", rootProperty=" + rootProperty +
-                ", childProperties=" + childProperties +
+                ", childProperties=" + childProperties.toString() +
                 '}';
     }
 }

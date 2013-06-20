@@ -8,13 +8,17 @@
                 <param name="sequence">PROP_SEQ</param>
             </generator>
         </id>
-        <property name="name" not-null="true" />
-        <property name="value" />
+        <property name="name" length="30">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">by.academy.domain.PropertyNameEnum</param>
+            </type>
+        </property>
+        <property name="value" type="text" />
         <property name="langId"  />
-        <set name="childProperties" inverse="true" fetch="select">
+        <set name="childProperties" inverse="true" fetch="select" cascade="save-update">
             <key column="PARENT_ID" not-null="true" />
             <one-to-many class="Property" />
         </set>
-        <many-to-one name="rootProperty" class="Property" fetch="select" />
+        <many-to-one name="rootProperty" column="PARENT_ID" class="Property" fetch="select" />
     </class>
 </hibernate-mapping>

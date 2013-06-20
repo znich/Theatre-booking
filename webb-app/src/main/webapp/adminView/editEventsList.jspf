@@ -1,27 +1,91 @@
 <%@page language="java" contentType="text/html; UTF-8"
-        pageEncoding="UTF-8" %>
-<a href="/webb-app/Controller?action=show_add_performance" class="btn btn-primary">Добавить представление</a>
-<c:forEach var="performance" items="${performanceList}">
-    <div class="row-fluid">
+        pageEncoding="UTF-8"%>
 
-        <div class="span3">
-            <img src="${performance.image}" class="img-polaroid">
-        </div>
-        <div class="span6 perf-text">
-            <a
-                    href="/webb-app/Controller?action=show_performance?performanceId=${performance.id}">
-                <h3>${performance.name}</h3>
-            </a> <span>${performance.shortDescription}</span>
-        </div>
-        <div class="span1">
-            <div class="btn-group">
-                <a class="btn"
-                   href="/webb-app/Controller?action=show_edit_performance&performanceId=${performance.id}"><i
-                        class="icon-edit icon-large"></i></a> <a class="btn"
-                                                                 href="/webb-app/Controller?action=delete_performance&performanceId=${performance.id}"><i
-                    class="icon-trash icon-large"></i></a>
-            </div>
-        </div>
 
-    </div>
-</c:forEach>
+<ul class="nav nav-tabs">
+    <li class="dropdown"><%@include file="../jspf/categories.jspf"%>
+    </li>
+    <li>
+        <form class="form-horizontal">
+            <fieldset>
+                <div class="control-group">
+                    <label class="control-label" for="reservation"><fmt:message
+                            key="lbl.date" bundle="${bundle}" />:</label>
+                    <div class="controls">
+                        <div class="input-prepend">
+                            <span class="add-on"><i class="icon-calendar"></i></span> <input
+                                type="hidden" id="action" name="action"
+                                value="admin_show_events" /> <input class="input-medium"
+                                                                    type="text" name="dateInteval" id="reservation"
+                                                                    value="${dateInterval}" />
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </li>
+    <li><a href="/webb-app/Controller?action=show_add_event"
+           class="btn btn-primary">Добавить новое событие</a></li>
+</ul>
+
+<table class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th><fmt:message key="lbl.date" bundle="${bundle}" /></th>
+        <th><fmt:message key="lbl.time" bundle="${bundle}" /></th>
+        <th><fmt:message key="lbl.title" bundle="${bundle}" /></th>
+        <th><fmt:message key="lbl.tickets" bundle="${bundle}" /></th>
+        <th><fmt:message key="lbl.cost" bundle="${bundle}" /></th>
+    </tr>
+    </thead>
+    <tbody>
+    <c:forEach var="event" items="${eventList}">
+        <tr class="rowlink">
+            <td><fmt:formatDate value="${event.startTime}"
+                                pattern="MM/dd/yyyy" /></td>
+            <td><fmt:formatDate value="${event.startTime}" pattern="HH:mm" />
+                - <fmt:formatDate value="${event.endTime}" pattern="HH:mm" /></td>
+            <td><strong> <c:forEach var="property"
+                                    items="${event.performance.properties}">
+                <c:if test="${property.name==NAME}">${property.childProperties[0].value}</c:if>
+            </c:forEach>
+            </strong>
+                <p>
+                    <c:forEach var="property" items="${event.performance.properties}">
+                        <c:if test="${property.name==SHORT_DESCRIPTION}">${property.childProperties[0].value}</c:if>
+                    </c:forEach>
+                </p></td>
+            <td><c:if test="${event.freeTicketsCount<=0}">
+                <fmt:message key="lbl.noticket" bundle="${bundle}" />
+            </c:if> <c:if test="${event.freeTicketsCount>0}">
+                <a
+                        href="/webb-app/Controller?action=BOOKING_TICKETS_SHOW&eventId=${event.id}"><fmt:message
+                        key="btn.buyTicket" bundle="${bundle}" /></a>
+            </c:if></td>
+            <td>${event.minTicketPrice} - ${event.maxTicketPrice} <fmt:message
+                    key="lbl.rubles" bundle="${bundle}" /></br> ${event.freeTicketsCount}
+                <fmt:message key="lbl.ticketsAvailable" bundle="${bundle}" /> div
+                class="dropdown">
+
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    <li><a tabindex="-1"
+                           href="/webb-app/Controller?action=PERFORMANCE_SHOW&eventId=${event.id}">Просмотреть</a></li>
+                    <li><a tabindex="-1"
+                           href="/webb-app/Controller?action=show_edit_event&eventId=${event.id}">Редактировать</a></li>
+                    <li><a tabindex="-1"
+                           href="/webb-app/Controller?action=delete_event&eventId=${event.id}">Удалить</a></li>
+                    <li class="divider"></li>
+                    <li><a tabindex="-1" href="#">Отмена</a></li>
+                </ul>
+                </div>
+            </td>
+    </c:forEach>
+    <script>
+        $(function() {
+            $(this).find('.dropdown-toggle').dropdown();
+            $('.rowlink').on('click', function(e) {
+                $(this).find('.dropdown').toggleClass('open');
+                e.stopPropagation();
+            });
+        });
+    </script>

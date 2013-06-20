@@ -15,8 +15,8 @@ public class Category implements Serializable {
 
     private Integer id;
     private String name;
-    private int pid;
-    private int langId;
+    private Integer pid;
+    private Integer langId;
     private Set<Performance> performances;
 
     public Category() {
@@ -46,19 +46,19 @@ public class Category implements Serializable {
         this.name = name;
     }
 
-    public int getPid() {
+    public Integer getPid() {
         return pid;
     }
 
-    public void setPid(int pid) {
+    public void setPid(Integer pid) {
         this.pid = pid;
     }
 
-    public int getLangId() {
+    public Integer getLangId() {
         return langId;
     }
 
-    public void setLangId(int langId) {
+    public void setLangId(Integer langId) {
         this.langId = langId;
     }
 

@@ -1,5 +1,6 @@
 package by.academy.dao;
 
+import by.academy.dao.exception.DaoException;
 import by.academy.domain.Event;
 
 import java.util.Calendar;
@@ -13,6 +14,6 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public interface IEventDao extends IGenericDao<Event, Integer>  {
-    List<Event> getEventsInDateInterval(Calendar begin, Calendar end);
+    List<Event> getEventsInDateInterval(Calendar begin, Calendar end) throws DaoException;
 
 }

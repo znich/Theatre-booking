@@ -1,13 +1,11 @@
-package by.academy.commands;
+package by.academy.web.commands;
 
-import by.academy.util.PathProperties;
+import by.academy.web.util.PathProperties;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.

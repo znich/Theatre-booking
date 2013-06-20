@@ -22,6 +22,14 @@ public class Ticket implements Serializable {
     public Ticket() {
     }
 
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
     public Booking getBooking() {
         return booking;
     }

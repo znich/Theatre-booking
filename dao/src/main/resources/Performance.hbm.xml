@@ -11,8 +11,8 @@
         <property name="startDate" />
         <property name="endDate" not-null="true" />
 
-        <many-to-one name="category" class="Category" fetch="select" />
-        <set name="properties" lazy="true" cascade="save-update">
+        <many-to-one name="category" column="F_CATEGORY_ID" class="Category" fetch="select" />
+        <set name="properties" table="PERFORMANCE_PROPERTIES" fetch="join" cascade="save-update">
             <key column="PERFORMANCE_ID" not-null="true"/>
             <many-to-many class="Property" column="PROPERTY_ID"/>
         </set>

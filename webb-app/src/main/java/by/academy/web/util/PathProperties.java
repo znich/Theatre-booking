@@ -1,4 +1,4 @@
-package by.academy.util;
+package by.academy.web.util;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -25,7 +25,7 @@ public class PathProperties {
     public static final String PERFORMANCE_PAGE = "PERFORMANCE_PAGE";
     public static final String ADMIN_PAGE = "ADMIN_PAGE";
 
-    private PathProperties() throws FileNotFoundException, IOException {
+    private PathProperties() throws IOException {
 
         properties = new Properties();
         InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("urls.xml");
@@ -33,7 +33,7 @@ public class PathProperties {
         inputStream.close();
     }
 
-    public static PathProperties createPathProperties() throws FileNotFoundException, IOException {
+    public static PathProperties createPathProperties() throws IOException {
         if (pathProperties == null) {
             pathProperties = new PathProperties();
         }

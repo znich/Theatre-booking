@@ -1,6 +1,7 @@
 package by.academy.dao.impl;
 
 import by.academy.dao.IUserDao;
+import by.academy.dao.exception.DaoException;
 import by.academy.domain.User;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
@@ -14,12 +15,12 @@ import org.hibernate.criterion.Restrictions;
  */
 public class UserDaoImpl extends GenericDaoImpl<User, Integer> implements IUserDao {
     @Override
-    public User getUserByEmail(String email) {
+    public User getUserByEmail(String email) throws DaoException {
         return findByCriteria( Restrictions.eq("email", email) ).get(0);
     }
 
     @Override
-    public User getUserByEmailAndPassword(String email, String password) {
+    public User getUserByEmailAndPassword(String email, String password) throws DaoException {
         return findByCriteria( Restrictions.eq("email", email), Restrictions.eq("password", password) ).get(0);
     }
 }

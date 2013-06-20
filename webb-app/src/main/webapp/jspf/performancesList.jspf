@@ -1,15 +1,32 @@
-
-
-<c:forEach var="performance" items="${performances}">   
+<c:forEach var="performance" items="${performanceList}">
  <div class="row">
 			<div class="span12">
 				<div class="span3">
-					<img src="${performance.image}" class="img-polaroid">
+                    <c:forEach var="property" items="${performance.properties}">
+                        <c:if test="${property.name=='IMAGE'}">
+                            <c:forEach var="childProperty" items="${property.childProperties}">
+                                <img src="../static/img/thumbnail/${childProperty.value}" class="img-polaroid">
+                            </c:forEach>
+                        </c:if>
+                    </c:forEach>
 				</div>
 				<div class="span8 perf-text">
 					<a href="/webb-app/Controller?action=show_performance?performanceId=${performance.id}">
-					<h3>${performance.name}</h3></a>
-					<span>${performance.shortDescription}</span>					
+                        <c:forEach var="property" items="${performance.properties}">
+                            <c:if test="${property.name == 'NAME'}">
+                                <c:forEach var="childProperty" items="${property.childProperties}">
+                                    <h3>${childProperty.value}</h3>
+                                </c:forEach>
+                            </c:if>
+                        </c:forEach>
+                    </a>
+                    <c:forEach var="property" items="${performance.properties}">
+                        <c:if test="${property.name=='SHORT_DESCRIPTION'}">
+                            <c:forEach var="childProperty" items="${property.childProperties}">
+                                <span>${childProperty.value}</span></a>
+                            </c:forEach>
+                        </c:if>
+                    </c:forEach>
 				</div>
 			</div>
 	  </div>

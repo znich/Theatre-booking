@@ -1,5 +1,6 @@
 package by.academy.dao;
 
+import by.academy.dao.exception.DaoException;
 import by.academy.domain.Booking;
 import by.academy.domain.User;
 
@@ -15,6 +16,6 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public interface IBookingDao extends IGenericDao<Booking, Integer> {
-    List<Booking> getBookingByUser(User user);
-    List<Booking> getExpiredBooking(Calendar currentDate);
+    List<Booking> getBookingByUser(User user) throws DaoException;
+    List<Booking> getExpiredBooking(Calendar currentDate) throws DaoException;
 }
