@@ -25,7 +25,9 @@ import by.academy.domain.Event;
 import by.academy.exception.ServiceException;
 import by.academy.logic.SiteLogic;
 import by.academy.web.util.PathProperties;
+import by.academy.web.util.RequestConstants;
 import by.academy.web.util.SessionConstants;
+import by.academy.web.wrapper.IWrapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -35,13 +37,12 @@ public class AdminShowEventsCommand implements ICommand {
     private HttpServletRequest request;
     private HttpServletResponse response;
     private SiteLogic siteLogic;
-    private HttpSession session = null;
+    private HttpSession session;
 
 
-    public AdminShowEventsCommand(HttpServletRequest request,
-                                  HttpServletResponse response) {
-        this.request = request;
-        this.response = response;
+    public AdminShowEventsCommand(IWrapper wrapper) {
+        this.request = wrapper.getRequest();
+        this.response = wrapper.getResponse();
     }
 
     @Override
@@ -65,14 +66,14 @@ public class AdminShowEventsCommand implements ICommand {
         String dateInterval = "";
         int sutki = 86400000;
 
-        if (request.getParameter(SessionConstants.DATE_INTERVAL.getName()) != null) {
+        if (request.getParameter(RequestConstants.DATE_INTERVAL.getName()) != null) {
 
-            dateInterval = request.getParameter(SessionConstants.DATE_INTERVAL.getName());
+            dateInterval = request.getParameter(RequestConstants.DATE_INTERVAL.getName());
 
-            session.setAttribute(SessionConstants.DATE_INTERVAL.getName(), dateInterval);
+            session.setAttribute(RequestConstants.DATE_INTERVAL.getName(), dateInterval);
         }
 
-        dateInterval = (String) session.getAttribute(SessionConstants.DATE_INTERVAL.getName());
+        dateInterval = (String) session.getAttribute(RequestConstants.DATE_INTERVAL.getName());
         if (dateInterval != null && dateInterval.length() > 0) {
             String[] dates = dateInterval.split(" - ");
             dateFirst = dates[0];
@@ -105,7 +106,7 @@ public class AdminShowEventsCommand implements ICommand {
             eventList = sortedEventList;
         }
 
-        request.setAttribute(SessionConstants.EVENTS_LIST_ATTRIBUTE.getName(), eventList);
+        request.setAttribute(RequestConstants.EVENTS_LIST_ATTRIBUTE.getName(), eventList);
         request.setAttribute(SessionConstants.MENU_ITEM_ATTRIBUTE.getName(), SessionConstants.EVENTS_ATTRIBUTE.getName());
         request.setAttribute(SessionConstants.ANSWER_ATTRIBUTE.getName(), SessionConstants.EVENT_ANSWER_ATTRIBUTE.getName());
 
@@ -123,22 +124,22 @@ public class AdminShowEventsCommand implements ICommand {
             session = request.getSession();
         }
 
-        if (request.getParameter(SessionConstants.CATEGORY_ID.getName()) != null) {
+        if (request.getParameter(RequestConstants.CATEGORY_ID.getName()) != null) {
 
-            categoryId = Integer.parseInt(request.getParameter(SessionConstants.CATEGORY_ID.getName()));
+            categoryId = Integer.parseInt(request.getParameter(RequestConstants.CATEGORY_ID.getName()));
 
-            session.setAttribute(SessionConstants.CATEGORY_ID.getName(), categoryId);
+            session.setAttribute(RequestConstants.CATEGORY_ID.getName(), categoryId);
         }
 
-        if (session.getAttribute(SessionConstants.CATEGORY_ID.getName()) == null) {
+        if (session.getAttribute(RequestConstants.CATEGORY_ID.getName()) == null) {
             categoryId = 0;
         } else {
-            categoryId = (Integer) session.getAttribute(SessionConstants.CATEGORY_ID.getName());
+            categoryId = (Integer) session.getAttribute(RequestConstants.CATEGORY_ID.getName());
         }
 
         Category category = null;
         try {
-            category = siteLogic.getCategoryById(categoryId, langId);
+            category = siteLogic.getCategoryById(categoryId);
         } catch (ServiceException e) {
             log.error("Can't get category by id " + categoryId, e);
             throw new ServiceException("Can't get category by id " + categoryId, e);
