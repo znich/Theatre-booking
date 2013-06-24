@@ -21,7 +21,7 @@
 </head>
 <body id="body">
     <div class="container">
-        <jsp:include page="jspf/head.jspf"></jsp:include>
+        <%@include file="jspf/head.jspf"%>
 
 		<div class="row">
 			<div class="span12">

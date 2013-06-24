@@ -2,13 +2,13 @@
 <%@page language="java" contentType="text/html; UTF-8"
     pageEncoding="UTF-8"%>
     <%@ page isELIgnored="false" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
   <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
- <fmt:setLocale value="${locale}"/>
+ <fmt:setLocale value="${lang}"/>
  <fmt:setBundle basename="messages" var="bundle" scope="page"/>
 	<title><fmt:message key="title.repertoire" bundle="${bundle}"/></title>
 	<meta name="description" content="">

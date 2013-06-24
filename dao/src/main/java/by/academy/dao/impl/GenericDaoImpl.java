@@ -19,7 +19,7 @@ import java.util.List;
  * Time: 11:08 PM
  */
 public abstract class GenericDaoImpl<T, ID extends Serializable> implements IGenericDao<T, ID> {
-    private static Log log = LogFactory.getLog(GenericDaoImpl.class);
+    protected static Log log = LogFactory.getLog(GenericDaoImpl.class);
     private Class<T> persistentClass;
     private Session session;
 
@@ -165,8 +165,8 @@ public abstract class GenericDaoImpl<T, ID extends Serializable> implements IGen
     }
 
     @Override
-    public List<T> findAll(int langId) throws DaoException {
-        return findByCriteria(Restrictions.eq("langId", langId));
+    public List<T> getParentEntities() throws DaoException {
+        return findByCriteria(Restrictions.isNull("parent"));
 
     }
 

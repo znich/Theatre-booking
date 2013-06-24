@@ -3,7 +3,9 @@ package by.academy.web.commands;
 import by.academy.exception.ServiceException;
 import by.academy.logic.SiteLogic;
 import by.academy.web.util.PathProperties;
+import by.academy.web.util.RequestConstants;
 import by.academy.web.util.SessionConstants;
+import by.academy.web.wrapper.IWrapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -24,10 +26,9 @@ public class ShowPerformancesCommand implements ICommand {
 
     private static Log log = LogFactory.getLog(ShowPerformancesCommand.class);
 
-    public ShowPerformancesCommand(HttpServletRequest request, HttpServletResponse response) {
-        this.request = request;
-        this.response = response;
-
+    public ShowPerformancesCommand(IWrapper wrapper) {
+        this.request = wrapper.getRequest();
+        this.response = wrapper.getResponse();
     }
 
     public String execute() throws ServletException, IOException, ServiceException {
@@ -46,14 +47,14 @@ public class ShowPerformancesCommand implements ICommand {
             log.error("Can't get category list", e);
             throw new ServiceException("Can't get category list", e);
         }
-        String cat = (String) request.getParameter(SessionConstants.CATEGORY_ID.getName());
+        String cat = (String) request.getParameter(RequestConstants.CATEGORY_ID.getName());
         String perfId = (String) request.getParameter(SessionConstants.PERFORMANCE_ID_ATTRIBUTE.getName());
 
         if(cat != null && Integer.parseInt(cat) != 0){
             int selectedCategory = Integer.parseInt(cat);
-            request.setAttribute(SessionConstants.CATEGORY_ID.getName(), selectedCategory);
+            request.setAttribute(RequestConstants.CATEGORY_ID.getName(), selectedCategory);
             try {
-                request.setAttribute(SessionConstants.PERFORMANCE_LIST_ATTRIBUTE.getName(), siteLogic.getPerformancesByCategory(selectedCategory));
+                request.setAttribute(SessionConstants.PERFORMANCE_LIST_ATTRIBUTE.getName(), siteLogic.getPerformancesByCategory(selectedCategory, langId));
             } catch (ServiceException e) {
                 log.error("Can't get performances by category", e);
                 throw new ServiceException("Can't get performances by category", e);

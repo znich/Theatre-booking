@@ -20,5 +20,9 @@
             <key column="EVENT_NAME" not-null="true" />
             <one-to-many class="Event" />
         </set>
+        <set name="ticketsPrices" table="T_TICKETSPRICE" inverse="true" fetch="select">
+            <key column="F_PERFORMANCE_ID" not-null="true" />
+            <one-to-many class="TicketsPrice" />
+        </set>
     </class>
 </hibernate-mapping>

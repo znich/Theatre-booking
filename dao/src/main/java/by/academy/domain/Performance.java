@@ -19,8 +19,17 @@ public class Performance implements Serializable {
     private Category category;
     private Set<Event> events;
     private Set<Property> properties;
+    private Set<TicketsPrice> ticketsPrices;
 
     public Performance() {
+    }
+
+    public Set<TicketsPrice> getTicketsPrices() {
+        return ticketsPrices;
+    }
+
+    public void setTicketsPrices(Set<TicketsPrice> ticketsPrices) {
+        this.ticketsPrices = ticketsPrices;
     }
 
     public Integer getId() {

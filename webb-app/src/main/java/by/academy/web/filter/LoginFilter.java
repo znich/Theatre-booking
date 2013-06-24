@@ -1,15 +1,14 @@
 package by.academy.web.filter;
 
+import by.academy.domain.User;
+import by.academy.web.util.PathProperties;
+import by.academy.web.util.SessionConstants;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Siarhei Poludvaranin
- * Date: 6/19/13
- * Time: 9:26 AM
- * To change this template use File | Settings | File Templates.
  */
 public class LoginFilter implements Filter {
     @Override
@@ -19,9 +18,17 @@ public class LoginFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest httpReq = (HttpServletRequest) request;
-        if (httpReq.getSession().getAttribute("user") != null) {
+        if ((request != null) && (request instanceof HttpServletRequest)
+                && (((HttpServletRequest)request).getSession().getAttribute(SessionConstants.USER_ATTRIBUTE.getName()) instanceof User))
+        {
             chain.doFilter(request, response);
+        }
+        else
+        {
+            RequestDispatcher dispatcher;
+            String url = PathProperties.createPathProperties().getProperty(PathProperties.LOGIN_PAGE);
+            dispatcher = request.getRequestDispatcher(url);
+            dispatcher.forward(request, response);
         }
     }
 

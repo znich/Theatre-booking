@@ -15,6 +15,7 @@ import by.academy.exception.ServiceException;
 import by.academy.logic.AdminLogic;
 import by.academy.web.util.PathProperties;
 import by.academy.web.util.SessionConstants;
+import by.academy.web.wrapper.IWrapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -26,10 +27,9 @@ public class EditEventCommand implements ICommand {
     private HttpServletResponse response;
     private AdminLogic adminLogic;
 
-    public EditEventCommand(HttpServletRequest request,
-                            HttpServletResponse response) {
-        this.request = request;
-        this.response = response;
+    public EditEventCommand(IWrapper wrapper) {
+        this.request = wrapper.getRequest();
+        this.response = wrapper.getResponse();
     }
 
     @Override
@@ -91,7 +91,7 @@ public class EditEventCommand implements ICommand {
             performanceId = Integer.parseInt(idOfPerformance);
         }
 
-        boolean flag = adminLogic.saveOrUpdateEvent(eventId, performanceId, eventsStartDate, eventsEndDate);
+        boolean flag = adminLogic.saveOrUpdateEvent(eventId, performanceId, eventsStartDate.getTimeInMillis(), eventsEndDate.getTimeInMillis());
 
         String message = null;
 

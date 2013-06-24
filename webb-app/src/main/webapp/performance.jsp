@@ -1,15 +1,19 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: 1
-  Date: 5/20/13
-  Time: 11:27 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page isELIgnored="false" %>
 <!DOCTYPE html>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${lang}"/>
+<fmt:setBundle basename="messages" var="bundle" scope="page"/>
 <html>
 <head>
-    <title><c:out value="${performanceList.name}" /> - <fmt:message key="title.index" bundle="${bundle}"/></title>
+    <c:forEach var="property" items="${performanceList.properties}">
+        <c:if test="${property.name == 'NAME'}">
+            <c:forEach var="childProperty" items="${property.childProperties}">
+                <title>${childProperty.value} - <fmt:message key="title.index" bundle="${bundle}"/></title>
+            </c:forEach>
+        </c:if>
+    </c:forEach>
     <meta charset="utf-8">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -23,25 +27,51 @@
 </head>
 <body id="body">
 <div class="container">
-    <jsp:include page="jspf/head.jspf"></jsp:include>
-
+    <%@include file="jspf/head.jspf"%>
     <div class="contentWrapper">
         <div class="row">
             <div class="span12">
                 <div  class="well well-small">
                     <div class="row">
                         <div class="span8">
-                            <h1>${performanceList.name}</h1>${performanceList.shortDescription}
+                            <c:forEach var="property" items="${performanceList.properties}">
+                                <c:if test="${property.name == 'NAME'}">
+                                    <c:forEach var="childProperty" items="${property.childProperties}">
+                                        <h3>${childProperty.value}</h3>
+                                    </c:forEach>
+                                </c:if>
+                            </c:forEach>
+
+                            <c:forEach var="property" items="${performance.properties}">
+                            <c:if test="${property.name=='SHORT_DESCRIPTION'}">
+                                <c:forEach var="childProperty" items="${property.childProperties}">
+                                    <span>${childProperty.value}</span></a>
+                                </c:forEach>
+                            </c:if>
+                            </c:forEach>
+
                             <p>
                                 <a href="#" class="btn btn-mini">Купить билет</a>
                             </p>
                         </div>
                         <div class="span3">
-                            <img src="../static/img/thumbnail/${performanceList.image}" class="img-rounded">
+                            <c:forEach var="property" items="${performanceList.properties}">
+                                <c:if test="${property.name=='IMAGE'}">
+                                    <c:forEach var="childProperty" items="${property.childProperties}">
+                                        <img src="../static/img/thumbnail/${childProperty.value}" class="img-polaroid">
+                                    </c:forEach>
+                                </c:if>
+                            </c:forEach>
                         </div>
                     </div>
                 </div>
-                ${performanceList.description}
+                <c:forEach var="property" items="${performanceList.properties}">
+                    <c:if test="${property.name=='DESCRIPTION'}">
+                        <c:forEach var="childProperty" items="${property.childProperties}">
+                            ${childProperty.value}
+                        </c:forEach>
+                    </c:if>
+                </c:forEach>
             </div>
         </div>
 

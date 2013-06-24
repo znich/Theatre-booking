@@ -14,6 +14,6 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public interface IEventDao extends IGenericDao<Event, Integer>  {
-    List<Event> getEventsInDateInterval(Calendar begin, Calendar end) throws DaoException;
+    List<Event> getEventsInDateInterval(long begin, long end) throws DaoException;
 
 }

@@ -1,6 +1,7 @@
 package by.academy.web.commands;
 
 import by.academy.web.util.PathProperties;
+import by.academy.web.wrapper.IWrapper;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,9 +19,9 @@ public class  ShowUserProfileCommand implements ICommand {
     private HttpServletRequest request;
     private HttpServletResponse response;
 
-    public ShowUserProfileCommand(HttpServletRequest request, HttpServletResponse response) {
-        this.request = request;
-        this.response = response;
+    public ShowUserProfileCommand(IWrapper wrapper) {
+        this.request = wrapper.getRequest();
+        this.response = wrapper.getResponse();
     }
     @Override
     public String execute() throws ServletException, IOException {

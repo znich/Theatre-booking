@@ -4,18 +4,13 @@ import java.io.Serializable;
 import java.util.Set;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Siarhei Poludvaranin
- * Date: 31.05.13
- * Time: 19:08
- * To change this template use File | Settings | File Templates.
  */
 public class Status implements Serializable {
     private static final long serialVersionUID = 6845922418703306184L;
 
     private Integer id;
-    private int pid;
-    private int langId;
+    private Integer pid;
+    private Integer langId;
     private String value;
     private Set<Ticket> tickets;
     public Status() {
@@ -29,11 +24,11 @@ public class Status implements Serializable {
         this.id = id;
     }
 
-    public int getLangId() {
+    public Integer getLangId() {
         return langId;
     }
 
-    public void setLangId(int langId) {
+    public void setLangId(Integer langId) {
         this.langId = langId;
     }
 
@@ -53,11 +48,11 @@ public class Status implements Serializable {
         this.tickets = tickets;
     }
 
-    public int getPid() {
+    public Integer getPid() {
         return pid;
     }
 
-    public void setPid(int pid) {
+    public void setPid(Integer pid) {
         this.pid = pid;
     }
 

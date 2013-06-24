@@ -24,6 +24,7 @@ public enum HibernateUtil {
 
     private static void getSessionFactory() {
         try {
+            Locale.setDefault(Locale.ENGLISH);
             Configuration conf = new Configuration();
             conf.setNamingStrategy(new CustomNamingStrategy());
             sessionFactory = conf.configure().buildSessionFactory();
@@ -34,7 +35,6 @@ public enum HibernateUtil {
     }
 
     public static Session getSession() {
-        Locale.setDefault(Locale.ENGLISH);
         Session session = (Session) sessions.get();
         if (session == null) {
             HibernateUtil.getSessionFactory();

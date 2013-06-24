@@ -16,11 +16,20 @@ public class User implements Serializable {
     private Integer id;
     private String email;
     private String password;
+    private UserRole role;
     private Set<Booking> booking;
     private Set<Property> properties;
 
     public User() {
 
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 
     public Set<Property> getProperties() {

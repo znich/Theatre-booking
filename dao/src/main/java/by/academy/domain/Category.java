@@ -15,11 +15,28 @@ public class Category implements Serializable {
 
     private Integer id;
     private String name;
-    private Integer pid;
     private Integer langId;
+    private Category parent;
+    private Set<Category> childCategories;
     private Set<Performance> performances;
 
     public Category() {
+    }
+
+    public Category getParent() {
+        return parent;
+    }
+
+    public void setParent(Category parent) {
+        this.parent = parent;
+    }
+
+    public Set<Category> getChildCategories() {
+        return childCategories;
+    }
+
+    public void setChildCategories(Set<Category> childCategories) {
+        this.childCategories = childCategories;
     }
 
     public Set<Performance> getPerformances() {
@@ -44,14 +61,6 @@ public class Category implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getPid() {
-        return pid;
-    }
-
-    public void setPid(Integer pid) {
-        this.pid = pid;
     }
 
     public Integer getLangId() {

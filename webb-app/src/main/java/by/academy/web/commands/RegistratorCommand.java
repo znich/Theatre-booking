@@ -3,9 +3,11 @@ package by.academy.web.commands;
 import by.academy.domain.User;
 import by.academy.exception.ServiceException;
 import by.academy.logic.RegistratorLogic;
-import by.academy.web.util.MessagesProperties;
+import by.academy.utils.MessagesProperties;
 import by.academy.web.util.PathProperties;
+import by.academy.web.util.RequestConstants;
 import by.academy.web.util.SessionConstants;
+import by.academy.web.wrapper.IWrapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 //import MessagesProperties;
@@ -22,17 +24,17 @@ public class RegistratorCommand implements ICommand {
     private HttpServletResponse response;
     private RegistratorLogic registratorLogic;
 
-    public RegistratorCommand(HttpServletRequest request, HttpServletResponse response) {
-        this.request = request;
-        this.response = response;
+    public RegistratorCommand(IWrapper wrapper) {
+        this.request = wrapper.getRequest();
+        this.response = wrapper.getResponse();
     }
 
     public String execute() throws ServletException, IOException, ServiceException {
         String url = PathProperties.createPathProperties().getProperty(PathProperties.REGISTRATION_PAGE);
         String firstName = request.getParameter(SessionConstants.FIRST_NAME_ATTRIBUTE.getName());
         String secondName = request.getParameter(SessionConstants.SECOND_NAME_ATTRIBUTE.getName());
-        String email = request.getParameter(SessionConstants.EMAIL_ATTRIBUTE.getName());
-        String password = request.getParameter(SessionConstants.PASSWORD_ATTRIBUTE.getName());
+        String email = request.getParameter(RequestConstants.EMAIL_ATTRIBUTE.getName());
+        String password = request.getParameter(RequestConstants.PASSWORD_ATTRIBUTE.getName());
         String city = request.getParameter(SessionConstants.CITY_ATTRIBUTE.getName());
         String phone = request.getParameter(SessionConstants.PHONE_ATTRIBUTE.getName());
 
@@ -86,8 +88,8 @@ public class RegistratorCommand implements ICommand {
 
         request.setAttribute(SessionConstants.FIRST_NAME_ATTRIBUTE.getName(), firstName);
         request.setAttribute(SessionConstants.SECOND_NAME_ATTRIBUTE.getName(), secondName);
-        request.setAttribute(SessionConstants.EMAIL_ATTRIBUTE.getName(), email);
-        request.setAttribute(SessionConstants.PASSWORD_ATTRIBUTE.getName(), password);
+        request.setAttribute(RequestConstants.EMAIL_ATTRIBUTE.getName(), email);
+        request.setAttribute(RequestConstants.PASSWORD_ATTRIBUTE.getName(), password);
         request.setAttribute(SessionConstants.CITY_ATTRIBUTE.getName(), city);
         request.setAttribute(SessionConstants.PHONE_ATTRIBUTE.getName(), phone);
         request.setAttribute(SessionConstants.MESSAGE_ATTRIBUTE.getName(), message);

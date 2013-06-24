@@ -3,6 +3,9 @@ package by.academy.web;
 import by.academy.exception.ServiceException;
 import by.academy.web.commands.CommandFactory;
 import by.academy.web.commands.ICommand;
+import by.academy.web.wrapper.HttpRequestResponseWrapper;
+import by.academy.web.wrapper.IWrapper;
+import by.academy.web.wrapper.WrapperException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,10 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Siarhei Poludvaranin
- * Date: 20.05.13
- * Time: 11:35
  * Сервлет, выполняющий роль контроллера, который по запросу получает комманду
  * и отсылает её на выполнение.
  */
@@ -22,12 +21,19 @@ import java.io.IOException;
 public class Controller extends HttpServlet {
     private static final long serialVersionUID = -787399415436802178L;
 
-
-
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ICommand command = CommandFactory.createCommand(request, response);
+
+        IWrapper wrapper = null;
+        try
+        {
+            wrapper = new HttpRequestResponseWrapper(request, response);
+        }
+        catch (WrapperException e)
+        {
+            throw new ServletException("Null in request/response in Controller. Can't create HttpRequestResponseWrapper", e);
+        }
+        ICommand command = CommandFactory.createCommand(wrapper);
         String url = null;
         try {
             url = command.execute();
@@ -35,7 +41,7 @@ public class Controller extends HttpServlet {
             throw new ServletException();
         }
         if (url != null) {
-            request.getRequestDispatcher(url).forward(request, response);
+            wrapper.getRequest().getRequestDispatcher(url).forward(wrapper.getRequest(), wrapper.getResponse());
         }
     }
 

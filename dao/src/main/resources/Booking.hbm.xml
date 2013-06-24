@@ -13,7 +13,7 @@
         <many-to-one name="paymentMethod" class="PaymentMethod" fetch="select" />
         <many-to-one name="user" class="User" fetch="select" />
         <set name="tickets" inverse="true" fetch="select">
-            <key column="EVENT_ID" not-null="true"/>
+            <key column="F_BOOKING_ID" not-null="true"/>
             <one-to-many class="Ticket"/>
         </set>
     </class>

@@ -28,6 +28,6 @@ public interface IGenericDao<T, ID extends Serializable> {
 
     List<T> findAll() throws DaoException;
 
-    List<T> findAll(int langId) throws DaoException;
+    List<T> getParentEntities() throws DaoException;
 
 }

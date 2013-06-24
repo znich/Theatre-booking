@@ -37,6 +37,7 @@
         <mapping resource="Seat.hbm.xml" />
         <mapping resource="Status.hbm.xml" />
         <mapping resource="Ticket.hbm.xml" />
+        <mapping resource="TicketsPrice.hbm.xml" />
         <mapping resource="User.hbm.xml" />
     </session-factory>
 </hibernate-configuration>

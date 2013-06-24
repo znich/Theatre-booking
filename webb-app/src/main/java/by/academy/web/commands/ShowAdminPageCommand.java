@@ -7,15 +7,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import by.academy.web.util.PathProperties;
 import by.academy.web.util.SessionConstants;
+import by.academy.web.wrapper.IWrapper;
 
 public class ShowAdminPageCommand implements ICommand {
 
     private HttpServletRequest request;
     private HttpServletResponse response;
-    public ShowAdminPageCommand(HttpServletRequest request,
-                                HttpServletResponse response) {
-        this.request = request;
-        this.response = response;
+    public ShowAdminPageCommand(IWrapper wrapper) {
+        this.request = wrapper.getRequest();
+        this.response = wrapper.getResponse();
     }
 
     @Override

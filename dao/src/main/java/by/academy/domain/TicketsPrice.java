@@ -1,13 +1,9 @@
 package by.academy.domain;
 
 import java.io.Serializable;
+import java.util.Set;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Siarhei Poludvaranin
- * Date: 6/5/13
- * Time: 10:13 PM
- * To change this template use File | Settings | File Templates.
  */
 public class TicketsPrice implements Serializable {
     private static final long serialVersionUID = 3226097319160868426L;
@@ -16,8 +12,17 @@ public class TicketsPrice implements Serializable {
     private Performance perfId;
     private int priceCategory;
     private int price;
+    private Set<Seat> seats;
 
     public TicketsPrice() {
+    }
+
+    public Set<Seat> getSeats() {
+        return seats;
+    }
+
+    public void setSeats(Set<Seat> seats) {
+        this.seats = seats;
     }
 
     public Integer getId() {

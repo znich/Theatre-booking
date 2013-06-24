@@ -23,10 +23,4 @@ import java.util.Set;
  * To change this template use File | Settings | File Templates.
  */
 public class PerformanceDaoImpl extends GenericDaoImpl<Performance, Integer> implements IPerformanceDao {
-
-
-    @Override
-    public List<Performance> getPerformancesByCategory(Integer catId) throws DaoException {
-        return findByCriteria( Restrictions.eq("category", catId) );
-    }
 }

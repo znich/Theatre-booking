@@ -3,82 +3,82 @@ package by.academy.web.commands;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import by.academy.domain.Category;
 import by.academy.domain.Event;
 import by.academy.exception.ServiceException;
 import by.academy.logic.SiteLogic;
 import by.academy.web.util.PathProperties;
+import by.academy.web.util.RequestConstants;
 import by.academy.web.util.SessionConstants;
+import by.academy.web.wrapper.IWrapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 public class ShowEventsCommand implements ICommand {
-    private static Log log = LogFactory.getLog(ShowEditPerformanceCommand.class);
+    private static Log log = LogFactory.getLog(ShowEventsCommand.class);
     private HttpServletRequest request;
-    private HttpServletResponse response;
     private SiteLogic siteLogic;
-    private List<String> rights = new ArrayList<String>();
+    private HttpSession session;
 
 
-    public ShowEventsCommand(HttpServletRequest request, HttpServletResponse response) {
-        this.request = request;
-        this.response = response;
+    public ShowEventsCommand(IWrapper wrapper) {
+        this.request = wrapper.getRequest();
+        this.session = wrapper.getSession();
     }
 
     @Override
     public String execute() throws ServletException, IOException, ServiceException {
 
-        int langId = (Integer) request.getSession().getAttribute(SessionConstants.LOCALE_ID_ATTRIBUTE.getName());
+        int langId = (Integer) session.getAttribute(SessionConstants.LOCALE_ID_ATTRIBUTE.getName());
         try {
             siteLogic = new SiteLogic();
         } catch (ServiceException e) {
             log.error("Can't create SiteLogic", e);
             throw new ServiceException("Can't create SiteLogic", e);
         }
-        Calendar date1 = Calendar.getInstance();
-        Calendar date2 = Calendar.getInstance();
-        String dateFirst;
-        String dateLast;
+        Calendar begin = Calendar.getInstance();
+        Calendar end = Calendar.getInstance();
+        /*begin.set(2013, 6, 22, 00, 00, 00);
+        end.set(2013, 6, 26, 00, 00, 00);*/
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 
         String dateInterval = "";
 
-        if (request.getParameter(SessionConstants.DATE_INTERVAL.getName()) != null) {
+        if (request.getParameter(RequestConstants.DATE_INTERVAL.getName()) != null) {
 
-            dateInterval = request.getParameter(SessionConstants.DATE_INTERVAL.getName());
+            dateInterval = request.getParameter(RequestConstants.DATE_INTERVAL.getName());
 
-            request.getSession().setAttribute(SessionConstants.DATE_INTERVAL.getName(), dateInterval);
+            session.setAttribute(RequestConstants.DATE_INTERVAL.getName(), dateInterval);
         }
 
-        dateInterval = (String) request.getSession().getAttribute(SessionConstants.DATE_INTERVAL.getName());
+        dateInterval = (String) session.getAttribute(RequestConstants.DATE_INTERVAL.getName());
+
         if (dateInterval != null && dateInterval.length() > 0) {
             String[] dates = dateInterval.split(" - ");
-            dateFirst = dates[0];
-            dateLast = dates[1];
 
             try {
-                date1.setTime(sdf.parse(dateFirst));
-                date2.setTime(sdf.parse(dateLast));
+                begin.setTime(sdf.parse(dates[0]));
+                end.setTime(sdf.parse(dates[1]));
             } catch (ParseException e) {
                 log.error("Wrong date format error", e);
                 throw new ServiceException("Wrong date format error", e);
             }
 
         } else {
-            date2.add(Calendar.MONTH, 1);
+            begin.add(Calendar.DAY_OF_YEAR, -14);
+            end.add(Calendar.DAY_OF_YEAR, 14);
         }
-
         List<Event> eventList = null;
         try {
-            eventList = siteLogic.getEventsInDateInterval(date1, date2, langId);
+            eventList = siteLogic.getEventsInDateInterval(begin, end, langId);
         } catch (ServiceException e) {
             log.error("Can't get events", e);
             throw new ServiceException("Can't get events", e);
@@ -91,9 +91,9 @@ public class ShowEventsCommand implements ICommand {
             eventList = sortedEventList;
         }
 
-        request.setAttribute(SessionConstants.EVENTS_LIST_ATTRIBUTE.getName(), eventList);
+        request.setAttribute(RequestConstants.EVENTS_LIST_ATTRIBUTE.getName(), eventList);
         try {
-            request.getSession().setAttribute(SessionConstants.CATEGORIES_LIST_ATTRIBUTE.getName(), siteLogic.getAllCategories(langId));
+            session.setAttribute(SessionConstants.CATEGORIES_LIST_ATTRIBUTE.getName(), siteLogic.getAllCategories(langId));
         } catch (ServiceException e) {
             log.error("Can't get categories", e);
             throw new ServiceException("Can't get categories", e);
@@ -105,25 +105,25 @@ public class ShowEventsCommand implements ICommand {
 
     private Category getCategory(int langId) throws ServiceException {
 
-        int categoryId;
+        Integer categoryId;
 
 
-        if (request.getParameter(SessionConstants.CATEGORY_ID.getName()) != null) {
+        if (request.getParameter(RequestConstants.CATEGORY_ID.getName()) != null) {
 
-            categoryId = Integer.parseInt(request.getParameter(SessionConstants.CATEGORY_ID.getName()));
+            categoryId = Integer.parseInt(request.getParameter(RequestConstants.CATEGORY_ID.getName()));
 
-            request.getSession().setAttribute(SessionConstants.CATEGORY_ID.getName(), categoryId);
+            session.setAttribute(RequestConstants.CATEGORY_ID.getName(), categoryId);
         }
 
-        if (request.getSession().getAttribute(SessionConstants.CATEGORY_ID.getName()) == null) {
+        if (request.getSession().getAttribute(RequestConstants.CATEGORY_ID.getName()) == null) {
             categoryId = 0;
         } else {
-            categoryId = (Integer) request.getSession().getAttribute(SessionConstants.CATEGORY_ID.getName());
+            categoryId = (Integer) session.getAttribute(RequestConstants.CATEGORY_ID.getName());
         }
 
         Category category = null;
         try {
-            category = siteLogic.getCategoryById(categoryId, langId);
+            category = siteLogic.getCategoryById(categoryId);
         } catch (ServiceException e) {
             log.error("Can't get category by id", e);
             throw new ServiceException("Can't get category by id", e);

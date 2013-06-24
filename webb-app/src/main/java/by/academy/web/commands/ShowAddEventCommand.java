@@ -13,6 +13,7 @@ import by.academy.exception.ServiceException;
 import by.academy.logic.SiteLogic;
 import by.academy.web.util.PathProperties;
 import by.academy.web.util.SessionConstants;
+import by.academy.web.wrapper.IWrapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -23,10 +24,9 @@ public class ShowAddEventCommand implements ICommand {
 
     private static Log log = LogFactory.getLog(ShowAddEventCommand.class);
 
-    public ShowAddEventCommand(HttpServletRequest request,
-                               HttpServletResponse response) {
-        this.request = request;
-        this.response = response;
+    public ShowAddEventCommand(IWrapper wrapper) {
+        this.request = wrapper.getRequest();
+        this.response = wrapper.getResponse();
     }
 
     @Override

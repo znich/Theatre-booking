@@ -9,7 +9,6 @@ package by.academy.web.commands;
  */
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Set;
 
 import javax.servlet.ServletException;
@@ -21,6 +20,7 @@ import by.academy.domain.Performance;
 import by.academy.exception.ServiceException;
 import by.academy.logic.SiteLogic;
 import by.academy.web.util.SessionConstants;
+import by.academy.web.wrapper.IWrapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -30,10 +30,9 @@ public class ShowEditEventCommand implements ICommand {
     private HttpServletRequest request;
     private HttpServletResponse response;
 
-    public ShowEditEventCommand(HttpServletRequest request,
-                                HttpServletResponse response) {
-        this.request = request;
-        this.response = response;
+    public ShowEditEventCommand(IWrapper wrapper) {
+        this.request = wrapper.getRequest();
+        this.response = wrapper.getResponse();
     }
 
     @Override
@@ -68,8 +67,11 @@ public class ShowEditEventCommand implements ICommand {
             throw new ServiceException("Can't get event by id", e);
         }
 
-        Calendar startDate = event.getStartTime();
-        Calendar endDate = event.getEndTime();
+        Calendar startDate = Calendar.getInstance();
+        startDate.setTimeInMillis(event.getStartTime());
+
+        Calendar endDate = Calendar.getInstance();
+        startDate.setTimeInMillis(event.getEndTime());
 
         String eventsDate = (startDate.get(Calendar.MONTH) + 1) + "/"
                 + startDate.get(Calendar.DATE) + "/"

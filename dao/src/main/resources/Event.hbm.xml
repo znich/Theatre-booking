@@ -8,12 +8,12 @@
                 <param name="sequence">EVENT_SEQ</param>
             </generator>
         </id>
-        <property name="startTime" not-null="true" />
-        <property name="endTime" not-null="true" />
-        <many-to-one name="performance" class="Performance" fetch="select" />
+        <property name="startTime" type="long" not-null="true" />
+        <property name="endTime" type="long" not-null="true" />
+        <many-to-one name="performance" class="Performance" column="EVENT_NAME" fetch="select" />
 
         <set name="tickets" inverse="true" fetch="select">
-            <key column="TICKET_EVENT_ID" not-null="true" />
+            <key column="EVENT_ID" not-null="true" />
             <one-to-many class="Ticket" />
         </set>
     </class>

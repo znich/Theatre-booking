@@ -1,5 +1,7 @@
 package by.academy.web.commands;
 
+import by.academy.web.wrapper.IWrapper;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,9 +18,9 @@ public class HelloCommand implements ICommand {
     private HttpServletRequest request;
     private HttpServletResponse response;
 
-    public HelloCommand(HttpServletRequest request, HttpServletResponse response) {
-        this.request = request;
-        this.response = response;
+    public HelloCommand(IWrapper wrapper) {
+        this.request = wrapper.getRequest();
+        this.response = wrapper.getResponse();
     }
 
     public String execute() throws ServletException, IOException {

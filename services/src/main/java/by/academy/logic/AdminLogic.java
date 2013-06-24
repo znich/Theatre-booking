@@ -98,7 +98,7 @@ public class AdminLogic extends DataAccessService {
     }
 
     public boolean saveOrUpdateEvent(Integer eventId, int perfId,
-                                     Calendar startTime, Calendar endTime) throws ServiceException {
+                                     long startTime, long endTime) throws ServiceException {
 
         IPerformanceDao perfDao = daoFactory.getPerformanceDao();
         IStatusDao statusDao = daoFactory.getStatusDao();

@@ -10,6 +10,11 @@
         </id>
         <property name="priceCategory" />
         <property name="price" />
-        <many-to-one name="perfId" class="Performance" fetch="select" column="PERFORMANCE_ID" />
+        <many-to-one name="perfId" class="Performance" fetch="select" column="F_PERFORMANCE_ID" />
+
+        <set name="seats" inverse="true" fetch="select">
+            <key column="F_PRICE_CATEGORY" not-null="true" />
+            <one-to-many class="Seat" />
+        </set>
     </class>
 </hibernate-mapping>

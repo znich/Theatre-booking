@@ -10,6 +10,11 @@
         </id>
         <property name="email" not-null="true" unique="true"></property>
         <property name="password" not-null="true"></property>
+        <property name="role" length="10">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">by.academy.domain.UserRole</param>
+            </type>
+        </property>
         <set name="booking" inverse="true" fetch="select">
             <key column="BOOKING_ID" not-null="true"/>
             <one-to-many class="Booking" />

@@ -6,7 +6,9 @@ import by.academy.domain.TicketsPrice;
 import by.academy.exception.ServiceException;
 import by.academy.logic.SiteLogic;
 import by.academy.web.util.PathProperties;
+import by.academy.web.util.RequestConstants;
 import by.academy.web.util.SessionConstants;
+import by.academy.web.wrapper.IWrapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -18,6 +20,7 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -33,10 +36,9 @@ public class ShowEditPerformanceCommand implements ICommand {
     private HttpServletResponse response;
     private SiteLogic siteLogic;
 
-    public ShowEditPerformanceCommand(HttpServletRequest request,
-                                      HttpServletResponse response) {
-        this.request = request;
-        this.response = response;
+    public ShowEditPerformanceCommand(IWrapper wrapper) {
+        this.request = wrapper.getRequest();
+        this.response = wrapper.getResponse();
     }
 
     @Override
@@ -66,11 +68,11 @@ public class ShowEditPerformanceCommand implements ICommand {
 
         Performance performance = null;
         List<Category> categoryList = null;
-        List<TicketsPrice> ticketsPrices = null;
+        Set<TicketsPrice> ticketsPrices = null;
         try {
             performance = siteLogic.getPerformancesById(performanceId, langId);
             categoryList = siteLogic.getAllCategories(langId);
-            ticketsPrices = siteLogic.getTicketsPriceByPerformance(performance);
+            ticketsPrices = performance.getTicketsPrices();
         } catch (ServiceException e) {
             log.error("Can't collect entities", e);
             throw new ServiceException("Can't collect entities", e);
@@ -92,7 +94,7 @@ public class ShowEditPerformanceCommand implements ICommand {
 
         request.setAttribute(SessionConstants.PERFORMANCE_ID_ATTRIBUTE.getName(), performance);
         request.setAttribute(SessionConstants.CATEGORIES_LIST_ATTRIBUTE.getName(), categoryList);
-        request.setAttribute(SessionConstants.DATE_INTERVAL.getName(), dateInterval);
+        request.setAttribute(RequestConstants.DATE_INTERVAL.getName(), dateInterval);
         session.setAttribute(SessionConstants.TICKETS_PRICE_ATTRIBUTE.getName(), ticketsPrices);
         request.setAttribute(SessionConstants.MENU_ITEM_ATTRIBUTE.getName(), SessionConstants.PERFORMANCES_ATTRIBUTE.getName());
         request.setAttribute(SessionConstants.ANSWER_ATTRIBUTE.getName(), SessionConstants.PERFORMANCE_ANSWER_ATTRIBUTE.getName());

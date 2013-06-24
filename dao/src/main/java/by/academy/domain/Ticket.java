@@ -3,11 +3,6 @@ package by.academy.domain;
 import java.io.Serializable;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Siarhei Poludvaranin
- * Date: 31.05.13
- * Time: 15:12
- * To change this template use File | Settings | File Templates.
  */
 public class Ticket implements Serializable {
     private static final long serialVersionUID = -7762125850874268760L;

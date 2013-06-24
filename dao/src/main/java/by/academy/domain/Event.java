@@ -1,24 +1,17 @@
 package by.academy.domain;
 
 import java.io.Serializable;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Set;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Siarhei Poludvaranin
- * Date: 31.05.13
- * Time: 15:23
- * To change this template use File | Settings | File Templates.
  */
 public class Event implements Serializable {
     private static final long serialVersionUID = 6587162487503777904L;
 
     private Integer id;
     private Performance performance;
-    private Calendar startTime;
-    private Calendar endTime;
+    private long startTime;
+    private long endTime;
     private Set<Ticket> tickets;
 
     private Integer freeTicketsCount;
@@ -68,19 +61,19 @@ public class Event implements Serializable {
         this.performance = performance;
     }
 
-    public Calendar getStartTime() {
+    public long getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Calendar startTime) {
+    public void setStartTime(long startTime) {
         this.startTime = startTime;
     }
 
-    public Calendar getEndTime() {
+    public long getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Calendar endTime) {
+    public void setEndTime(long endTime) {
         this.endTime = endTime;
     }
 

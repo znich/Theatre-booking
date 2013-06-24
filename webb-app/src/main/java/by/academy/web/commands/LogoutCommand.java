@@ -1,35 +1,28 @@
 package by.academy.web.commands;
 
+import by.academy.web.util.PathProperties;
 import by.academy.web.util.SessionConstants;
+import by.academy.web.wrapper.IWrapper;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Siarhei Poludvaranin
- * Date: 20.05.13
- * Time: 11:00
- * To change this template use File | Settings | File Templates.
  */
 public class LogoutCommand implements ICommand {
     private HttpServletRequest request;
-    private HttpServletResponse response;
+    private HttpSession session;
 
-    public LogoutCommand(HttpServletRequest request, HttpServletResponse response) {
-        this.request = request;
-        this.response = response;
+    public LogoutCommand(IWrapper wrapper) {
+        this.request = wrapper.getRequest();
+        this.session = wrapper.getSession();
     }
 
     public String execute() throws ServletException, IOException {
-        Object localeObj = request.getSession().getAttribute(SessionConstants.LOCALE_ATTRIBUTE.getName());
-        request.getSession().invalidate();
-        if (localeObj != null) {
-            request.getSession().setAttribute(SessionConstants.LOCALE_ATTRIBUTE.getName(), localeObj);
-        }
-        return "./";
+        session.removeAttribute(SessionConstants.USER_ATTRIBUTE.getName());
+        return PathProperties.createPathProperties().getProperty(PathProperties.LOGIN_PAGE);
     }
 
 }

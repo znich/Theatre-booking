@@ -1,10 +1,6 @@
 package by.academy.web.commands;
 
 import java.io.IOException;
-import java.sql.SQLData;
-import java.sql.SQLException;
-import java.sql.SQLInput;
-import java.sql.SQLOutput;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,9 +18,10 @@ import by.academy.domain.*;
 import by.academy.exception.ServiceException;
 import by.academy.logic.AdminLogic;
 import by.academy.logic.SiteLogic;
-import by.academy.web.util.MessagesProperties;
+import by.academy.utils.MessagesProperties;
 import by.academy.web.util.PathProperties;
 import by.academy.web.util.SessionConstants;
+import by.academy.web.wrapper.IWrapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -40,10 +37,9 @@ public class EditPerformanceCommand implements ICommand {
     private final String DATE_FORMAT = "MM/dd/yyyy";
 
 
-    public EditPerformanceCommand(HttpServletRequest request,
-                                  HttpServletResponse response) {
-        this.request = request;
-        this.response = response;
+    public EditPerformanceCommand(IWrapper wrapper) {
+        this.request = wrapper.getRequest();
+        this.response = wrapper.getResponse();
     }
 
     @Override
@@ -118,7 +114,7 @@ public class EditPerformanceCommand implements ICommand {
                             + ticketsPrice.getPriceCategory())));
         }
 
-        Category category = siteLogic.getCategoryById(categoryId, langId);
+        Category category = siteLogic.getCategoryById(categoryId);
 
         boolean flag = adminLogic.saveOrUpdatePerformance(performanceId, name,
                 shortDescription, description, date1, date2, image, category,
