@@ -119,8 +119,9 @@ public class SiteLogic extends DataAccessService {
         List<Event> sortedEvents = new ArrayList<Event>();
 
         for (Event event : events) {
-            Category cat = event.getPerformance().getCategory();
-            if (cat.equals(category)) {
+            log.info("id категории ивента: " + event.getPerformance().getCategory().getId());
+            log.info("id категории фильтра: " + category.getId());
+            if (event.getPerformance().getCategory().getId().equals(category.getId())) {
                 sortedEvents.add(event);
             }
         }

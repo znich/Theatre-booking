@@ -84,7 +84,6 @@ public class ShowEventsCommand implements ICommand {
             throw new ServiceException("Can't get events", e);
         }
         Category category = getCategory(langId);
-
         if (category != null && category.getId() != 0) {
 
             List<Event> sortedEventList = siteLogic.sortEventsByCategory(eventList, category);

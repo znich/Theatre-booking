@@ -12,7 +12,7 @@
         <property name="langId" />
         <many-to-one name="parent" column="PARENT_ID" class="Category" fetch="select" />
         <set name="childCategories" inverse="true" fetch="select" cascade="save-update">
-            <key column="PARENT_ID" not-null="true" />
+            <key column="PARENT_ID" />
             <one-to-many class="Category" />
         </set>
 
