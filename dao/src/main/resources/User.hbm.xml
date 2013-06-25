@@ -8,8 +8,8 @@
                 <param name="sequence">USER_SEQ</param>
             </generator>
         </id>
-        <property name="email" not-null="true" unique="true"></property>
-        <property name="password" not-null="true"></property>
+        <property name="email" not-null="true" unique="true" />
+        <property name="password" not-null="true" />
         <property name="role" length="10">
             <type name="org.hibernate.type.EnumType">
                 <param name="enumClass">by.academy.domain.UserRole</param>

@@ -10,6 +10,10 @@ public enum RequestConstants {
     DATE_INTERVAL("dateInteval"),
     EMAIL_ATTRIBUTE("inputEmail"),
     PASSWORD_ATTRIBUTE("inputPassword"),
+    FIRST_NAME_ATTRIBUTE("firstName"),
+    SECOND_NAME_ATTRIBUTE("secondName"),
+    CITY_ATTRIBUTE("inputAddress"),
+    PHONE_ATTRIBUTE("inputPhone"),
     CATEGORY_ID("categoryId"),
     COMMAND_PARAMETER("action");
     private String name;

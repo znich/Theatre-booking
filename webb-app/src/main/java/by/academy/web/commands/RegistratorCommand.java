@@ -10,33 +10,34 @@ import by.academy.web.util.SessionConstants;
 import by.academy.web.wrapper.IWrapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-//import MessagesProperties;
-//import PathProperties;
 
 import java.io.IOException;
+import java.util.Enumeration;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class RegistratorCommand implements ICommand {
     private static Log log = LogFactory.getLog(RegistratorCommand.class);
     private HttpServletRequest request;
-    private HttpServletResponse response;
     private RegistratorLogic registratorLogic;
+    private HttpSession session;
 
     public RegistratorCommand(IWrapper wrapper) {
         this.request = wrapper.getRequest();
-        this.response = wrapper.getResponse();
+        this.session =  wrapper.getSession();
     }
 
     public String execute() throws ServletException, IOException, ServiceException {
+
         String url = PathProperties.createPathProperties().getProperty(PathProperties.REGISTRATION_PAGE);
-        String firstName = request.getParameter(SessionConstants.FIRST_NAME_ATTRIBUTE.getName());
-        String secondName = request.getParameter(SessionConstants.SECOND_NAME_ATTRIBUTE.getName());
+        String firstName = request.getParameter(RequestConstants.FIRST_NAME_ATTRIBUTE.getName());
+        String secondName = request.getParameter(RequestConstants.SECOND_NAME_ATTRIBUTE.getName());
         String email = request.getParameter(RequestConstants.EMAIL_ATTRIBUTE.getName());
         String password = request.getParameter(RequestConstants.PASSWORD_ATTRIBUTE.getName());
-        String city = request.getParameter(SessionConstants.CITY_ATTRIBUTE.getName());
-        String phone = request.getParameter(SessionConstants.PHONE_ATTRIBUTE.getName());
+        String address = request.getParameter(RequestConstants.CITY_ATTRIBUTE.getName());
+        String phone = request.getParameter(RequestConstants.PHONE_ATTRIBUTE.getName());
 
         try {
             registratorLogic = new RegistratorLogic();
@@ -44,13 +45,9 @@ public class RegistratorCommand implements ICommand {
             log.error("Can't create registration Logic", e);
             throw new ServiceException("Can't create registration Logic", e);
         }
-        // для использования других языков
-        String locale = (String) request.getSession().getAttribute("lang");
-            if (locale == null) {
-                locale = request.getLocale().getLanguage();
-        }
+        String locale = (String) session.getAttribute(SessionConstants.LOCALE_ATTRIBUTE.getName());
+        int langId = (Integer) session.getAttribute(SessionConstants.LOCALE_ID_ATTRIBUTE.getName());
 
-        // связь с логикой
         String message = null;
         if (!registratorLogic.checkFirstName(firstName)) {
             firstName = null;
@@ -68,30 +65,18 @@ public class RegistratorCommand implements ICommand {
             email = null;
             message = MessagesProperties.createPathProperties().getProperties(MessagesProperties.EMAIL_EXIST, locale);
         }else {
-            User user = new User();
-            user.setEmail(email);
-            email = null;
-            user.setPassword(password);
-            password=null;
-            /*user.setName(firstName);
-            firstName = null;
-            user.setSurname(secondName);
-            secondName = null;
-            user.setCity(city);
-            city = null;
-            user.setPhoneNumber(phone);*/
-            phone = null;
-            user = registratorLogic.registerUser(user);
+
+            registratorLogic.registerUser(firstName, secondName, email, password, address, phone, langId);
             url = PathProperties.createPathProperties().getProperty(PathProperties.LOGIN_PAGE);
             message = MessagesProperties.createPathProperties().getProperties(MessagesProperties.REGISTER_SUCCESSFUL, locale);
         }
 
-        request.setAttribute(SessionConstants.FIRST_NAME_ATTRIBUTE.getName(), firstName);
-        request.setAttribute(SessionConstants.SECOND_NAME_ATTRIBUTE.getName(), secondName);
+        request.setAttribute(RequestConstants.FIRST_NAME_ATTRIBUTE.getName(), firstName);
+        request.setAttribute(RequestConstants.SECOND_NAME_ATTRIBUTE.getName(), secondName);
         request.setAttribute(RequestConstants.EMAIL_ATTRIBUTE.getName(), email);
         request.setAttribute(RequestConstants.PASSWORD_ATTRIBUTE.getName(), password);
-        request.setAttribute(SessionConstants.CITY_ATTRIBUTE.getName(), city);
-        request.setAttribute(SessionConstants.PHONE_ATTRIBUTE.getName(), phone);
+        request.setAttribute(RequestConstants.CITY_ATTRIBUTE.getName(), address);
+        request.setAttribute(RequestConstants.PHONE_ATTRIBUTE.getName(), phone);
         request.setAttribute(SessionConstants.MESSAGE_ATTRIBUTE.getName(), message);
         return url;
     }

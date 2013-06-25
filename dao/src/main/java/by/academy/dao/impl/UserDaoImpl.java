@@ -19,7 +19,28 @@ import org.hibernate.criterion.Restrictions;
 public class UserDaoImpl extends GenericDaoImpl<User, Integer> implements IUserDao {
     @Override
     public User getUserByEmail(String email) throws DaoException {
-        return findByCriteria( Restrictions.eq("email", email) ).get(0);
+        if (email == null) {
+            throw new IllegalArgumentException("UserDaoImpl.ErrorIdNull");
+        }
+        User user = null;
+
+        Transaction tr = null;
+        try {
+            Session session = getSession();
+            tr = session.beginTransaction();
+
+            Criteria crit = session.createCriteria(getPersistentClass());
+            crit.add(Restrictions.eq("email", email));
+            user = (User) crit.uniqueResult();
+            tr.commit();
+        } catch (HibernateException e) {
+            log.error("Error was thrown in DAO", e);
+            if (tr != null) {
+                tr.rollback();
+            }
+            throw new DaoException(e);
+        }
+        return user;
     }
 
     @Override

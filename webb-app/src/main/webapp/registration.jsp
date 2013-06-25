@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${lang}"/>
+<fmt:setBundle basename="messages" var="bundle" scope="page"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +21,7 @@
 </head>
  <body id="body">
     <div class="container">
-      <jsp:include page="jspf/head.jspf"></jsp:include>
+        <%@include file="jspf/head.jspf"%>
 
 	  <div class="contentWrapper">
 		<div class="row">
@@ -29,20 +32,20 @@
 				 <legend>Регистрация</legend>
                      <input type="hidden" name="action" value="registrator">
                  <div class="control-group">
-                     <label class="control-label"><!--Надо добавить for="inputName"  --> Имя</label>
+                     <label class="control-label" for="firstName">Имя</label>
                      <div class="controls">
                          <div class="input-prepend">
                              <span class="add-on"><i></i></span>
-                             <input type="text" class="input-large" name="inputName" id="inputName" placeholder="Имя">
+                             <input type="text" class="input-large" name="firstName" id="firstName" placeholder="Имя">
                          </div>
                      </div>
                  </div>
                  <div class="control-group">
-                     <label class="control-label"> <!--Надо добавить   for="inputSurname"  -->Фамилия</label>
+                     <label class="control-label" for="secondName">Фамилия</label>
                      <div class="controls">
                          <div class="input-prepend">
                              <span class="add-on"><i></i></span>
-                             <input type="text" class="input-large" name="inputSurname" id="inputSurname" placeholder="Фамилия">
+                             <input type="text" class="input-large" name="secondName" id="secondName" placeholder="Фамилия">
                          </div>
                      </div>
                  </div>
@@ -78,7 +81,7 @@
 					<div class="controls">
 						<div class="input-prepend">
 						  <span class="add-on"><i class="icon-book"></i></span>
-						  <input type="text" class="input-large" name="inputAddress" id="inputPhone" placeholder="+372 (29) 555 55 55">
+						  <input type="text" class="input-large" name="inputPhone" id="inputPhone" placeholder="+372 (29) 555 55 55">
 						</div>
 					</div>
 				  </div>

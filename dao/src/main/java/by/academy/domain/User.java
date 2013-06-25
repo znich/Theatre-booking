@@ -1,14 +1,10 @@
 package by.academy.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Siarhei Poludvaranin
- * Date: 31.05.13
- * Time: 14:17
- * To change this template use File | Settings | File Templates.
  */
 public class User implements Serializable {
     private static final long serialVersionUID = -2269045498830506797L;
@@ -16,12 +12,11 @@ public class User implements Serializable {
     private Integer id;
     private String email;
     private String password;
-    private UserRole role;
+    private UserRole role = UserRole.USER;
     private Set<Booking> booking;
-    private Set<Property> properties;
+    private Set<Property> properties = new HashSet<Property>();
 
     public User() {
-
     }
 
     public UserRole getRole() {

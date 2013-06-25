@@ -22,13 +22,12 @@ import org.apache.commons.logging.LogFactory;
 public class ShowAddPerformanceCommand implements ICommand {
 
     private HttpServletRequest request;
-    private HttpServletResponse response;
-
+    private HttpSession session;
     private static Log log = LogFactory.getLog(ShowAddPerformanceCommand.class);
 
     public ShowAddPerformanceCommand(IWrapper wrapper) {
         this.request = wrapper.getRequest();
-        this.response = wrapper.getResponse();
+        this.session = wrapper.getSession();
     }
 
     @Override
@@ -40,7 +39,6 @@ public class ShowAddPerformanceCommand implements ICommand {
             log.error("Can't create SiteLogic", e);
             throw new ServiceException("Can't create SiteLogic", e);
         }
-        HttpSession session = request.getSession();
         String inputLangId = request.getParameter(SessionConstants.INPUT_LANG_ID.getName());
         Integer langId = null;
         if (inputLangId != null) {

@@ -8,5 +8,5 @@ package by.academy.domain;
  * To change this template use File | Settings | File Templates.
  */
 public enum PropertyNameEnum {
-    NAME, SHORT_DESCRIPTION, DESCRIPTION, IMAGE, FIRST_NAME, SURNAME, PHONE_NUMBER, CITY
+    NAME, SHORT_DESCRIPTION, DESCRIPTION, IMAGE, FIRST_NAME, SURNAME, PHONE_NUMBER, ADDRESS
 }
