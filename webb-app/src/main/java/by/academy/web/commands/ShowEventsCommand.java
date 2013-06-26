@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -46,11 +45,9 @@ public class ShowEventsCommand implements ICommand {
         }
         Calendar begin = Calendar.getInstance();
         Calendar end = Calendar.getInstance();
-        /*begin.set(2013, 6, 22, 00, 00, 00);
-        end.set(2013, 6, 26, 00, 00, 00);*/
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 
-        String dateInterval = "";
+        String dateInterval;
 
         if (request.getParameter(RequestConstants.DATE_INTERVAL.getName()) != null) {
 
@@ -76,7 +73,7 @@ public class ShowEventsCommand implements ICommand {
             begin.add(Calendar.DAY_OF_YEAR, -14);
             end.add(Calendar.DAY_OF_YEAR, 14);
         }
-        List<Event> eventList = null;
+        List<Event> eventList;
         try {
             eventList = siteLogic.getEventsInDateInterval(begin, end, langId);
         } catch (ServiceException e) {
@@ -120,7 +117,7 @@ public class ShowEventsCommand implements ICommand {
             categoryId = (Integer) session.getAttribute(RequestConstants.CATEGORY_ID.getName());
         }
 
-        Category category = null;
+        Category category;
         try {
             category = siteLogic.getCategoryById(categoryId);
         } catch (ServiceException e) {

@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import by.academy.domain.Category;
@@ -32,7 +31,7 @@ public class ShowAddPerformanceCommand implements ICommand {
 
     @Override
     public String execute() throws ServletException, IOException, ServiceException {
-        SiteLogic siteLogic = null;
+        SiteLogic siteLogic;
         try {
             siteLogic = new SiteLogic();
         } catch (ServiceException e) {
@@ -51,7 +50,7 @@ public class ShowAddPerformanceCommand implements ICommand {
             langId = 1;
         }
 
-        List<Category> categoryList = null;
+        List<Category> categoryList;
         try {
             categoryList = siteLogic.getAllCategories(langId);
         } catch (ServiceException e) {
@@ -71,11 +70,10 @@ public class ShowAddPerformanceCommand implements ICommand {
 
         session.setAttribute(SessionConstants.TICKETS_PRICE_ATTRIBUTE.getName(), ticketsPrices);
         request.setAttribute(SessionConstants.MENU_ITEM_ATTRIBUTE.getName(), SessionConstants.PERFORMANCES_ATTRIBUTE.getName());
-        request.setAttribute(SessionConstants.ANSWER_ATTRIBUTE.getName(), SessionConstants.PERFORMANCE_ANSWER_ATTRIBUTE.getName());
+        request.setAttribute(SessionConstants.ANSWER_ATTRIBUTE.getName(), SessionConstants.EDIT_PERF_ANSWER_ATTRIBUTE.getName());
         request.setAttribute(SessionConstants.LEGEND_ATTRIBUTE.getName(), SessionConstants.LEGEND.getName());
 
-        return PathProperties.createPathProperties().getProperty(
-                PathProperties.ADMIN_PAGE);
+        return PathProperties.createPathProperties().getProperty(PathProperties.ADMIN_PAGE);
     }
 
 }

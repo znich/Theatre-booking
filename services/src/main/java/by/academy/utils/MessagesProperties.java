@@ -22,6 +22,8 @@ public class MessagesProperties {
     public static final String ERROR_LOGIN = "msg.errorLogin";
     public static final String MAIN_PAGE = "menu.main";
     public static final String EDIT_PERFORMANCE_SUCESS = "msg.editPerformSucces";
+    public static final String PERF_DEL_SUCCESS = "msg.deletePerformSuccess";
+    public static final String PERF_DEL_ERROR = "msg.deletePerformError";
 
 
     private MessagesProperties() {

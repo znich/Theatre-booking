@@ -16,13 +16,6 @@ import java.io.IOException;
  * To change this template use File | Settings | File Templates.
  */
 public class  ShowUserProfileCommand implements ICommand {
-    private HttpServletRequest request;
-    private HttpServletResponse response;
-
-    public ShowUserProfileCommand(IWrapper wrapper) {
-        this.request = wrapper.getRequest();
-        this.response = wrapper.getResponse();
-    }
     @Override
     public String execute() throws ServletException, IOException {
         return PathProperties.createPathProperties().getProperty(PathProperties.PROFILE_USER_PAGE);

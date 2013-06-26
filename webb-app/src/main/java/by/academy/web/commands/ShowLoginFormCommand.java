@@ -16,13 +16,6 @@ import java.io.IOException;
  * To change this template use File | Settings | File Templates.
  */
 public class ShowLoginFormCommand implements ICommand {
-    private HttpServletRequest request;
-    private HttpServletResponse response;
-
-    public ShowLoginFormCommand(IWrapper wrapper) {
-        this.request = wrapper.getRequest();
-        this.response = wrapper.getResponse();
-    }
 
     @Override
     public String execute() throws ServletException, IOException {

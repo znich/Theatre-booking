@@ -3,6 +3,7 @@ package by.academy.domain;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -18,7 +19,7 @@ public class Performance implements Serializable {
     private Calendar endDate;
     private Category category;
     private Set<Event> events;
-    private Set<Property> properties;
+    private Set<Property> properties = new HashSet<Property>();
     private Set<TicketsPrice> ticketsPrices;
 
     public Performance() {

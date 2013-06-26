@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import by.academy.domain.User;
+import by.academy.domain.UserRole;
 import by.academy.exception.ServiceException;
 import by.academy.logic.LoginLogic;
 import by.academy.utils.MessagesProperties;
@@ -46,8 +47,12 @@ public class LoginCommand implements ICommand {
             LoginLogic loginLogic = new LoginLogic();
             User user = loginLogic.logination(email, password);
             if(user != null){
-                session.setAttribute(SessionConstants.USER_ATTRIBUTE.getName(), user);
+                if(UserRole.ADMIN.equals(user.getRole())){
+                    url = PathProperties.createPathProperties().getProperty(PathProperties.ADMIN_PAGE);
+                }else{
                 url = PathProperties.createPathProperties().getProperty(PathProperties.PROFILE_USER_PAGE);
+                }
+                session.setAttribute(SessionConstants.USER_ATTRIBUTE.getName(), user);
             } else{
                 message = MessagesProperties.createPathProperties().getProperties(MessagesProperties.ERROR_LOGIN, locale);
                 url = PathProperties.createPathProperties().getProperty(PathProperties.LOGIN_PAGE);

@@ -1,19 +1,16 @@
 package by.academy.web.util;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Siarhei Poludvaranin
- * Date: 6/19/13
- * Time: 2:41 PM
- * To change this template use File | Settings | File Templates.
  */
 public enum SessionConstants {
     LOCALE_ATTRIBUTE("lang"),
     LOCALE_ID_ATTRIBUTE("langId"),
     PERFORMANCE_ID_ATTRIBUTE("performanceId"),
+    PERFORMANCE_ATTRIBUTE("performance"),
     PERFORMANCES_ATTRIBUTE("performances"),
     PERFORMANCE_LIST_ATTRIBUTE("performanceList"),
-    PERFORMANCE_ANSWER_ATTRIBUTE("editPerformanceList"),
+    EDIT_PERF_ANSWER_ATTRIBUTE("editPerformance"),
+    EDIT_PERF_LIST_ANSWER_ATTRIBUTE("editPerformanceList"),
     MENU_ITEM_ATTRIBUTE("menuItem"),
     ANSWER_ATTRIBUTE("answer"),
     MESSAGE_ATTRIBUTE("message"),

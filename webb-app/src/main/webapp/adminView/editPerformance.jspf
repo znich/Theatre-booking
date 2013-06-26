@@ -1,5 +1,4 @@
-<%@page language="java" contentType="text/html; UTF-8"
-        pageEncoding="UTF-8"%>
+<%@page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8"%>
 
 <p class="text-error">
     <c:out value="${message}" />
@@ -8,14 +7,14 @@
 <form class="form-horizontal" method="POST"
       action="/webb-app/Controller">
 <fieldset>
-<legend>${legend }</legend>
-<input type="hidden" name="action" value="edit_performance"> <input
-        type="hidden" name="performanceId" value="${performance.id}">
+<legend>${legend}</legend>
+<input type="hidden" name="action" value="edit_performance">
+<input type="hidden" name="performanceId" value="${performance.id}">
 
 
 <div class="control-group">
     <div class="row-fluid">
-        <div class="span7">
+        <div class="span6">
 
             <div class="control-group">
                 <div class="row">
@@ -24,13 +23,16 @@
 
                     <div class="controls">
                         <div class="input-prepend">
-                            <span class="add-on"><i class="icon-file"></i></span> <input
-                                type="text" class="input-large" name="inputName"
-                                id="inputName"
-                        <c:forEach var="property"
-                                   items="${performance.properties}">
-                        <c:if test="${property.name==NAME}"> value="${property.childProperties[0].value}"</c:if>
-                        </c:forEach>>
+                            <span class="add-on"><i class="icon-file"></i></span>
+                            <input type="text" class="input-large" name="inputName" id="inputName"
+                            <c:forEach var="property" items="${performance.properties}">
+                                <c:if test="${property.name == 'NAME'}">
+                                    <c:forEach var="childProperty" items="${property.childProperties}">
+                                        value="${childProperty.value}"
+                                    </c:forEach>
+                                </c:if>
+                            </c:forEach>
+                                    />
                         </div>
                     </div>
 
@@ -47,9 +49,12 @@
                             <span class="add-on"><i class="icon-sort"></i></span> <select
                                 size=1 name="inputCategoryId">
                             <optgroup label="Категория">
-                                <c:forEach var="category" items="${categoryList}">
-                                    <option value="${category.id}"
-                                            <c:if test="${category.id == performance.category.id}">selected</c:if>>${category.name}</option>
+                                <c:forEach var="category" items="${categories}">
+                                    <c:forEach var="childCategory" items="${category.childCategories}">
+                                        <option value="${childCategory.parent.id}"
+                                                <c:if test="${childCategory.parent.id == performance.category.id}">selected</c:if>>${childCategory.name}
+                                        </option>
+                                    </c:forEach>
                                 </c:forEach>
                             </optgroup>
                         </select>
@@ -83,19 +88,23 @@
 
                     <div class="controls">
                         <img
-                        <c:forEach var="property"
-                                   items="${performance.properties}">
-                        <c:if test="${property.name==IMAGE}"> src="${property.childProperties[0].value}"</c:if>
-                        </c:forEach>
-                                                              class="img-rounded" width="300" height="200">
+                        <c:forEach var="property" items="${performance.properties}">
+                            <c:if test="${property.name=='IMAGE'}">
+                                <c:forEach var="childProperty" items="${property.childProperties}">
+                                    src="../static/img/thumbnail/${childProperty.value}"
+                                </c:forEach>
+                            </c:if>
+                        </c:forEach>                                      class="img-rounded" width="300" height="200">
 
                         <div class="input-prepend">
-                            <span class="add-on"><i class="icon-camera"></i></span> <input
-                                type="text" class="input-large" name="inputImage"
-                                id="inputImage"
-                        <c:forEach var="property"
-                                   items="${performance.properties}">
-                        <c:if test="${property.name==IMAGE}"> value="${property.childProperties[0].value}"</c:if>
+                            <span class="add-on"><i class="icon-camera"></i></span>
+                            <input type="text" class="input-large" name="inputImage" id="inputImage"
+                        <c:forEach var="property" items="${performance.properties}">
+                            <c:if test="${property.name=='IMAGE'}">
+                                <c:forEach var="childProperty" items="${property.childProperties}">
+                                        value= "../static/img/thumbnail/${childProperty.value}"
+                                </c:forEach>
+                            </c:if>
                         </c:forEach>>
                         </div>
                     </div>
@@ -168,9 +177,12 @@
         <div class="input-prepend">
 
             <textarea name="inputShortDescription">
-                <c:forEach var="property"
-                           items="${performance.properties}">
-                    <c:if test="${property.name==SHORT_DESCRIPTION}"> ${property.childProperties[0].value}"</c:if>
+                <c:forEach var="property" items="${performance.properties}">
+                    <c:if test="${property.name=='SHORT_DESCRIPTION'}">
+                        <c:forEach var="childProperty" items="${property.childProperties}">
+                            ${childProperty.value}
+                        </c:forEach>
+                    </c:if>
                 </c:forEach>
             </textarea>
 
@@ -190,9 +202,12 @@
         <div class="input-prepend">
 
             <textarea name="inputDescription">
-                <c:forEach var="property"
-                           items="${performance.properties}">
-                    <c:if test="${property.name==DESCRIPTION}"> ${property.childProperties[0].value}"</c:if>
+                <c:forEach var="property" items="${performanceList.properties}">
+                    <c:if test="${property.name=='DESCRIPTION'}">
+                        <c:forEach var="childProperty" items="${property.childProperties}">
+                            ${childProperty.value}
+                        </c:forEach>
+                    </c:if>
                 </c:forEach>
             </textarea>
             <script>

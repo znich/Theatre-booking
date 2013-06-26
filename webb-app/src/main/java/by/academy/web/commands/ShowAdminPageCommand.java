@@ -12,10 +12,8 @@ import by.academy.web.wrapper.IWrapper;
 public class ShowAdminPageCommand implements ICommand {
 
     private HttpServletRequest request;
-    private HttpServletResponse response;
     public ShowAdminPageCommand(IWrapper wrapper) {
         this.request = wrapper.getRequest();
-        this.response = wrapper.getResponse();
     }
 
     @Override
@@ -24,8 +22,7 @@ public class ShowAdminPageCommand implements ICommand {
         request.setAttribute(SessionConstants.MENU_ITEM_ATTRIBUTE.getName(), SessionConstants.ADMIN_ATTRIBUTE.getName());
         request.setAttribute(SessionConstants.ANSWER_ATTRIBUTE.getName(), SessionConstants.ADMIN_ANSWER_ATTRIBUTE.getName());
 
-        return PathProperties.createPathProperties().getProperty(
-                PathProperties.ADMIN_PAGE);
+        return PathProperties.createPathProperties().getProperty(PathProperties.ADMIN_PAGE);
     }
 
 }

@@ -101,8 +101,7 @@ public class AdminShowEventsCommand implements ICommand {
 
         if (category != null && category.getId() != 0) {
 
-            List<Event> sortedEventList = siteLogic.sortEventsByCategory(
-                    eventList, category);
+            List<Event> sortedEventList = siteLogic.sortEventsByCategory(eventList, category);
             eventList = sortedEventList;
         }
 
@@ -112,8 +111,7 @@ public class AdminShowEventsCommand implements ICommand {
 
         session.setAttribute(SessionConstants.CATEGORIES_LIST_ATTRIBUTE.getName(), siteLogic.getAllCategories(langId));
 
-        return PathProperties.createPathProperties().getProperty(
-                PathProperties.ADMIN_PAGE);
+        return PathProperties.createPathProperties().getProperty(PathProperties.ADMIN_PAGE);
 
     }
 

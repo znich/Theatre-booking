@@ -26,7 +26,8 @@ public enum CommandFactory {
     SHOW_EDIT_EVENT,
     EDIT_EVENT,
     SHOW_ADD_EVENT,
-    SHOW_ADMIN_PAGE;
+    DELETE_PERFORMANCE,
+    ADMIN_SHOW_MAIN;
 
     public static ICommand createCommand(IWrapper wrapper) {
         String commandStr = wrapper.getRequest().getParameter(RequestConstants.COMMAND_PARAMETER.getName());
@@ -43,6 +44,8 @@ public enum CommandFactory {
                         switch (commandEnum) {
                             case ADMIN_SHOW_PERFORMANCES:
                                 return new AdminShowPerformancesCommand(wrapper);
+                            case DELETE_PERFORMANCE:
+                                return new DeletePerformanceCommand(wrapper);
                             case SHOW_EDIT_PERFORMANCE:
                                 return new ShowEditPerformanceCommand(wrapper);
                             case EDIT_PERFORMANCE:
@@ -57,7 +60,7 @@ public enum CommandFactory {
                                 return new EditEventCommand(wrapper);
                             case SHOW_ADD_EVENT:
                                 return new ShowAddEventCommand(wrapper);
-                            case SHOW_ADMIN_PAGE:
+                            case ADMIN_SHOW_MAIN:
                                 return new ShowAdminPageCommand(wrapper);
                             default:
                                 return new HelloCommand(wrapper);
@@ -65,15 +68,15 @@ public enum CommandFactory {
                     case USER:
                         switch (commandEnum) {
                             case USER_PROFILE:
-                                return new ShowUserProfileCommand(wrapper);
+                                return new ShowUserProfileCommand();
                             case SHOW_EVENT_LIST:
                                 return new ShowEventsCommand(wrapper);
                             case SHOW_PERF_LIST:
                                 return new ShowPerformancesCommand(wrapper);
                             case SHOW_REG_FORM:
-                                return new ShowRegistrationFormCommand(wrapper);
+                                return new ShowRegistrationFormCommand();
                             case SHOW_LOGIN_FORM:
-                                return new ShowLoginFormCommand(wrapper);
+                                return new ShowLoginFormCommand();
                             case LOGIN:
                                 return new LoginCommand(wrapper);
                             case REGISTRATOR:
@@ -91,9 +94,9 @@ public enum CommandFactory {
                     case SHOW_PERF_LIST:
                         return new ShowPerformancesCommand(wrapper);
                     case SHOW_REG_FORM:
-                        return new ShowRegistrationFormCommand(wrapper);
+                        return new ShowRegistrationFormCommand();
                     case SHOW_LOGIN_FORM:
-                        return new ShowLoginFormCommand(wrapper);
+                        return new ShowLoginFormCommand();
                     case LOGIN:
                         return new LoginCommand(wrapper);
                     case REGISTRATOR:

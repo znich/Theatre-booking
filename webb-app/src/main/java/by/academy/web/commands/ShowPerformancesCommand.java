@@ -12,27 +12,21 @@ import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Siarhei Poludvaranin
- * Date: 20.05.13
  */
 public class ShowPerformancesCommand implements ICommand {
     private HttpServletRequest request;
-    private HttpServletResponse response;
 
     private static Log log = LogFactory.getLog(ShowPerformancesCommand.class);
 
     public ShowPerformancesCommand(IWrapper wrapper) {
         this.request = wrapper.getRequest();
-        this.response = wrapper.getResponse();
     }
 
     public String execute() throws ServletException, IOException, ServiceException {
-        SiteLogic siteLogic = null;
+        SiteLogic siteLogic;
         try {
             siteLogic = new SiteLogic();
         } catch (ServiceException e) {

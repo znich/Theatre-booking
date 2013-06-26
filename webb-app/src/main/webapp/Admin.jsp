@@ -28,12 +28,9 @@
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="../static/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../static/js/moment.js"></script>
-    <script type="text/javascript"
-            src="../static/js/daterangepicker.js"></script>
-    <script type="text/javascript"
-            src="../static/js/bootstrap-datepicker.js"></script>
-    <script type="text/javascript"
-            src="../static/js/bootstrap-timepicker.min.js"></script>
+    <script type="text/javascript" src="../static/js/daterangepicker.js"></script>
+    <script type="text/javascript" src="../static/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="../static/js/bootstrap-timepicker.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('#reservation').daterangepicker();

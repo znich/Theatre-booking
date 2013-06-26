@@ -97,8 +97,7 @@ public class AdminLogic extends DataAccessService {
         return flag;
     }
 
-    public boolean saveOrUpdateEvent(Integer eventId, int perfId,
-                                     long startTime, long endTime) throws ServiceException {
+    public boolean saveOrUpdateEvent(Integer eventId, int perfId, long startTime, long endTime) throws ServiceException {
 
         IPerformanceDao perfDao = daoFactory.getPerformanceDao();
         IStatusDao statusDao = daoFactory.getStatusDao();
@@ -120,7 +119,7 @@ public class AdminLogic extends DataAccessService {
                     ticket.setPlace(s);
                     ticket.setStatus(statusDao.getEntityById(1));
                     ticket.setEvent(event);
-                    event.setTicket(ticket);
+                    event.getTickets().add(ticket);
                 }
             } else {
                 event = eventDao.getEntityById(eventId);
@@ -146,7 +145,7 @@ public class AdminLogic extends DataAccessService {
         IBookingDao bookingDao = daoFactory.getBookingDao();
         IStatusDao statusDao = daoFactory.getStatusDao();
         Calendar currentDate = Calendar.getInstance();
-        List<Booking> expiredBookingList = null;
+        List<Booking> expiredBookingList;
 
         try{
 
@@ -170,8 +169,7 @@ public class AdminLogic extends DataAccessService {
 
     }
 
-    public boolean deleteTicketFromBooking(int bookingId, int ticketId,
-                                           int langId) throws ServiceException {
+    public boolean deleteTicketFromBooking(int bookingId, int ticketId, int langId) throws ServiceException {
 
         IBookingDao bookingDao = daoFactory.getBookingDao();
         ITicketDao ticketDao = daoFactory.getTicketDao();

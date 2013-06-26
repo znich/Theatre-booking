@@ -19,13 +19,12 @@ import org.apache.commons.logging.LogFactory;
 public class AdminShowPerformancesCommand implements ICommand {
     private static Log log = LogFactory.getLog(AdminShowPerformancesCommand.class);
     private HttpServletRequest request;
-    private HttpServletResponse response;
     private SiteLogic siteLogic;
     private HttpSession session;
 
     public AdminShowPerformancesCommand(IWrapper wrapper) {
         this.request = wrapper.getRequest();
-        this.response = wrapper.getResponse();
+        this.session = request.getSession();
     }
     //
     @Override
@@ -36,7 +35,6 @@ public class AdminShowPerformancesCommand implements ICommand {
             log.error("Can't create SiteLogic", e);
             throw new ServiceException("Can't create SiteLogic", e);
         }
-        session = request.getSession();
 
         int langId = (Integer) session.getAttribute(SessionConstants.LOCALE_ID_ATTRIBUTE.getName());
 
@@ -47,10 +45,9 @@ public class AdminShowPerformancesCommand implements ICommand {
             throw new ServiceException("Can't get performances", e);
         }
         request.setAttribute(SessionConstants.MENU_ITEM_ATTRIBUTE.getName(), SessionConstants.PERFORMANCES_ATTRIBUTE.getName());
-        request.setAttribute(SessionConstants.ANSWER_ATTRIBUTE.getName(), SessionConstants.PERFORMANCE_ANSWER_ATTRIBUTE.getName());
+        request.setAttribute(SessionConstants.ANSWER_ATTRIBUTE.getName(), SessionConstants.EDIT_PERF_LIST_ANSWER_ATTRIBUTE.getName());
 
-        return PathProperties.createPathProperties().getProperty(
-                PathProperties.ADMIN_PAGE);
+        return PathProperties.createPathProperties().getProperty(PathProperties.ADMIN_PAGE);
     }
 
 }

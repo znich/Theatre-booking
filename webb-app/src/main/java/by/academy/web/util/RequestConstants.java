@@ -7,7 +7,7 @@ package by.academy.web.util;
  */
 public enum RequestConstants {
     EVENTS_LIST_ATTRIBUTE("eventList"),
-    DATE_INTERVAL("dateInteval"),
+    DATE_INTERVAL("dateInterval"),
     EMAIL_ATTRIBUTE("inputEmail"),
     PASSWORD_ATTRIBUTE("inputPassword"),
     FIRST_NAME_ATTRIBUTE("firstName"),

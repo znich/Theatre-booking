@@ -6,23 +6,30 @@
     <div class="row-fluid">
 
         <div class="span3">
-            <img
-            <c:forEach var="property"
-                       items="${performance.properties}">
-            <c:if test="${property.name==IMAGE}"> src="${property.childProperties[0].value}"</c:if>
+            <c:forEach var="property" items="${performance.properties}">
+                <c:if test="${property.name=='IMAGE'}">
+                    <c:forEach var="childProperty" items="${property.childProperties}">
+                        <img src="../static/img/thumbnail/${childProperty.value}" class="img-polaroid">
+                    </c:forEach>
+                </c:if>
             </c:forEach>
-                                                  class="img-rounded" width="300" height="200">
         </div>
         <div class="span6 perf-text">
             <a
                     href="/webb-app/Controller?action=show_performance?performanceId=${performance.id}">
-                <h3><c:forEach var="property"
-                               items="${performance.properties}">
-                    <c:if test="${property.name==NAME}">${property.childProperties[0].value}"</c:if>
+                <h3><c:forEach var="property" items="${event.performance.properties}">
+                    <c:if test="${property.name == 'NAME'}">
+                        <c:forEach var="childProperty" items="${property.childProperties}">
+                            ${childProperty.value}
+                        </c:forEach>
+                    </c:if>
                 </c:forEach></h3>
-            </a> <span><c:forEach var="property"
-                                  items="${performance.properties}">
-            <c:if test="${property.name==SHORT_DESCRIPTION}">${property.childProperties[0].value}"</c:if>
+            </a> <span><c:forEach var="property" items="${performance.properties}">
+            <c:if test="${property.name=='SHORT_DESCRIPTION'}">
+                <c:forEach var="childProperty" items="${property.childProperties}">
+                    ${childProperty.value}
+                </c:forEach>
+            </c:if>
         </c:forEach></span>
         </div>
         <div class="span1">

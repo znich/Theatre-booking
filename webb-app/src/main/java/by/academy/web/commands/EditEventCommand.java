@@ -24,12 +24,10 @@ public class EditEventCommand implements ICommand {
     private static Log log = LogFactory.getLog(EditEventCommand.class);
     private final String DATE_FORMAT = "MM/dd/yyyy HH:mm";
     private HttpServletRequest request;
-    private HttpServletResponse response;
     private AdminLogic adminLogic;
 
     public EditEventCommand(IWrapper wrapper) {
         this.request = wrapper.getRequest();
-        this.response = wrapper.getResponse();
     }
 
     @Override
@@ -53,33 +51,28 @@ public class EditEventCommand implements ICommand {
             langId = 1;
         }
 
-        Calendar eventsStartDate = new GregorianCalendar();
-        Calendar eventsEndDate = new GregorianCalendar();
-
         String inputedDate = request.getParameter(SessionConstants.INPUT_DATE.getName());
         String inputedStartTime = request.getParameter(SessionConstants.INPUT_START_TIME_ATTRIBUTE.getName());
         String inputedEndTime = request.getParameter(SessionConstants.INPUT_END_TIME_ATTRIBUTE.getName());
 
-        String startDate = inputedDate + " " + inputedStartTime;
-        String endDate = inputedDate + " " + inputedEndTime;
-
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+        long eventsStartDate;
+        long eventsEndDate;
         if (inputedDate != null && inputedDate.length() > 0) {
 
             try {
-                eventsStartDate.setTime(new SimpleDateFormat(DATE_FORMAT)
-                        .parse(startDate));
-                eventsEndDate.setTime(new SimpleDateFormat(DATE_FORMAT)
-                        .parse(endDate));
+                eventsStartDate = sdf.parse(inputedDate + " " + inputedStartTime).getTime();
+                eventsEndDate = sdf.parse( inputedDate + " " + inputedEndTime).getTime();
             } catch (ParseException e) {
                 log.error("Wrong date format error", e);
                 throw new ServiceException("Wrong date format error", e);
             }
         } else {
-            eventsStartDate.setTime(new Date());
-            eventsEndDate.setTime(new Date());
+            eventsStartDate = Calendar.getInstance().getTimeInMillis();
+            eventsEndDate = Calendar.getInstance().getTimeInMillis();
         }
 
-        Integer eventId = 0;
+        Integer eventId = null;
         String idOfEvent = request.getParameter(SessionConstants.EVENT_ID_ATTRIBUTE.getName());
         if (idOfEvent.length() > 0) {
             eventId = Integer.parseInt(idOfEvent);
@@ -91,7 +84,7 @@ public class EditEventCommand implements ICommand {
             performanceId = Integer.parseInt(idOfPerformance);
         }
 
-        boolean flag = adminLogic.saveOrUpdateEvent(eventId, performanceId, eventsStartDate.getTimeInMillis(), eventsEndDate.getTimeInMillis());
+        boolean flag = adminLogic.saveOrUpdateEvent(eventId, performanceId, eventsStartDate, eventsEndDate);
 
         String message = null;
 

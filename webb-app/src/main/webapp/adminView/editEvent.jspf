@@ -25,14 +25,18 @@
                             <div class="controls">
                                 <div class="input-prepend">
                                     <span class="add-on"><i class="icon-file"></i></span> <select
-                                        size=1 name="inputPerformanceId">
+                                        size=1 name="performanceId">
                                     <optgroup label="Выберите представление">
-                                        <c:forEach var="performance" items="${performancesList}">
+                                        <c:forEach var="performance" items="${performanceList}">
                                             <option value="${performance.id}"
                                             <c:if test="${performence.id == event.performance.id}">selected</c:if>>
-                                            <c:forEach var="property" items="${performance.properties}">
-                                                <c:if test="${property.name==NAME}">${property.childProperties[0].value}</c:if>
-                                            </c:forEach>
+                                                <c:forEach var="property" items="${performance.properties}">
+                                                    <c:if test="${property.name == 'NAME'}">
+                                                        <c:forEach var="childProperty" items="${property.childProperties}">
+                                                            ${childProperty.value}
+                                                        </c:forEach>
+                                                    </c:if>
+                                                </c:forEach>
                                             </option>
                                         </c:forEach>
                                     </optgroup>

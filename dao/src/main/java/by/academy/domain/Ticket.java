@@ -72,13 +72,13 @@ public class Ticket implements Serializable {
 
         Ticket ticket = (Ticket) o;
 
-        if (!id.equals(ticket.id)) return false;
+        if (id != null ? !id.equals(ticket.id) : ticket.id != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return id != null ? id.hashCode() : 0;
     }
 }

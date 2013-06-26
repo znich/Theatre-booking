@@ -1,6 +1,5 @@
 package by.academy.web.commands;
 
-import by.academy.domain.User;
 import by.academy.exception.ServiceException;
 import by.academy.logic.RegistratorLogic;
 import by.academy.utils.MessagesProperties;
@@ -12,8 +11,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -48,7 +45,7 @@ public class RegistratorCommand implements ICommand {
         String locale = (String) session.getAttribute(SessionConstants.LOCALE_ATTRIBUTE.getName());
         int langId = (Integer) session.getAttribute(SessionConstants.LOCALE_ID_ATTRIBUTE.getName());
 
-        String message = null;
+        String message;
         if (!registratorLogic.checkFirstName(firstName)) {
             firstName = null;
             message = MessagesProperties.createPathProperties().getProperties(MessagesProperties.WRONG_FIRST_NAME, locale);

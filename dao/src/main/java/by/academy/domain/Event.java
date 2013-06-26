@@ -1,6 +1,7 @@
 package by.academy.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -12,7 +13,7 @@ public class Event implements Serializable {
     private Performance performance;
     private long startTime;
     private long endTime;
-    private Set<Ticket> tickets;
+    private Set<Ticket> tickets = new HashSet<Ticket>();
 
     private Integer freeTicketsCount;
     private Integer maxTicketPrice;
@@ -77,16 +78,12 @@ public class Event implements Serializable {
         this.endTime = endTime;
     }
 
-    public Set getTickets() {
+    public Set<Ticket> getTickets() {
         return tickets;
     }
 
-    public void setTickets(Set tickets) {
+    public void setTickets(Set<Ticket> tickets) {
         this.tickets = tickets;
-    }
-
-    public void setTicket(Ticket ticket) {
-        this.tickets.add(ticket);
     }
 
     @Override
@@ -96,13 +93,31 @@ public class Event implements Serializable {
 
         Event event = (Event) o;
 
-        if (!id.equals(event.id)) return false;
+        if (endTime != event.endTime) return false;
+        if (startTime != event.startTime) return false;
+        if (freeTicketsCount != null ? !freeTicketsCount.equals(event.freeTicketsCount) : event.freeTicketsCount != null)
+            return false;
+        if (id != null ? !id.equals(event.id) : event.id != null) return false;
+        if (maxTicketPrice != null ? !maxTicketPrice.equals(event.maxTicketPrice) : event.maxTicketPrice != null)
+            return false;
+        if (minTicketPrice != null ? !minTicketPrice.equals(event.minTicketPrice) : event.minTicketPrice != null)
+            return false;
+        if (performance != null ? !performance.equals(event.performance) : event.performance != null) return false;
+        if (tickets != null ? !tickets.equals(event.tickets) : event.tickets != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (performance != null ? performance.hashCode() : 0);
+        result = 31 * result + (int) (startTime ^ (startTime >>> 32));
+        result = 31 * result + (int) (endTime ^ (endTime >>> 32));
+        result = 31 * result + (tickets != null ? tickets.hashCode() : 0);
+        result = 31 * result + (freeTicketsCount != null ? freeTicketsCount.hashCode() : 0);
+        result = 31 * result + (maxTicketPrice != null ? maxTicketPrice.hashCode() : 0);
+        result = 31 * result + (minTicketPrice != null ? minTicketPrice.hashCode() : 0);
+        return result;
     }
 }
