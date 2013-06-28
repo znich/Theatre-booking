@@ -33,6 +33,12 @@
         <module name="webb-app" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel target="1.8">
+      <module name="dao" target="1.7" />
+      <module name="services" target="1.7" />
+      <module name="theatre-booking" target="1.7" />
+      <module name="webb-app" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
 </project>
 

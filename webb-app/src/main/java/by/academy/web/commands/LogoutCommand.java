@@ -12,11 +12,9 @@ import java.io.IOException;
 /**
  */
 public class LogoutCommand implements ICommand {
-    private HttpServletRequest request;
     private HttpSession session;
 
     public LogoutCommand(IWrapper wrapper) {
-        this.request = wrapper.getRequest();
         this.session = wrapper.getSession();
     }
 

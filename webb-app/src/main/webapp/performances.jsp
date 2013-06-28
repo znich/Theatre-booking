@@ -26,27 +26,6 @@
        <%@include file="jspf/head.jspf"%>
 	  <div class="contentWrapper" id="performanceList">
 	   <%@include file="jspf/perfCategories.jspf"%>
-	  <div class="row">
-			<div class="span12">
-				<div class="span3">
-					<img src="../static/img/thumbnail/1.jpg" class="img-polaroid">
-				</div>
-				<div class="span8 perf-text">
-					<a href="http://localhost:8080/userView/performance.jsp"><h3>Аида</h3></a>
-					<span>Джузеппе Верди</span>
-					<p>
-					<small>
-						опера в 4-х действиях с участием народного артиста Грузии Теймураза Гугушвили<br />
-						<b>Либретто</b> – Антонио Гисланцони, Камилл дю Локль<br />
-						по сценарию Франсуа Огюста Фердинанда Мариетта<br />
-						<b>Дирижер-постановщик</b> – Вячеслав Волич<br />
-						<b>Режиссер-постановщик</b> – Михаил Панджавидзе<br />
-					</small>
-					</p>
-				</div>
-			</div>
-	  </div>
-	 
 	
 	   <%@include file="jspf/performancesList.jspf"%>
 	  

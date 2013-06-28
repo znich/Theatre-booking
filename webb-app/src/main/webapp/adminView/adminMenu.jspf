@@ -15,4 +15,7 @@
 					
 					<li  <c:if test="${menuItem==\"tickets\"}">class="active"</c:if>>
 					<a href="/webb-app/Controller?action=admin_show_events">Билеты</a></li>
+
+                    <li><a href="/webb-app/Controller" target="_blank">Перейти на Главную</a></li>
+                    <li><a href="/webb-app/Controller?action=logout">Выход</a></li>
 </ul>  

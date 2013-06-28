@@ -21,20 +21,7 @@
 </head>
 <body id="body">
  <div class="container">
-     <div class="row" id="user-nav">
-         <%@include file="jspf/userLogin.jspf"%>
-         <div class="span4">
-             <form class="form-search">
-                 <div class="input-append">
-                     <input type="text" class="span2 search-quyery">
-                     <button type="submit" class="btn"><fmt:message key="btn.search" bundle="${bundle}"/></button>
-                 </div>
-             </form>
-         </div>
-     </div>
-     <div class="navbar">
-         <%@include file="jspf/mainMenu.jspf"%>
-     </div>
+     <%@include file="jspf/head.jspf"%>
 	  <div class="contentWrapper">
 			<div class="carousel slide" id="mySlider">
 				<ol class="carousel-indicators">

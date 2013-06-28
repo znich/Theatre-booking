@@ -107,6 +107,7 @@
                 </div>
             </td>
     </c:forEach>
+</table>
     <script>
         $(function() {
             $(this).find('.dropdown-toggle').dropdown();

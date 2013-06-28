@@ -3,10 +3,7 @@ package by.academy.web.commands;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -90,7 +87,7 @@ public class EditPerformanceCommand implements ICommand {
         String description = request.getParameter(SessionConstants.INPUT_DESCRIPTION_ATTRIBUTE.getName());
         String image = request.getParameter(SessionConstants.INPUT_IMAGE_ATTRIBUTE.getName());
 
-        List<TicketsPrice> ticketsPrices = new ArrayList<TicketsPrice>();
+        List<TicketsPrice> ticketsPrices;
         ticketsPrices = (List<TicketsPrice>) session.getAttribute(SessionConstants.TICKETS_PRICE_ATTRIBUTE.getName());
 
         System.out.println(ticketsPrices.size());

@@ -16,7 +16,7 @@
             <key column="PERFORMANCE_ID" not-null="true"/>
             <many-to-many class="Property" column="PROPERTY_ID"/>
         </set>
-        <set name="events" table="EVENT" inverse="true" fetch="select">
+        <set name="events" table="T_EVENT" inverse="true" fetch="select">
             <key column="EVENT_NAME" not-null="true" />
             <one-to-many class="Event" />
         </set>

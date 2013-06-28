@@ -1,5 +1,6 @@
 package by.academy.dao;
 
+import by.academy.dao.exception.DaoException;
 import by.academy.dao.impl.*;
 import by.academy.dao.util.HibernateUtil;
 import by.academy.domain.*;
@@ -8,11 +9,6 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Siarhei Poludvaranin
- * Date: 6/8/13
- * Time: 11:07 PM
- * To change this template use File | Settings | File Templates.
  */
 public class HibernateDaoFactory extends DaoFactory {
     private static Log log = LogFactory.getLog(HibernateDaoFactory.class);
@@ -72,7 +68,13 @@ public class HibernateDaoFactory extends DaoFactory {
         return (IUserDao)instantiateDao(UserDaoImpl.class);
     }
     protected Session getCurrentSession() {
-        return HibernateUtil.getSession();
+        Session session = null;
+        try {
+            session =  HibernateUtil.getSession();
+        } catch (DaoException e) {
+            log.error("Can not get session");
+        }
+        return session;
     }
 
     private GenericDaoImpl instantiateDao(Class daoClass) {
@@ -106,6 +108,10 @@ public class HibernateDaoFactory extends DaoFactory {
     public static class StatusDaoImpl
             extends GenericDaoImpl<Status, Integer>
             implements IStatusDao {}
+
+    public static class PerformanceDaoImpl
+            extends GenericDaoImpl<Performance, Integer>
+            implements IPerformanceDao {}
 
  
 

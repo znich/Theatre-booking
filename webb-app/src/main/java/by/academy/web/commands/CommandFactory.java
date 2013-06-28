@@ -62,6 +62,20 @@ public enum CommandFactory {
                                 return new ShowAddEventCommand(wrapper);
                             case ADMIN_SHOW_MAIN:
                                 return new ShowAdminPageCommand(wrapper);
+                            case SHOW_EVENT_LIST:
+                                return new ShowEventsCommand(wrapper);
+                            case SHOW_PERF_LIST:
+                                return new ShowPerformancesCommand(wrapper);
+                            case SHOW_REG_FORM:
+                                return new ShowRegistrationFormCommand();
+                            case SHOW_LOGIN_FORM:
+                                return new ShowLoginFormCommand();
+                            case LOGIN:
+                                return new LoginCommand(wrapper);
+                            case REGISTRATOR:
+                                return new RegistratorCommand(wrapper);
+                            case LOGOUT:
+                                return new LogoutCommand(wrapper);
                             default:
                                 return new HelloCommand(wrapper);
                         }

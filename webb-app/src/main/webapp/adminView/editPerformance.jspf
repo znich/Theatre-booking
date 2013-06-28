@@ -42,12 +42,12 @@
             <div class="control-group">
                 <div class="row">
 
-                    <label class="control-label" for="inputCategory">Категория</label>
+                    <label class="control-label" for="inputCategoryId">Категория</label>
 
                     <div class="controls">
                         <div class="input-prepend">
                             <span class="add-on"><i class="icon-sort"></i></span> <select
-                                size=1 name="inputCategoryId">
+                                size=1 id="inputCategoryId" name="inputCategoryId">
                             <optgroup label="Категория">
                                 <c:forEach var="category" items="${categories}">
                                     <c:forEach var="childCategory" items="${category.childCategories}">
@@ -117,35 +117,21 @@
         <div class="span3">
             <div class="control-group">
                 <div class="row">
-                    <label class="control-label" for="inputLanguage">Язык:</label>
-
-                    <div class="controls">
-                        <div class="input-prepend">
-                            <span class="add-on"><i class="icon-comment"></i></span> <select
-                                size=1 name="inputLangId" onchange=>
-                            <optgroup label="Язык">
-                                <option value="1"
-                                        onclick="location.href='/webb-app/Controller?action=show_edit_performance&performanceId=${performance.id }&inputLangId=1'"
-                                        <c:if test="${langId == 1}">selected</c:if>>русский
-                                </option>
-                                <option value="2"
-                                        onclick="location.href= '/webb-app/Controller?action=show_edit_performance&performanceId=${performance.id }&inputLangId=2'"
-                                        <c:if test="${langId == 2}">selected</c:if>>english
-                                </option>
-                            </optgroup>
-                        </select>
-                        </div>
-                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Выберите язык <span class="caret"></span></button><p></p>
+                        <ul class="dropdown-menu">
+                            <li><a href="/webb-app/Controller?action=show_edit_performance&performanceId=${performance.id}&&inputLangId=1">RU</a></li>
+                            <li><a href="/webb-app/Controller?action=show_edit_performance&performanceId=${performance.id}&&inputLangId=2">EN</a></li>
+                        </ul></div>
                 </div>
             </div>
 
             <div class="control-group">
                 <div class="row">
-                    <label class="control-label" for="inputPrice">Цена
-                        билетов:</label>
+                    <label class="control-label" for="inputPrice">Цена билетов:</label>
 
                     <div class="controls">
-                        <table id="inputPrice">
+                        <table>
                             <tr>
                                 <td>Категория:</td>
                                 <td>Стоимость:</td>
@@ -188,7 +174,7 @@
 
             <script>
                 CKEDITOR.replace('inputShortDescription', {
-                    height : 150,
+                    height : 150
                 });
             </script>
         </div>
@@ -212,7 +198,7 @@
             </textarea>
             <script>
                 CKEDITOR.replace('inputDescription', {
-                    height : 500,
+                    height : 500
                 });
             </script>
         </div>

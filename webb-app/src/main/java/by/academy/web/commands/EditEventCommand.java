@@ -4,12 +4,11 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
+
 import java.util.GregorianCalendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import by.academy.exception.ServiceException;
 import by.academy.logic.AdminLogic;
@@ -22,9 +21,8 @@ import org.apache.commons.logging.LogFactory;
 public class EditEventCommand implements ICommand {
 
     private static Log log = LogFactory.getLog(EditEventCommand.class);
-    private final String DATE_FORMAT = "MM/dd/yyyy HH:mm";
     private HttpServletRequest request;
-    private AdminLogic adminLogic;
+
 
     public EditEventCommand(IWrapper wrapper) {
         this.request = wrapper.getRequest();
@@ -32,12 +30,7 @@ public class EditEventCommand implements ICommand {
 
     @Override
     public String execute() throws ServletException, IOException, ServiceException {
-        try {
-            adminLogic = new AdminLogic();
-        } catch (ServiceException e) {
-            log.error("Can't create SiteLogic", e);
-            throw new ServiceException("Can't create SiteLogic", e);
-        }
+
         String inputLangId = request.getParameter(SessionConstants.INPUT_LANG_ID.getName());
 
         Integer langId = null;
@@ -55,21 +48,20 @@ public class EditEventCommand implements ICommand {
         String inputedStartTime = request.getParameter(SessionConstants.INPUT_START_TIME_ATTRIBUTE.getName());
         String inputedEndTime = request.getParameter(SessionConstants.INPUT_END_TIME_ATTRIBUTE.getName());
 
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
-        long eventsStartDate;
-        long eventsEndDate;
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy HH:mm");
+        Calendar eventsStartDate = GregorianCalendar.getInstance();
+        Calendar eventsEndDate = GregorianCalendar.getInstance();
         if (inputedDate != null && inputedDate.length() > 0) {
-
             try {
-                eventsStartDate = sdf.parse(inputedDate + " " + inputedStartTime).getTime();
-                eventsEndDate = sdf.parse( inputedDate + " " + inputedEndTime).getTime();
+                eventsStartDate.setTime(sdf.parse(inputedDate + " " + inputedStartTime));
+                eventsEndDate.setTime(sdf.parse(inputedDate + " " + inputedEndTime));
             } catch (ParseException e) {
                 log.error("Wrong date format error", e);
                 throw new ServiceException("Wrong date format error", e);
             }
         } else {
-            eventsStartDate = Calendar.getInstance().getTimeInMillis();
-            eventsEndDate = Calendar.getInstance().getTimeInMillis();
+            eventsStartDate = Calendar.getInstance();
+            eventsEndDate = Calendar.getInstance();
         }
 
         Integer eventId = null;
@@ -84,20 +76,24 @@ public class EditEventCommand implements ICommand {
             performanceId = Integer.parseInt(idOfPerformance);
         }
 
-        boolean flag = adminLogic.saveOrUpdateEvent(eventId, performanceId, eventsStartDate, eventsEndDate);
-
+        boolean flag;
+        try {
+            AdminLogic adminLogic = new AdminLogic();
+            flag = adminLogic.saveOrUpdateEvent(eventId, performanceId, eventsStartDate.getTimeInMillis(), eventsEndDate.getTimeInMillis());
+        } catch (ServiceException e) {
+            log.error("Can't create SiteLogic", e);
+            throw new ServiceException("Can't create SiteLogic", e);
+        }
         String message = null;
 
 		/*if (flag) {
-			message = MessagesProperties.createPathProperties().getProperties(
-					MessagesProperties.REGISTER_SUCCESSFUL, "ru");
+            message = MessagesProperties.createPathProperties().getProperties(MessagesProperties.REGISTER_SUCCESSFUL, "ru");
 		}*/
 
         request.setAttribute(SessionConstants.MENU_ITEM_ATTRIBUTE.getName(), SessionConstants.EVENTS_ATTRIBUTE.getName());
         request.setAttribute(SessionConstants.ANSWER_ATTRIBUTE.getName(), SessionConstants.EVENT_ANSWER_ATTRIBUTE.getName());
         request.setAttribute(SessionConstants.MESSAGE_ATTRIBUTE.getName(), message);
 
-        return PathProperties.createPathProperties().getProperty(
-                PathProperties.ADMIN_PAGE);
+        return PathProperties.createPathProperties().getProperty(PathProperties.ADMIN_PAGE);
     }
 }

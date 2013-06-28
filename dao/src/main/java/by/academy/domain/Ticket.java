@@ -72,13 +72,20 @@ public class Ticket implements Serializable {
 
         Ticket ticket = (Ticket) o;
 
+        if (price != ticket.price) return false;
         if (id != null ? !id.equals(ticket.id) : ticket.id != null) return false;
+        if (place != null ? !place.equals(ticket.place) : ticket.place != null) return false;
+        if (status != null ? !status.equals(ticket.status) : ticket.status != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + price;
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (place != null ? place.hashCode() : 0);
+        return result;
     }
 }

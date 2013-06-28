@@ -33,24 +33,22 @@ public class LocaleFilter implements Filter {
      */
 
     public void doFilter(ServletRequest request, ServletResponse response,
-                         FilterChain chain)
-            throws IOException, ServletException {
+                         FilterChain chain) throws IOException, ServletException {
         request.setCharacterEncoding("UTF8");
         response.setCharacterEncoding("UTF8");
         HttpServletRequest httpReq = (HttpServletRequest) request;
         HttpSession session = httpReq.getSession();
-        String lang = "ru";
+        String lang;
         if (request.getParameter(SessionConstants.LOCALE_ATTRIBUTE.getName()) != null) {
             lang = request.getParameter(SessionConstants.LOCALE_ATTRIBUTE.getName());
             session.setAttribute(SessionConstants.LOCALE_ATTRIBUTE.getName(), lang);
-
         }
+
         if (session.getAttribute(SessionConstants.LOCALE_ATTRIBUTE.getName()) == null) {
             lang = httpReq.getLocale().getLanguage();
             session.setAttribute(SessionConstants.LOCALE_ATTRIBUTE.getName(), lang);
-
         }
-
+        lang = (String)session.getAttribute(SessionConstants.LOCALE_ATTRIBUTE.getName());
         switch (Languages.valueOf(lang.toUpperCase())) {
             case RU:
                 session.setAttribute(SessionConstants.LOCALE_ID_ATTRIBUTE.getName(), 1);

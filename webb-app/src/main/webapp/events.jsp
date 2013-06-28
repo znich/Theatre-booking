@@ -9,7 +9,7 @@
 <head>
     <fmt:setLocale value="${lang}"/>
     <fmt:setBundle basename="messages" var="bundle" scope="page"/>
-    <title><fmt:message key="title.index" bundle="${bundle}"/></title>
+    <title><fmt:message key="title.events" bundle="${bundle}"/></title>
     <meta charset="utf-8">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -29,20 +29,7 @@
 </head>
 <body id="body">
 <div class="container">
-    <div class="row" id="user-nav">
-        <%@include file="jspf/userLogin.jspf"%>
-        <div class="span4">
-            <form class="form-search">
-                <div class="input-append">
-                    <input type="text" class="span2 search-quyery">
-                    <button type="submit" class="btn"><fmt:message key="btn.search" bundle="${bundle}"/></button>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="navbar">
-        <%@include file="jspf/mainMenu.jspf"%>
-    </div>
+    <%@include file="jspf/head.jspf"%>
     <div class="contentWrapper">
         <div class="row">
             <div class="span12">
@@ -66,7 +53,7 @@
                                         <div class="input-prepend">
                                             <span class="add-on"><i class="icon-calendar"></i></span>
                                             <input type="hidden" id="action" name="action" value="show_event_list"/>
-                                            <input class="input-medium" type="text" name="dateInteval" id="reservation" value="${dateInterval}" />
+                                            <input class="input-medium" type="text" name="dateInterval" id="reservation" value="${dateInterval}" />
                                         </div>
                                     </div>
                                 </div>

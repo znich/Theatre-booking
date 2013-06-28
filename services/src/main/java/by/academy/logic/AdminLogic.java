@@ -2,7 +2,9 @@ package by.academy.logic;
 
 import java.util.Calendar;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import by.academy.dao.*;
 import by.academy.dao.exception.DaoException;
@@ -69,7 +71,7 @@ public class AdminLogic extends DataAccessService {
                 }
 
                 parentProperty.getChildProperties().add(childProperty);
-                if(parentProperty.getName() != null){
+                if (parentProperty.getName() != null) {
                     performance.setProperty(parentProperty);
                 }
             }
@@ -147,21 +149,21 @@ public class AdminLogic extends DataAccessService {
         Calendar currentDate = Calendar.getInstance();
         List<Booking> expiredBookingList;
 
-        try{
+        try {
 
-        expiredBookingList = bookingDao.getExpiredBooking(currentDate);
-        for (Booking b : expiredBookingList) {
-            bookingDao.delEntity(b.getId());
+            expiredBookingList = bookingDao.getExpiredBooking(currentDate);
+            for (Booking b : expiredBookingList) {
+                bookingDao.delEntity(b.getId());
 
-            List<Ticket> tickets = ticketDao.getTicketsByBookingId(b);
-            for (Ticket ticket : tickets) {
+                List<Ticket> tickets = ticketDao.getTicketsByBookingId(b);
+                for (Ticket ticket : tickets) {
 
-                ticket.setBooking(null);
-                ticket.setStatus(statusDao.getEntityById(1));
-                ticketDao.save(ticket);
+                    ticket.setBooking(null);
+                    ticket.setStatus(statusDao.getEntityById(1));
+                    ticketDao.save(ticket);
+                }
             }
-        }
-        }catch (DaoException e) {
+        } catch (DaoException e) {
             log.error("DaoException in AdminLogic. Can't delete Expired Bookings", e);
             throw new ServiceException("DaoException in AdminLogic. Can't delete Expired Bookings", e);
         }
@@ -176,20 +178,20 @@ public class AdminLogic extends DataAccessService {
         IStatusDao statusDao = daoFactory.getStatusDao();
 
         boolean flag = false;
-        try{
-        Booking booking = bookingDao.getEntityById(bookingId);
-        Ticket ticket = ticketDao.getEntityById(ticketId);
+        try {
+            Booking booking = bookingDao.getEntityById(bookingId);
+            Ticket ticket = ticketDao.getEntityById(ticketId);
 
-        if (booking != null && ticket == null) {
+            if (booking != null && ticket == null) {
 
-            booking.deleteTicket(ticket);
-            ticket.setStatus(statusDao.getEntityById(1));
-            ticket.setBooking(null);
-            ticketDao.save(ticket);
-            flag = true;
-            bookingDao.save(booking);
-        }
-        }catch (DaoException e) {
+                booking.deleteTicket(ticket);
+                ticket.setStatus(statusDao.getEntityById(1));
+                ticket.setBooking(null);
+                ticketDao.save(ticket);
+                flag = true;
+                bookingDao.save(booking);
+            }
+        } catch (DaoException e) {
             log.error("DaoException in AdminLogic. Can't delete ticket from booking", e);
             throw new ServiceException("DaoException in AdminLogic. Can't delete ticket from booking", e);
         }

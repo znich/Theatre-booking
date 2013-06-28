@@ -1,5 +1,8 @@
-<%@page language="java" contentType="text/html; UTF-8"
-        pageEncoding="UTF-8"%>
+<%@page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8"%>
+<jsp:useBean id="sTime" class="java.util.Date" scope="page"/>
+<jsp:useBean id="eTime" class="java.util.Date" scope="page"/>
+<jsp:setProperty name="sTime" property="time" value="${event.startTime}" />
+<jsp:setProperty name="eTime" property="time" value="${event.endTime}" />
 
 <p class="text-error">
     <c:out value="${message}" />
@@ -8,7 +11,7 @@
 <form class="form-horizontal" method="POST"
       action="/webb-app/Controller">
     <fieldset>
-        <legend>${legend }</legend>
+        <legend>${legend}</legend>
         <input type="hidden" name="action" value="edit_event"> <input
             type="hidden" name="eventId" value="${event.id}">
 
@@ -50,14 +53,13 @@
                     <div class="control-group">
                         <div class="row">
 
-                            <label class="control-label" for="reservation">Дата
-                                события:</label>
+                            <label class="control-label" for="datepicker">Дата события:</label>
                             <div class="controls">
                                 <div class="input-prepend">
                                     <span class="add-on"><i class="icon-calendar"></i></span> <input
                                         class="input-large" type="text" name="inputDate"
                                         id="datepicker" data-date-format="mm/dd/yy"
-                                        value="${eventsDate}" />
+                                        value="<fmt:formatDate value="${sTime}" pattern="MM/dd/yy" />" />
 
                                 </div>
                             </div>
@@ -111,7 +113,7 @@
         minuteStep : 5,
         showSeconds : false,
         showMeridian : false,
-        defaultTime : '${startTime}'
+        defaultTime : '<fmt:formatDate value="${sTime}" pattern="HH:mm" />'
     });
 </script>
 <script type="text/javascript">
@@ -119,6 +121,6 @@
         minuteStep : 5,
         showSeconds : false,
         showMeridian : false,
-        defaultTime : '${endTime}'
+        defaultTime : '<fmt:formatDate value="${eTime}" pattern="HH:mm" />'
     });
 </script>

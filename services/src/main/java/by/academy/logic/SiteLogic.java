@@ -183,7 +183,9 @@ public class SiteLogic extends DataAccessService {
     }
 
     public List<Ticket> setPricesForTikets(List<Ticket> ticketsList) throws ServiceException {
-
+        if(ticketsList.isEmpty()){
+            return new ArrayList<Ticket>();
+        }
         Performance performance = ticketsList.get(0).getEvent().getPerformance();
         Set<TicketsPrice> ticketsPriceList = performance.getTicketsPrices();
 

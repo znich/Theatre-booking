@@ -1,11 +1,6 @@
 package by.academy.web.commands;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Siarhei Poludvaranin
- * Date: 6/19/13
- * Time: 10:05 AM
- * To change this template use File | Settings | File Templates.
  */
 import java.io.IOException;
 import java.text.ParseException;

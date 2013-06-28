@@ -27,11 +27,10 @@ public class LoginCommand implements ICommand {
     private HttpSession session;
 
 
-
     public LoginCommand(IWrapper wrapper) {
 
         this.request = wrapper.getRequest();
-        this.session =  wrapper.getSession();
+        this.session = wrapper.getSession();
     }
 
     public String execute() throws ServletException, IOException, ServiceException {
@@ -46,14 +45,16 @@ public class LoginCommand implements ICommand {
         try {
             LoginLogic loginLogic = new LoginLogic();
             User user = loginLogic.logination(email, password);
-            if(user != null){
-                if(UserRole.ADMIN.equals(user.getRole())){
+            if (user != null) {
+
+                if (UserRole.ADMIN.equals(user.getRole())) {
                     url = PathProperties.createPathProperties().getProperty(PathProperties.ADMIN_PAGE);
-                }else{
-                url = PathProperties.createPathProperties().getProperty(PathProperties.PROFILE_USER_PAGE);
+                } else {
+                    url = PathProperties.createPathProperties().getProperty(PathProperties.PROFILE_USER_PAGE);
                 }
+
                 session.setAttribute(SessionConstants.USER_ATTRIBUTE.getName(), user);
-            } else{
+            } else {
                 message = MessagesProperties.createPathProperties().getProperties(MessagesProperties.ERROR_LOGIN, locale);
                 url = PathProperties.createPathProperties().getProperty(PathProperties.LOGIN_PAGE);
             }

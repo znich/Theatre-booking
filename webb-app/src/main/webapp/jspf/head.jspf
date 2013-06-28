@@ -1,5 +1,6 @@
 <div class="row" id="user-nav">
 		   <%@include file="userLogin.jspf"%>
+           <%@include file="lang.jspf"%>
 		  <div class="span4">
 			<form class="form-search">
 			  <div class="input-append">

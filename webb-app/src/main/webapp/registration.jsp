@@ -8,7 +8,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
- <title>Регистрация - Театр Minsk Opera House</title>
+ <title><fmt:message key="lbl.registration" bundle="${bundle}"/> - <fmt:message key="title.index" bundle="${bundle}"/></title>
 	<meta name="description" content="">
     <meta name="author" content="">
     <!-- Bootstrap -->
@@ -29,23 +29,23 @@
                 <p class="text-error"><c:out value="${message}"/></p>
 				<form class="form-horizontal" method="POST" action = "Controller">
 				 <fieldset>
-				 <legend>Регистрация</legend>
+				 <legend><fmt:message key="lbl.registration" bundle="${bundle}"/></legend>
                      <input type="hidden" name="action" value="registrator">
                  <div class="control-group">
-                     <label class="control-label" for="firstName">Имя</label>
+                     <label class="control-label" for="firstName"><fmt:message key="lbl.firstName" bundle="${bundle}"/></label>
                      <div class="controls">
                          <div class="input-prepend">
                              <span class="add-on"><i></i></span>
-                             <input type="text" class="input-large" name="firstName" id="firstName" placeholder="Имя">
+                             <input type="text" class="input-large" name="firstName" id="firstName" placeholder="<fmt:message key="lbl.firstName" bundle="${bundle}"/>">
                          </div>
                      </div>
                  </div>
                  <div class="control-group">
-                     <label class="control-label" for="secondName">Фамилия</label>
+                     <label class="control-label" for="secondName"><fmt:message key="lbl.surname" bundle="${bundle}"/></label>
                      <div class="controls">
                          <div class="input-prepend">
                              <span class="add-on"><i></i></span>
-                             <input type="text" class="input-large" name="secondName" id="secondName" placeholder="Фамилия">
+                             <input type="text" class="input-large" name="secondName" id="secondName" placeholder="<fmt:message key="lbl.surname" bundle="${bundle}"/>">
                          </div>
                      </div>
                  </div>
@@ -59,25 +59,25 @@
 					</div>
 				  </div>
 				  <div class="control-group">
-					<label class="control-label" for="inputPassword">Пароль</label>
+					<label class="control-label" for="inputPassword"><fmt:message key="lbl.password" bundle="${bundle}"/></label>
 					<div class="controls">
 					  <div class="input-prepend">
 						  <span class="add-on"><i class="icon-lock"></i></span>
-						  <input type="password" class="input-large" name="inputPassword" id="inputPassword" placeholder="Пароль">
+						  <input type="password" class="input-large" name="inputPassword" id="inputPassword" placeholder="<fmt:message key="lbl.password" bundle="${bundle}"/>">
 					  </div>
 					</div>
 				  </div>
 				  <div class="control-group">
-					<label class="control-label" for="inputAddress">Адрес</label>
+					<label class="control-label" for="inputAddress"><fmt:message key="lbl.address" bundle="${bundle}"/></label>
 					<div class="controls">
 					  <div class="input-prepend">
 						  <span class="add-on"><i class="icon-home"></i></span>
-						  <input type="text" class="input-large" name="inputAddress" id="inputAddress" placeholder="ул. Джигурдинская 120б, кв. 80">
+						  <input type="text" class="input-large" name="inputAddress" id="inputAddress" placeholder="<fmt:message key="lbl.address" bundle="${bundle}"/>">
 					  </div>
 					</div>
 				  </div>
 				  <div class="control-group">
-					<label class="control-label" for="inputPhone">Телефон</label>
+					<label class="control-label" for="inputPhone"><fmt:message key="lbl.phone" bundle="${bundle}"/></label>
 					<div class="controls">
 						<div class="input-prepend">
 						  <span class="add-on"><i class="icon-book"></i></span>
@@ -87,7 +87,7 @@
 				  </div>
 				  <div class="control-group">
 					<div class="controls">
-					  <button type="submit" class="btn btn-large btn-primary">Жмяк</button>
+					  <button type="submit" class="btn btn-large btn-primary"><fmt:message key="btn.submit" bundle="${bundle}"/></button>
 					</div>
 				  </div>
 				   </fieldset>

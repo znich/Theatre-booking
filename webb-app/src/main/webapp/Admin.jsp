@@ -1,5 +1,4 @@
-<%@page language="java" contentType="text/html; UTF-8"
-        pageEncoding="UTF-8"%>
+<%@page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -13,20 +12,17 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../static/css/daterangepicker.css" rel="stylesheet"
-          type="text/css" />
-    <link href="../static/css/datepicker.css" rel="stylesheet"
-          type="text/css" />
-    <link href="../static/css/bootstrap-timepicker.min.css"
-          rel="stylesheet" type="text/css" />
+    <link href="../static/css/daterangepicker.css" rel="stylesheet" type="text/css" />
+    <link href="../static/css/datepicker.css" rel="stylesheet" type="text/css" />
+    <link href="../static/css/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css" />
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
     <script src="../static/js/html5shiv.js"></script>
     <![endif]-->
     <link href="../static/css/style.css" rel="stylesheet">
-    <script src="../static/ckeditor/ckeditor.js"></script>
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="../static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../static/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../static/js/moment.js"></script>
     <script type="text/javascript" src="../static/js/daterangepicker.js"></script>
     <script type="text/javascript" src="../static/js/bootstrap-datepicker.js"></script>

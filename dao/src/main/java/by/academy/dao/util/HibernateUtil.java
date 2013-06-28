@@ -1,46 +1,66 @@
 package by.academy.dao.util;
 
+
+import by.academy.dao.exception.HibernateUtilException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+
 import java.util.Locale;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Siarhei Poludvaranin
- * Date: 31.05.13
- * Time: 2:34
- * To change this template use File | Settings | File Templates.
  */
-public enum HibernateUtil {
+public enum HibernateUtil
+{
     ;
-    private static final ThreadLocal<Session> sessions = new ThreadLocal<Session>();
+    private static Log log = LogFactory.getLog(HibernateUtil.class);
     private static SessionFactory sessionFactory;
-    public static Log log = LogFactory.getLog(HibernateUtil.class);
-
-    private static void getSessionFactory() {
-        try {
-            Locale.setDefault(Locale.ENGLISH);
-            Configuration conf = new Configuration();
-            conf.setNamingStrategy(new CustomNamingStrategy());
-            sessionFactory = conf.configure().buildSessionFactory();
-        } catch (Throwable ex) {
-            log.error("Initial SessionFactory creation failed." + ex);
-            throw new ExceptionInInitializerError(ex);
+    private static final Lock singletoneLock = new ReentrantLock();
+    /**
+     * Method to get Session from SessionFactory.
+     * @return currentSession() or openSession() from factory.
+     * @throws HibernateUtilException if any Exception cached from Hibernate
+     */
+    public static Session getSession() throws HibernateUtilException
+    {
+        Session session;
+        singletoneLock.lock();
+        if (null == HibernateUtil.sessionFactory)
+        {
+            HibernateUtil.init();
         }
-    }
-
-    public static Session getSession() {
-        Session session = (Session) sessions.get();
-        if (session == null) {
-            HibernateUtil.getSessionFactory();
-            session = sessionFactory.openSession();
-            sessions.set(session);
+        singletoneLock.unlock();
+        try
+        {
+            session = HibernateUtil.sessionFactory.getCurrentSession();
+        }
+        catch (Exception e)
+        {
+            session = HibernateUtil.sessionFactory.openSession();
         }
         return session;
     }
+
+    private static void init() throws HibernateUtilException
+    {
+        try
+        {
+            Locale.setDefault(Locale.ENGLISH);
+            Configuration conf = new Configuration();
+            conf.setNamingStrategy(new CustomNamingStrategy());
+            HibernateUtil.sessionFactory = conf.configure().buildSessionFactory();
+        }
+        catch (HibernateException ex)
+        {
+            log.error("Initial SessionFactory creation failed." + ex);
+            throw new HibernateUtilException("Initial SessionFactory creation failed.", ex);
+        }
+    }
 }
+

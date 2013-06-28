@@ -41,8 +41,8 @@ public class ShowPerformancesCommand implements ICommand {
             log.error("Can't get category list", e);
             throw new ServiceException("Can't get category list", e);
         }
-        String cat = (String) request.getParameter(RequestConstants.CATEGORY_ID.getName());
-        String perfId = (String) request.getParameter(SessionConstants.PERFORMANCE_ID_ATTRIBUTE.getName());
+        String cat = request.getParameter(RequestConstants.CATEGORY_ID.getName());
+        String perfId = request.getParameter(SessionConstants.PERFORMANCE_ID_ATTRIBUTE.getName());
 
         if(cat != null && Integer.parseInt(cat) != 0){
             int selectedCategory = Integer.parseInt(cat);
