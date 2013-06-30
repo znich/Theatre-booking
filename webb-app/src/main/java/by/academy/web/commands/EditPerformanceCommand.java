@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -87,21 +89,21 @@ public class EditPerformanceCommand implements ICommand {
         String description = request.getParameter(SessionConstants.INPUT_DESCRIPTION_ATTRIBUTE.getName());
         String image = request.getParameter(SessionConstants.INPUT_IMAGE_ATTRIBUTE.getName());
 
-        List<TicketsPrice> ticketsPrices;
-        ticketsPrices = (List<TicketsPrice>) session.getAttribute(SessionConstants.TICKETS_PRICE_ATTRIBUTE.getName());
-
-        System.out.println(ticketsPrices.size());
+        Set<TicketsPrice> ticketsPrices;
+        ticketsPrices = (Set<TicketsPrice>) session.getAttribute(SessionConstants.TICKETS_PRICE_ATTRIBUTE.getName());
+        
+        
 
         for (TicketsPrice ticketsPrice : ticketsPrices) {
             ticketsPrice.setPrice(Integer.parseInt(request.getParameter(SessionConstants.INPUT_TICKETS_PRICE_ATTRIBUTE.getName()
-                            + ticketsPrice.getPriceCategory())));
+                            + ticketsPrice.getPriceCategory())));            
         }
 
         Category category = siteLogic.getCategoryById(categoryId);
 
         boolean flag = adminLogic.saveOrUpdatePerformance(performanceId, name,
                 shortDescription, description, date1, date2, image, category,
-                langId);
+                ticketsPrices, langId);
         String message = null;
 
         if (flag) {
@@ -112,7 +114,7 @@ public class EditPerformanceCommand implements ICommand {
         }
 
         request.setAttribute(SessionConstants.MENU_ITEM_ATTRIBUTE.getName(), SessionConstants.PERFORMANCES_ATTRIBUTE.getName());
-        request.setAttribute(SessionConstants.ANSWER_ATTRIBUTE.getName(), SessionConstants.EDIT_PERF_ANSWER_ATTRIBUTE.getName());
+        request.setAttribute(SessionConstants.ANSWER_ATTRIBUTE.getName(), SessionConstants.EDIT_PERF_LIST_ANSWER_ATTRIBUTE.getName());
         request.setAttribute(SessionConstants.MESSAGE_ATTRIBUTE.getName(), message);
 
         return PathProperties.createPathProperties().getProperty(PathProperties.ADMIN_PAGE);

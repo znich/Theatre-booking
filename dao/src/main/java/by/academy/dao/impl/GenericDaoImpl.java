@@ -45,11 +45,11 @@ public abstract class GenericDaoImpl<T, ID extends Serializable> implements IGen
     }
 
     @Override
-    public void delEntity(ID id) throws IllegalArgumentException, DaoException {
+    public boolean delEntity(ID id) throws IllegalArgumentException, DaoException {
         if (id == null) {
             throw new IllegalArgumentException("GenericDaoImpl.ErrorIdNull");
         }
-
+        boolean flag = true;
         Transaction tr = null;
         try {
             Session session = getSession();
@@ -60,19 +60,22 @@ public abstract class GenericDaoImpl<T, ID extends Serializable> implements IGen
             tr.commit();
         } catch (HibernateException e) {
             log.error("Error was thrown in DAO", e);
+            flag=false;
             if (tr != null) {
                 tr.rollback();
             }
             throw new DaoException(e);
         }
+        return flag;
     }
 
     @Override
-    public void delEntity(T entity) throws IllegalArgumentException, DaoException {
+    public boolean delEntity(T entity) throws IllegalArgumentException, DaoException {
         if (entity == null) {
             throw new IllegalArgumentException(
                     "Entity for saving cannot be null!");
         }
+        boolean flag = true;
         Transaction tr = null;
         try {
             Session session = getSession();
@@ -81,11 +84,13 @@ public abstract class GenericDaoImpl<T, ID extends Serializable> implements IGen
             tr.commit();
         } catch (HibernateException e) {
             log.error("Error was thrown in DAO", e);
+            flag=false;
             if (tr != null) {
                 tr.rollback();
             }
             throw new DaoException(e);
         }
+        return flag;
     }
 
     @Override

@@ -27,6 +27,7 @@ public enum CommandFactory {
     EDIT_EVENT,
     SHOW_ADD_EVENT,
     DELETE_PERFORMANCE,
+    DELETE_EVENT,
     ADMIN_SHOW_MAIN;
 
     public static ICommand createCommand(IWrapper wrapper) {
@@ -46,6 +47,8 @@ public enum CommandFactory {
                                 return new AdminShowPerformancesCommand(wrapper);
                             case DELETE_PERFORMANCE:
                                 return new DeletePerformanceCommand(wrapper);
+                            case DELETE_EVENT:
+                            	return new DeleteEventCommand(wrapper);                            		
                             case SHOW_EDIT_PERFORMANCE:
                                 return new ShowEditPerformanceCommand(wrapper);
                             case EDIT_PERFORMANCE:

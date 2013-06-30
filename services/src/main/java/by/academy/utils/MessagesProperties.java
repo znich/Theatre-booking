@@ -24,6 +24,8 @@ public class MessagesProperties {
     public static final String EDIT_PERFORMANCE_SUCESS = "msg.editPerformSucces";
     public static final String PERF_DEL_SUCCESS = "msg.deletePerformSuccess";
     public static final String PERF_DEL_ERROR = "msg.deletePerformError";
+    public static final String EVENT_DEL_SUCCESS = "msg.deleteEventSuccess";
+    public static final String EVENT_DEL_ERROR = "msg.deleteEventError";
 
 
     private MessagesProperties() {

@@ -16,9 +16,9 @@ import java.util.List;
  */
 public interface IGenericDao<T, ID extends Serializable> {
 
-    void delEntity(ID id) throws IllegalArgumentException, DaoException;
+    boolean delEntity(ID id) throws IllegalArgumentException, DaoException;
 
-    void delEntity(T entity) throws IllegalArgumentException, DaoException;
+    boolean delEntity(T entity) throws IllegalArgumentException, DaoException;
 
     T save(T entity) throws IllegalArgumentException, DaoException;
 
