@@ -3,6 +3,7 @@ package by.academy.web.commands;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
@@ -89,14 +90,21 @@ public class EditPerformanceCommand implements ICommand {
         String description = request.getParameter(SessionConstants.INPUT_DESCRIPTION_ATTRIBUTE.getName());
         String image = request.getParameter(SessionConstants.INPUT_IMAGE_ATTRIBUTE.getName());
 
-        Set<TicketsPrice> ticketsPrices;
+      /*  Set<TicketsPrice> ticketsPrices;
         ticketsPrices = (Set<TicketsPrice>) session.getAttribute(SessionConstants.TICKETS_PRICE_ATTRIBUTE.getName());
-        
-        
+        session.removeAttribute((SessionConstants.TICKETS_PRICE_ATTRIBUTE.getName()));
+        */
+        Set<TicketsPrice> ticketsPrices = new HashSet<TicketsPrice>(); 
+
+        for (int i=1;i<=5;i++){
+            TicketsPrice ticketsPrice = new TicketsPrice();
+            ticketsPrice.setPriceCategory(i);
+            ticketsPrices.add(ticketsPrice);
+        }
 
         for (TicketsPrice ticketsPrice : ticketsPrices) {
             ticketsPrice.setPrice(Integer.parseInt(request.getParameter(SessionConstants.INPUT_TICKETS_PRICE_ATTRIBUTE.getName()
-                            + ticketsPrice.getPriceCategory())));            
+                            + ticketsPrice.getPriceCategory())));             
         }
 
         Category category = siteLogic.getCategoryById(categoryId);
@@ -106,9 +114,9 @@ public class EditPerformanceCommand implements ICommand {
                 ticketsPrices, langId);
         String message = null;
 
-        if (flag) {
+       /* if (flag) {
             flag = adminLogic.editTicketsPriceForPerformance(ticketsPrices);
-        }
+        }*/
         if (flag) {
             message = MessagesProperties.createPathProperties().getProperties(MessagesProperties.REGISTER_SUCCESSFUL, "ru");
         }

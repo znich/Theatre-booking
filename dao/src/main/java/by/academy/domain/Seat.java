@@ -16,7 +16,7 @@ public class Seat implements Serializable {
     private Integer id;
     private int row;
     private int seatNumber;
-    private TicketsPrice priceCategory;
+    private Integer priceCategory;
     private int sector;
 
     public Seat() {
@@ -47,11 +47,11 @@ public class Seat implements Serializable {
         this.seatNumber = seatNumber;
     }
 
-    public TicketsPrice getPriceCategory() {
+    public Integer getPriceCategory() {
         return priceCategory;
     }
 
-    public void setPriceCategory(TicketsPrice priceCategory) {
+    public void setPriceCategory(Integer priceCategory) {
         this.priceCategory = priceCategory;
     }
 

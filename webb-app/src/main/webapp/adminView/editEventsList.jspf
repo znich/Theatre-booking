@@ -2,7 +2,8 @@
 <jsp:useBean id="startTime" class="java.util.Date" scope="page"/>
 <jsp:useBean id="endTime" class="java.util.Date" scope="page"/>
 
-
+<div class="row-fluid">
+<div class="span7">
 <ul class="nav nav-tabs">
     <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -39,9 +40,14 @@
             </fieldset>
         </form>
     </li>
-    <li><a href="/webb-app/Controller?action=show_add_event"
-           class="btn btn-primary">Добавить новое событие</a></li>
-</ul>
+    </ul>
+    </div>
+    <div class="span3">
+   <a href="/webb-app/Controller?action=show_add_event"
+           class="btn btn-primary">Добавить новое событие</a>
+           
+</div>
+</div>
 
 <table class="table table-bordered table-hover">
     <thead>

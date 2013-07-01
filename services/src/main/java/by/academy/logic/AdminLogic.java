@@ -30,54 +30,104 @@ public class AdminLogic extends DataAccessService {
 			Set<TicketsPrice> ticketsPrices, int langId)
 			throws ServiceException {
 
+		SiteLogic siteLogic = new SiteLogic();
 		boolean flag = false;
 		IPerformanceDao perfDao = daoFactory.getPerformanceDao();
 		Performance performance;
 		try {
-			if (id == null) {
-				performance = new Performance();
-			} else {
+			if (id != null) {
+
 				performance = perfDao.getEntityById(id);
+				log.info("Getting performance for editing:"
+						+ performance.toString());
+
+				Set<Property> properties = performance.getProperties();
+				siteLogic.sortPropertyByLang(properties, langId);
+
+				for (Property parentProperty : properties) {
+					PropertyNameEnum e = parentProperty.getName();
+
+					switch (e) {
+
+					case NAME:
+						for (Property childProperty : parentProperty
+								.getChildProperties()) {
+							childProperty.setValue(title);
+						}
+						break;
+					case SHORT_DESCRIPTION:
+						for (Property childProperty : parentProperty
+								.getChildProperties()) {
+							childProperty.setValue(shortDescription);
+						}
+						break;
+					case DESCRIPTION:
+						for (Property childProperty : parentProperty
+								.getChildProperties()) {
+							childProperty.setValue(description);
+						}
+						break;
+					case IMAGE:
+						for (Property childProperty : parentProperty
+								.getChildProperties()) {
+							childProperty.setValue(image);
+						}
+						break;
+					default:
+						break;
+					}
+				}
+			} else {
+				performance = new Performance();
+
+				for (PropertyNameEnum e : PropertyNameEnum.values()) {
+					Property parentProperty = new Property();
+					Property childProperty = new Property();
+					childProperty.setLangId(langId);
+					childProperty.setRootProperty(parentProperty);
+
+					switch (e) {
+					case NAME:
+						parentProperty.setName(e);
+						childProperty.setName(e);
+						childProperty.setValue(title);
+						break;
+					case SHORT_DESCRIPTION:
+						parentProperty.setName(e);
+						childProperty.setName(e);
+						childProperty.setValue(shortDescription);
+						break;
+					case DESCRIPTION:
+						parentProperty.setName(e);
+						childProperty.setName(e);
+						childProperty.setValue(description);
+						break;
+					case IMAGE:
+						parentProperty.setName(e);
+						childProperty.setName(e);
+						childProperty.setValue(image);
+						break;
+					default:
+						break;
+					}
+					parentProperty.getChildProperties().add(childProperty);
+					if (parentProperty.getName() != null) {
+						performance.setProperty(parentProperty);
+					}
+				}
 			}
+			
+			performance.setTicketsPrices(ticketsPrices);			
+						
+			for (TicketsPrice price: performance.getTicketsPrices()){
+				price.setPerfId(performance);
+			}
+			
+
 			performance.setStartDate(startDate);
 			performance.setEndDate(endDate);
 			performance.setCategory(category);
-			performance.setTicketsPrices(ticketsPrices);
-
-			for (PropertyNameEnum e : PropertyNameEnum.values()) {
-				Property parentProperty = new Property();
-				Property childProperty = new Property();
-				childProperty.setLangId(langId);
-				childProperty.setRootProperty(parentProperty);
-
-				switch (e) {
-				case NAME:
-					parentProperty.setName(e);
-					childProperty.setName(e);
-					childProperty.setValue(title);
-					break;
-				case SHORT_DESCRIPTION:
-					parentProperty.setName(e);
-					childProperty.setName(e);
-					childProperty.setValue(shortDescription);
-					break;
-				case DESCRIPTION:
-					parentProperty.setName(e);
-					childProperty.setName(e);
-					childProperty.setValue(description);
-					break;
-				case IMAGE:
-					parentProperty.setName(e);
-					childProperty.setName(e);
-					childProperty.setValue(image);
-					break;
-				}
-
-				parentProperty.getChildProperties().add(childProperty);
-				if (parentProperty.getName() != null) {
-					performance.setProperty(parentProperty);
-				}
-			}
+			
 
 			if (perfDao.save(performance) != null) {
 				flag = true;

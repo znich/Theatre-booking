@@ -8,7 +8,7 @@
                 <param name="sequence">SEAT_SEQ</param>
             </generator>
         </id>
-        <many-to-one name="priceCategory" column="F_PRICE_CATEGORY" class="TicketsPrice" fetch="select" />
+        <property name="priceCategory" not-null="true" />
         <property name="row" not-null="true" />
         <property name="seatNumber" not-null="true" />
         <property name="sector" not-null="true" />

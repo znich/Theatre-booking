@@ -15,7 +15,7 @@
         </property>
         <property name="value" type="text" />
         <property name="langId"  />
-        <set name="childProperties" inverse="true" fetch="select" cascade="save-update">
+        <set name="childProperties" inverse="true" fetch="select" cascade="all">
             <key column="PARENT_ID" not-null="true" />
             <one-to-many class="Property" />
         </set>

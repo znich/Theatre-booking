@@ -56,7 +56,7 @@ public class SiteLogic extends DataAccessService {
         return performances;
     }
 
-    private Set<Property> sortPropertyByLang(Set<Property> propSet, Integer langId) {
+     Set<Property> sortPropertyByLang(Set<Property> propSet, Integer langId) {
         for (Property prop : propSet) {
             Set<Property> sortedProperties = new HashSet<Property>();
             for (Property childProp : prop.getChildProperties()) {
@@ -187,9 +187,10 @@ public class SiteLogic extends DataAccessService {
             return new ArrayList<Ticket>();
         }
         Performance performance = ticketsList.get(0).getEvent().getPerformance();
+        //getting list of TicketPrices for performance (one element for each price category)
         Set<TicketsPrice> ticketsPriceList = performance.getTicketsPrices();
 
-        for(TicketsPrice tp: ticketsPriceList){
+        for(TicketsPrice tp: ticketsPriceList){        	
             for(Ticket ticket: ticketsList){
                 if(tp.getSeats().contains(ticket.getPlace())){
                     ticket.setPrice(tp.getPrice());

@@ -80,7 +80,7 @@ public class ShowEditPerformanceCommand implements ICommand {
         request.setAttribute(SessionConstants.PERFORMANCE_ATTRIBUTE.getName(), performance);
         request.setAttribute(SessionConstants.CATEGORIES_LIST_ATTRIBUTE.getName(), categoryList);
         request.setAttribute(RequestConstants.DATE_INTERVAL.getName(), dateInterval);
-        session.setAttribute(SessionConstants.TICKETS_PRICE_ATTRIBUTE.getName(), ticketsPrices);
+        request.setAttribute(SessionConstants.TICKETS_PRICE_ATTRIBUTE.getName(), ticketsPrices);
         request.setAttribute(SessionConstants.MENU_ITEM_ATTRIBUTE.getName(), SessionConstants.PERFORMANCES_ATTRIBUTE.getName());
         request.setAttribute(SessionConstants.ANSWER_ATTRIBUTE.getName(), SessionConstants.EDIT_PERF_ANSWER_ATTRIBUTE.getName());
 
