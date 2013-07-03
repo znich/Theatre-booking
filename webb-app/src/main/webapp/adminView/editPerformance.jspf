@@ -11,7 +11,7 @@
 		<legend>${legend}</legend>
 		<input type="hidden" name="action" value="edit_performance"> <input
 			type="hidden" name="performanceId" value="${performance.id}">
-
+		<input type="hidden" name="inputLangId" value="${inputLangId}"> 
 
 		<div class="control-group">
 			<div class="row-fluid">
@@ -107,7 +107,7 @@
 										<c:forEach var="property" items="${performance.properties}">
                             <c:if test="${property.name=='IMAGE'}">
                                 <c:forEach var="childProperty" items="${property.childProperties}">
-                                        value= "../static/img/thumbnail/${childProperty.value}"
+                                        value= "${childProperty.value}"
                                 </c:forEach>
 									</c:if>
 									</c:forEach>

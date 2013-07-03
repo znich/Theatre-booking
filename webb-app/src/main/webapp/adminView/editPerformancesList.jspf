@@ -17,7 +17,7 @@
         <div class="span6 perf-text">
             <a
                     href="/webb-app/Controller?action=show_performance?performanceId=${performance.id}">
-                <h3><c:forEach var="property" items="${event.performance.properties}">
+                <h3><c:forEach var="property" items="${performance.properties}">
                     <c:if test="${property.name == 'NAME'}">
                         <c:forEach var="childProperty" items="${property.childProperties}">
                             ${childProperty.value}

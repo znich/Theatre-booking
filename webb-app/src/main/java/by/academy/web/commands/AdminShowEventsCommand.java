@@ -38,6 +38,7 @@ public class AdminShowEventsCommand implements ICommand {
 	public AdminShowEventsCommand(IWrapper wrapper) {
 		this.request = wrapper.getRequest();
 		this.response = wrapper.getResponse();
+		this.session = wrapper.getSession();
 	}
 
 	@Override
@@ -50,10 +51,8 @@ public class AdminShowEventsCommand implements ICommand {
 			throw new ServiceException("Can't create SiteLogic", e);
 		}
 
-		int langId = (Integer) request.getSession().getAttribute(
-				SessionConstants.LOCALE_ID_ATTRIBUTE.getName());
-
-		session = request.getSession();
+		 int langId = (Integer) session.getAttribute(SessionConstants.LOCALE_ID_ATTRIBUTE.getName());
+		log.info("Admin show events command: getted lang Id- "+langId);
 
 		Calendar date1 = new GregorianCalendar();
 		Calendar date2 = new GregorianCalendar();
@@ -67,6 +66,7 @@ public class AdminShowEventsCommand implements ICommand {
 
 			dateInterval = request.getParameter(RequestConstants.DATE_INTERVAL
 					.getName());
+			log.info("dateInterval="+dateInterval);
 
 			session.setAttribute(RequestConstants.DATE_INTERVAL.getName(),
 					dateInterval);
@@ -95,14 +95,18 @@ public class AdminShowEventsCommand implements ICommand {
 			date2.setTimeInMillis(date2.getTimeInMillis() - sutki);
 		}
 
+		log.info("date1="+ date1.get(Calendar.DAY_OF_MONTH)+"/"+date1.get(Calendar.MONTH)+"/"+date1.get(Calendar.YEAR));
+		log.info("date2="+ date2.get(Calendar.DAY_OF_MONTH)+"/"+date2.get(Calendar.MONTH)+"/"+date2.get(Calendar.YEAR));
 		List<Event> eventList = siteLogic.getEventsInDateInterval(date1, date2,
 				langId);
+		/*List<Event> eventList = siteLogic.getAllEvents(langId);*/
 		Category category = getCategory(langId);
-
+		log.info("active category"+category.getName());
 		if (category != null && category.getId() != 0) {
 
 			List<Event> sortedEventList = siteLogic.sortEventsByCategory(
 					eventList, category);
+			log.info("sorting events list");
 			eventList = sortedEventList;
 		}
 

@@ -107,7 +107,7 @@ public class Property implements Serializable {
                 ", value='" + value + '\'' +
                 ", langId=" + langId +
                 ", rootProperty=" + rootProperty +
-                ", childProperties=" + childProperties.toString() +
+                ", childProperties=" +
                 '}';
     }
 }

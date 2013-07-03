@@ -5,59 +5,59 @@ import java.util.Set;
 
 /**
  */
-public class TicketsPrice implements Serializable {
-    private static final long serialVersionUID = 3226097319160868426L;
+public class TicketsPrice implements Serializable, Comparable {
+	private static final long serialVersionUID = 3226097319160868426L;
 
-    private Integer id;
-    private Performance perfId;
-    private int priceCategory;
-    private int price;
-    private Set<Seat> seats;
+	private Integer id;
+	private Performance perfId;
+	private int priceCategory;
+	private int price;
+	private Set<Seat> seats;
 
-    public TicketsPrice() {
-    }
+	public TicketsPrice() {
+	}
 
-    public Set<Seat> getSeats() {
-        return seats;
-    }
+	public Set<Seat> getSeats() {
+		return seats;
+	}
 
-    public void setSeats(Set<Seat> seats) {
-        this.seats = seats;
-    }
+	public void setSeats(Set<Seat> seats) {
+		this.seats = seats;
+	}
 
-    public Integer getId() {
-        return id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public Performance getPerfId() {
-        return perfId;
-    }
+	public Performance getPerfId() {
+		return perfId;
+	}
 
-    public void setPerfId(Performance perfId) {
-        this.perfId = perfId;
-    }
+	public void setPerfId(Performance perfId) {
+		this.perfId = perfId;
+	}
 
-    public int getPriceCategory() {
-        return priceCategory;
-    }
+	public int getPriceCategory() {
+		return priceCategory;
+	}
 
-    public void setPriceCategory(int priceCategory) {
-        this.priceCategory = priceCategory;
-    }
+	public void setPriceCategory(int priceCategory) {
+		this.priceCategory = priceCategory;
+	}
 
-    public int getPrice() {
-        return price;
-    }
+	public int getPrice() {
+		return price;
+	}
 
-    public void setPrice(int price) {
-        this.price = price;
-    }
+	public void setPrice(int price) {
+		this.price = price;
+	}
 
-    @Override
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -100,6 +100,15 @@ public class TicketsPrice implements Serializable {
 		return true;
 	}
 
+	@Override
+	public int compareTo(Object obj) {
+		TicketsPrice entry = (TicketsPrice) obj;
 
-  
+		int result = priceCategory - entry.priceCategory;
+		if (result != 0) {
+			return (int) result / Math.abs(result);
+		}
+		return 0;
+	}
+
 }

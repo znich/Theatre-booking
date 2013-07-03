@@ -56,17 +56,20 @@ public class SiteLogic extends DataAccessService {
         return performances;
     }
 
-     Set<Property> sortPropertyByLang(Set<Property> propSet, Integer langId) {
-        for (Property prop : propSet) {
+     Integer sortPropertyByLang(Set<Property> propSet, Integer langId) {
+        Integer result=0;
+    	 for (Property prop : propSet) {
             Set<Property> sortedProperties = new HashSet<Property>();
             for (Property childProp : prop.getChildProperties()) {
                 if (childProp.getLangId().equals(langId)) {
-                    sortedProperties.add(childProp);
+                   if( sortedProperties.add(childProp)){
+                	   result++;
+                   }
                 }
             }
             prop.setChildProperties(sortedProperties);
         }
-        return propSet;
+        return result;
     }
 
     public Event getEventById(int id, int langId) throws ServiceException {
@@ -190,9 +193,11 @@ public class SiteLogic extends DataAccessService {
         //getting list of TicketPrices for performance (one element for each price category)
         Set<TicketsPrice> ticketsPriceList = performance.getTicketsPrices();
 
-        for(TicketsPrice tp: ticketsPriceList){        	
+        for(TicketsPrice tp: ticketsPriceList){ 
+        	log.info("Tickets prices list="+tp.getPriceCategory()+"-"+tp.getPrice());
             for(Ticket ticket: ticketsList){
-                if(tp.getSeats().contains(ticket.getPlace())){
+                /*if(tp.getSeats().contains(ticket.getPlace()))*/
+            	if(tp.getPriceCategory()==ticket.getPlace().getPriceCategory()){
                     ticket.setPrice(tp.getPrice());
                 }
             }
@@ -253,6 +258,7 @@ public class SiteLogic extends DataAccessService {
             return 0;
         }
         Integer maxPrice = tickets.get(0).getPrice();
+        log.info("Max tickets price = "+maxPrice);
         for (Ticket ticket : tickets) {
             if (ticket.getPrice() > maxPrice) {
                 maxPrice = ticket.getPrice();
@@ -266,6 +272,7 @@ public class SiteLogic extends DataAccessService {
             return 0;
         }
         Integer minPrice = tickets.get(0).getPrice();
+        log.info("Min tickets price = "+minPrice);
         for (Ticket ticket : tickets) {
             if (ticket.getPrice() < minPrice) {
                 minPrice = ticket.getPrice();

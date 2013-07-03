@@ -16,7 +16,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Set;
@@ -68,19 +70,26 @@ public class ShowEditPerformanceCommand implements ICommand {
             log.error("Can't collect entities", e);
             throw new ServiceException("Can't collect entities", e);
         }
+        
+        List<TicketsPrice> pricesList = new ArrayList<>();
+        pricesList.addAll(ticketsPrices);
+        Collections.sort(pricesList);
 
         Calendar cal = GregorianCalendar.getInstance();
         StringBuilder dateIntervalBulder = new StringBuilder();
+        cal=performance.getStartDate();
         dateIntervalBulder.append((cal.get(Calendar.MONTH) + 1) + "/" + cal.get(Calendar.DATE) + "/" + cal.get(Calendar.YEAR));
         dateIntervalBulder.append(" - ");
+        cal = performance.getEndDate();
         dateIntervalBulder.append((cal.get(Calendar.MONTH) + 1) + "/" + cal.get(Calendar.DATE) + "/" + cal.get(Calendar.YEAR));
         String dateInterval = dateIntervalBulder.toString();
 
-
+        
         request.setAttribute(SessionConstants.PERFORMANCE_ATTRIBUTE.getName(), performance);
         request.setAttribute(SessionConstants.CATEGORIES_LIST_ATTRIBUTE.getName(), categoryList);
         request.setAttribute(RequestConstants.DATE_INTERVAL.getName(), dateInterval);
-        request.setAttribute(SessionConstants.TICKETS_PRICE_ATTRIBUTE.getName(), ticketsPrices);
+        request.setAttribute(SessionConstants.INPUT_LANG_ID.getName(), langId);
+        request.setAttribute(SessionConstants.TICKETS_PRICE_ATTRIBUTE.getName(),  pricesList);
         request.setAttribute(SessionConstants.MENU_ITEM_ATTRIBUTE.getName(), SessionConstants.PERFORMANCES_ATTRIBUTE.getName());
         request.setAttribute(SessionConstants.ANSWER_ATTRIBUTE.getName(), SessionConstants.EDIT_PERF_ANSWER_ATTRIBUTE.getName());
 

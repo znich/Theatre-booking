@@ -39,95 +39,46 @@ public class AdminLogic extends DataAccessService {
 
 				performance = perfDao.getEntityById(id);
 				log.info("Getting performance for editing:"
-						+ performance.toString());
+						+ performance.getId());
 
-				Set<Property> properties = performance.getProperties();
-				siteLogic.sortPropertyByLang(properties, langId);
-
-				for (Property parentProperty : properties) {
-					PropertyNameEnum e = parentProperty.getName();
-
-					switch (e) {
-
-					case NAME:
-						for (Property childProperty : parentProperty
-								.getChildProperties()) {
-							childProperty.setValue(title);
+				Set<TicketsPrice> pricesList = performance.getTicketsPrices();
+				// editing tickets prices for performance
+				for (TicketsPrice price : pricesList) {
+					for (TicketsPrice inputPrice : ticketsPrices) {
+						if (price.getPriceCategory() == inputPrice
+								.getPriceCategory()) {
+							price.setPrice(inputPrice.getPrice());
 						}
-						break;
-					case SHORT_DESCRIPTION:
-						for (Property childProperty : parentProperty
-								.getChildProperties()) {
-							childProperty.setValue(shortDescription);
-						}
-						break;
-					case DESCRIPTION:
-						for (Property childProperty : parentProperty
-								.getChildProperties()) {
-							childProperty.setValue(description);
-						}
-						break;
-					case IMAGE:
-						for (Property childProperty : parentProperty
-								.getChildProperties()) {
-							childProperty.setValue(image);
-						}
-						break;
-					default:
-						break;
 					}
 				}
+				// editing properties for performance
+				Set<Property> properties = performance.getProperties();
+				Integer result = siteLogic.sortPropertyByLang(properties,
+						langId);
+				// if there's no properties with such language
+				if (result <= 0) {
+					addNewPropertiesForPerformance(performance, title,
+							shortDescription, description, image, langId);
+				} else {
+					editPropertiesForPerformance(properties, title,
+							shortDescription, description, image);
+				}
+
 			} else {
 				performance = new Performance();
+				performance.setTicketsPrices(ticketsPrices);
 
-				for (PropertyNameEnum e : PropertyNameEnum.values()) {
-					Property parentProperty = new Property();
-					Property childProperty = new Property();
-					childProperty.setLangId(langId);
-					childProperty.setRootProperty(parentProperty);
-
-					switch (e) {
-					case NAME:
-						parentProperty.setName(e);
-						childProperty.setName(e);
-						childProperty.setValue(title);
-						break;
-					case SHORT_DESCRIPTION:
-						parentProperty.setName(e);
-						childProperty.setName(e);
-						childProperty.setValue(shortDescription);
-						break;
-					case DESCRIPTION:
-						parentProperty.setName(e);
-						childProperty.setName(e);
-						childProperty.setValue(description);
-						break;
-					case IMAGE:
-						parentProperty.setName(e);
-						childProperty.setName(e);
-						childProperty.setValue(image);
-						break;
-					default:
-						break;
-					}
-					parentProperty.getChildProperties().add(childProperty);
-					if (parentProperty.getName() != null) {
-						performance.setProperty(parentProperty);
-					}
-				}
+				addNewPropertiesForPerformance(performance, title,
+						shortDescription, description, image, langId);
 			}
-			
-			performance.setTicketsPrices(ticketsPrices);			
-						
-			for (TicketsPrice price: performance.getTicketsPrices()){
+
+			for (TicketsPrice price : performance.getTicketsPrices()) {
 				price.setPerfId(performance);
 			}
-			
 
 			performance.setStartDate(startDate);
 			performance.setEndDate(endDate);
 			performance.setCategory(category);
-			
 
 			if (perfDao.save(performance) != null) {
 				flag = true;
@@ -138,6 +89,88 @@ public class AdminLogic extends DataAccessService {
 					"DaoException in AdminLogic. Can't save Performance", e);
 		}
 		return flag;
+	}
+
+	private void addNewPropertiesForPerformance(Performance performance,
+			String title, String shortDescription, String description,
+			String image, int langId) {
+
+		for (PropertyNameEnum e : PropertyNameEnum.values()) {
+			Property parentProperty = new Property();
+			Property childProperty = new Property();
+			childProperty.setLangId(langId);
+			childProperty.setRootProperty(parentProperty);
+
+			switch (e) {
+			case NAME:
+				parentProperty.setName(e);
+				childProperty.setName(e);
+				childProperty.setValue(title);
+				break;
+			case SHORT_DESCRIPTION:
+				parentProperty.setName(e);
+				childProperty.setName(e);
+				childProperty.setValue(shortDescription);
+				break;
+			case DESCRIPTION:
+				parentProperty.setName(e);
+				childProperty.setName(e);
+				childProperty.setValue(description);
+				break;
+			case IMAGE:
+				parentProperty.setName(e);
+				childProperty.setName(e);
+				childProperty.setValue(image);
+				break;
+			default:
+				break;
+			}
+			parentProperty.getChildProperties().add(childProperty);
+			if (parentProperty.getName() != null) {
+				performance.setProperty(parentProperty);
+
+			}
+		}
+
+	}
+
+	private void editPropertiesForPerformance(Set<Property> properties,
+			String title, String shortDescription, String description,
+			String image) {
+
+		for (Property parentProperty : properties) {
+			PropertyNameEnum e = parentProperty.getName();
+
+			switch (e) {
+
+			case NAME:
+				for (Property childProperty : parentProperty
+						.getChildProperties()) {
+					childProperty.setValue(title);
+				}
+				break;
+			case SHORT_DESCRIPTION:
+				for (Property childProperty : parentProperty
+						.getChildProperties()) {
+					childProperty.setValue(shortDescription);
+				}
+				break;
+			case DESCRIPTION:
+				for (Property childProperty : parentProperty
+						.getChildProperties()) {
+					childProperty.setValue(description);
+				}
+				break;
+			case IMAGE:
+				for (Property childProperty : parentProperty
+						.getChildProperties()) {
+					childProperty.setValue(image);
+				}
+				break;
+			default:
+				break;
+			}
+		}
 	}
 
 	public boolean deletePerformance(Integer perfId) throws ServiceException {

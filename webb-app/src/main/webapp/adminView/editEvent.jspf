@@ -34,7 +34,7 @@
 										<optgroup label="Выберите представление">
 											<c:forEach var="performance" items="${performanceList}">
 												<option value="${performance.id}"
-													<c:if test="${performence.id == event.performance.id}">selected</c:if>>
+													<c:if test="${performance.id == event.performance.id}">selected</c:if>>
 													<c:forEach var="property" items="${performance.properties}">
 														<c:if test="${property.name == 'NAME'}">
 															<c:forEach var="childProperty"
