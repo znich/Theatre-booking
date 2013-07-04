@@ -30,28 +30,34 @@ public class GenericDaoImpl<T, ID extends Serializable> implements IGenericDao<T
     }
 
     @Override
-    public void delEntity(ID id) throws DaoException {
-        try {
+    public boolean delEntity(ID id) throws DaoException {
+       boolean flag = false;
+    	try {
             if (id != null) {
                 T t = (T) getSession().get(persistentClass, id);
                 getSession().delete(t);
+                flag= true;
             }
         } catch (HibernateException e) {
             log.error("Error was thrown in DAO", e);
             throw new DaoException(e);
         }
+		return flag;
     }
 
     @Override
-    public void delEntity(T entity) throws DaoException {
-        try {
+    public boolean delEntity(T entity) throws DaoException {
+    	 boolean flag = false;
+    	try {
             if (entity != null) {
                 getSession().delete(entity);
+                flag= true;
             }
         } catch (HibernateException e) {
             log.error("Error was thrown in DAO", e);
             throw new DaoException(e);
         }
+        return flag;
     }
 
     @Override

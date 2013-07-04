@@ -10,6 +10,8 @@ import by.academy.dao.exception.DaoException;
 import by.academy.domain.*;
 import by.academy.exception.ServiceException;
 import by.academy.service.IAdminService;
+import by.academy.service.ISiteService;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.criterion.Restrictions;
@@ -21,215 +23,341 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AdminService implements IAdminService {
-    private static Log log = LogFactory.getLog(AdminService.class);
 
-    private IGenericDao<Performance, Integer>perfDao;
-    private IGenericDao<Status, Integer>statusDao;
-    private IGenericDao<Seat, Integer>seatDao;
-    private IGenericDao<Event, Integer>eventDao;
-    private IGenericDao<Ticket, Integer>ticketDao;
-    private IGenericDao<Booking, Integer>bookingDao;
-    private IGenericDao<TicketsPrice, Integer>ticketsPriceDao;
+	@Autowired
+	private ISiteService siteService;
 
-    public void setPerfDao(IGenericDao<Performance, Integer> perfDao) {
-        this.perfDao = perfDao;
-    }
+	private static Log log = LogFactory.getLog(AdminService.class);
 
-    public void setStatusDao(IGenericDao<Status, Integer> statusDao) {
-        this.statusDao = statusDao;
-    }
+	private IGenericDao<Performance, Integer> perfDao;
+	private IGenericDao<Status, Integer> statusDao;
+	private IGenericDao<Seat, Integer> seatDao;
+	private IGenericDao<Event, Integer> eventDao;
+	private IGenericDao<Ticket, Integer> ticketDao;
+	private IGenericDao<Booking, Integer> bookingDao;
+	private IGenericDao<TicketsPrice, Integer> ticketsPriceDao;
 
-    public void setSeatDao(IGenericDao<Seat, Integer> seatDao) {
-        this.seatDao = seatDao;
-    }
+	public void setPerfDao(IGenericDao<Performance, Integer> perfDao) {
+		this.perfDao = perfDao;
+	}
 
-    public void setEventDao(IGenericDao<Event, Integer> eventDao) {
-        this.eventDao = eventDao;
-    }
+	public void setStatusDao(IGenericDao<Status, Integer> statusDao) {
+		this.statusDao = statusDao;
+	}
 
-    public void setTicketDao(IGenericDao<Ticket, Integer> ticketDao) {
-        this.ticketDao = ticketDao;
-    }
+	public void setSeatDao(IGenericDao<Seat, Integer> seatDao) {
+		this.seatDao = seatDao;
+	}
 
-    public void setTicketsPriceDao(IGenericDao<TicketsPrice, Integer> ticketsPriceDao) {
-        this.ticketsPriceDao = ticketsPriceDao;
-    }
+	public void setEventDao(IGenericDao<Event, Integer> eventDao) {
+		this.eventDao = eventDao;
+	}
 
-    public void setBookingDao(IGenericDao<Booking, Integer> bookingDao) {
-        this.bookingDao = bookingDao;
-    }
-    public boolean saveOrUpdatePerformance(Integer id, String title,
-                                           String shortDescription, String description, Calendar startDate,
-                                           Calendar endDate, String image, Category category, Integer langId) throws ServiceException {
+	public void setTicketDao(IGenericDao<Ticket, Integer> ticketDao) {
+		this.ticketDao = ticketDao;
+	}
 
-        boolean flag = false;
-        Performance performance;
-        try {
-            if (id == null) {
-                performance = new Performance();
-            } else {
-                performance = perfDao.getEntityById(id);
-            }
-            performance.setStartDate(startDate);
-            performance.setEndDate(endDate);
-            performance.setCategory(category);
+	public void setTicketsPriceDao(
+			IGenericDao<TicketsPrice, Integer> ticketsPriceDao) {
+		this.ticketsPriceDao = ticketsPriceDao;
+	}
 
-            for (PropertyNameEnum e : PropertyNameEnum.values()) {
-                Property parentProperty = new Property();
-                Property childProperty = new Property();
-                childProperty.setLangId(langId);
-                childProperty.setRootProperty(parentProperty);
+	public void setBookingDao(IGenericDao<Booking, Integer> bookingDao) {
+		this.bookingDao = bookingDao;
+	}
 
-                switch (e) {
-                    case NAME:
-                        parentProperty.setName(e);
-                        childProperty.setName(e);
-                        childProperty.setValue(title);
-                        break;
-                    case SHORT_DESCRIPTION:
-                        parentProperty.setName(e);
-                        childProperty.setName(e);
-                        childProperty.setValue(shortDescription);
-                        break;
-                    case DESCRIPTION:
-                        parentProperty.setName(e);
-                        childProperty.setName(e);
-                        childProperty.setValue(description);
-                        break;
-                    case IMAGE:
-                        parentProperty.setName(e);
-                        childProperty.setName(e);
-                        childProperty.setValue(image);
-                        break;
-                }
+	public boolean saveOrUpdatePerformance(Integer id, String title,
+			String shortDescription, String description, Calendar startDate,
+			Calendar endDate, String image, Category category,
+			Set<TicketsPrice> ticketsPrices, Integer langId)
+			throws ServiceException {
 
-                parentProperty.getChildProperties().add(childProperty);
-                if (parentProperty.getName() != null) {
-                    performance.setProperty(parentProperty);
-                }
-            }
+		boolean flag = false;
+		Performance performance;
+		try {
+			if (id != null) {
 
-            if (perfDao.save(performance) != null) {
-                flag = true;
-            }
-        } catch (DaoException e) {
-            log.error("DaoException in AdminLogic. Can't save Performance", e);
-            throw new ServiceException("DaoException in AdminLogic. Can't save Performance", e);
-        }
-        return flag;
-    }
+				performance = perfDao.getEntityById(id);
+				log.info("Getting performance for editing:"
+						+ performance.getId());
 
-    public boolean deletePerformance(Integer perfId) throws ServiceException {
-        boolean flag = false;
+				Set<TicketsPrice> pricesList = performance.getTicketsPrices();
+				// editing tickets prices for performance
+				for (TicketsPrice price : pricesList) {
+					for (TicketsPrice inputPrice : ticketsPrices) {
+						if (price.getPriceCategory() == inputPrice
+								.getPriceCategory()) {
+							price.setPrice(inputPrice.getPrice());
+						}
+					}
+				}
+				// editing properties for performance
+				Set<Property> properties = performance.getProperties();
+				Integer result = siteService.sortPropertyByLang(properties,
+						langId);
+				// if there's no properties with such language
+				if (result <= 0) {
+					addNewPropertiesForPerformance(performance, title,
+							shortDescription, description, image, langId);
+				} else {
+					editPropertiesForPerformance(properties, title,
+							shortDescription, description, image);
+				}
 
-        try {
-            perfDao.delEntity(perfId);
-        } catch (DaoException e) {
-            log.error("DaoException in AdminLogic. Can't delete Performance", e);
-            throw new ServiceException("DaoException in AdminLogic. Can't delete Performance", e);
-        }
-        return flag;
-    }
+			} else {
+				performance = new Performance();
+				performance.setTicketsPrices(ticketsPrices);
 
-    public boolean saveOrUpdateEvent(Integer eventId, int perfId, long startTime, long endTime) throws ServiceException {
+				addNewPropertiesForPerformance(performance, title,
+						shortDescription, description, image, langId);
+			}
 
-        Event event;
+			for (TicketsPrice price : performance.getTicketsPrices()) {
+				price.setPerfId(performance);
+			}
 
-        boolean flag = false;
-        try {
-            if (eventId == null) {
+			performance.setStartDate(startDate);
+			performance.setEndDate(endDate);
+			performance.setCategory(category);
 
-                event = new Event();
+			if (perfDao.save(performance) != null) {
+				flag = true;
+			}
+		} catch (DaoException e) {
+			log.error("DaoException in AdminLogic. Can't save Performance", e);
+			throw new ServiceException(
+					"DaoException in AdminLogic. Can't save Performance", e);
+		}
+		return flag;
+	}
 
-                List<Seat> seats = seatDao.findAll();
+	private void addNewPropertiesForPerformance(Performance performance,
+			String title, String shortDescription, String description,
+			String image, int langId) {
 
-                for (Seat s : seats) {
-                    Ticket ticket = new Ticket();
-                    ticket.setPlace(s);
-                    ticket.setStatus(statusDao.getEntityById(1));
-                    ticket.setEvent(event);
-                    event.getTickets().add(ticket);
-                }
-            } else {
-                event = eventDao.getEntityById(eventId);
-            }
+		for (PropertyNameEnum e : PropertyNameEnum.values()) {
+			Property parentProperty = new Property();
+			Property childProperty = new Property();
+			childProperty.setLangId(langId);
+			childProperty.setRootProperty(parentProperty);
 
-            event.setPerformance(perfDao.getEntityById(perfId));
-            event.setStartTime(startTime);
-            event.setEndTime(endTime);
+			switch (e) {
+			case NAME:
+				parentProperty.setName(e);
+				childProperty.setName(e);
+				childProperty.setValue(title);
+				break;
+			case SHORT_DESCRIPTION:
+				parentProperty.setName(e);
+				childProperty.setName(e);
+				childProperty.setValue(shortDescription);
+				break;
+			case DESCRIPTION:
+				parentProperty.setName(e);
+				childProperty.setName(e);
+				childProperty.setValue(description);
+				break;
+			case IMAGE:
+				parentProperty.setName(e);
+				childProperty.setName(e);
+				childProperty.setValue(image);
+				break;
+			default:
+				break;
+			}
+			parentProperty.getChildProperties().add(childProperty);
+			if (parentProperty.getName() != null) {
+				performance.setProperty(parentProperty);
 
-            if (eventDao.save(event) != null) {
-                flag = true;
-            }
-        } catch (DaoException e) {
-            log.error("DaoException in AdminLogic. Can't save Event", e);
-            throw new ServiceException("DaoException in AdminLogic. Can't save Event", e);
-        }
-        return flag;
-    }
+			}
+		}
 
-    public int deleteExpiredBookings() throws ServiceException {
-        Calendar currentDate = Calendar.getInstance();
-        List<Booking> expiredBookingList;
+	}
 
-        try {
+	private void editPropertiesForPerformance(Set<Property> properties,
+			String title, String shortDescription, String description,
+			String image) {
 
-            expiredBookingList = bookingDao.findByCriteria(Restrictions.lt("expDate", currentDate));
-            for (Booking b : expiredBookingList) {
-                bookingDao.delEntity(b.getId());
+		for (Property parentProperty : properties) {
+			PropertyNameEnum e = parentProperty.getName();
 
-                List<Ticket> tickets = ticketDao.findByCriteria(Restrictions.eq("booking", b));
-                for (Ticket ticket : tickets) {
+			switch (e) {
 
-                    ticket.setBooking(null);
-                    ticket.setStatus(statusDao.getEntityById(1));
-                    ticketDao.save(ticket);
-                }
-            }
-        } catch (DaoException e) {
-            log.error("DaoException in AdminLogic. Can't delete Expired Bookings", e);
-            throw new ServiceException("DaoException in AdminLogic. Can't delete Expired Bookings", e);
-        }
-        return expiredBookingList.size();
+			case NAME:
+				for (Property childProperty : parentProperty
+						.getChildProperties()) {
+					childProperty.setValue(title);
+				}
+				break;
+			case SHORT_DESCRIPTION:
+				for (Property childProperty : parentProperty
+						.getChildProperties()) {
+					childProperty.setValue(shortDescription);
+				}
+				break;
+			case DESCRIPTION:
+				for (Property childProperty : parentProperty
+						.getChildProperties()) {
+					childProperty.setValue(description);
+				}
+				break;
+			case IMAGE:
+				for (Property childProperty : parentProperty
+						.getChildProperties()) {
+					childProperty.setValue(image);
+				}
+				break;
+			default:
+				break;
+			}
+		}
+	}
 
-    }
+	public boolean deletePerformance(Integer perfId) throws ServiceException {
+		boolean flag = false;
 
-    public boolean deleteTicketFromBooking(int bookingId, int ticketId, int langId) throws ServiceException {
+		try {
+			flag = perfDao.delEntity(perfId);
+		} catch (DaoException e) {
+			log.error("DaoException in AdminLogic. Can't delete Performance", e);
+			throw new ServiceException(
+					"DaoException in AdminLogic. Can't delete Performance", e);
+		}
+		return flag;
+	}
 
-        boolean flag = false;
-        try {
-            Booking booking = bookingDao.getEntityById(bookingId);
-            Ticket ticket = ticketDao.getEntityById(ticketId);
+	public boolean saveOrUpdateEvent(Integer eventId, Integer perfId,
+			long startTime, long endTime) throws ServiceException {
 
-            if (booking != null && ticket == null) {
+		Event event;
 
-                booking.deleteTicket(ticket);
-                ticket.setStatus(statusDao.getEntityById(1));
-                ticket.setBooking(null);
-                ticketDao.save(ticket);
-                flag = true;
-                bookingDao.save(booking);
-            }
-        } catch (DaoException e) {
-            log.error("DaoException in AdminLogic. Can't delete ticket from booking", e);
-            throw new ServiceException("DaoException in AdminLogic. Can't delete ticket from booking", e);
-        }
-        return flag;
-    }
+		boolean flag = false;
+		try {
+			if (eventId == null) {
 
-    public boolean editTicketsPriceForPerformance(Set<TicketsPrice> ticketsPrices) throws ServiceException {
-        boolean flag = false;
-        for (TicketsPrice tp : ticketsPrices) {
-            try {
-                ticketsPriceDao.save(tp);
-            } catch (DaoException e) {
-                log.error("DaoException in AdminLogic. Can't save tickets price for performance", e);
-                throw new ServiceException("DaoException in AdminLogic. Can't save tickets price for performance", e);
-            }
-            flag = true;
-        }
-        return flag;
+				event = new Event();
 
-    }
+				List<Seat> seats = seatDao.findAll();
+
+				for (Seat s : seats) {
+					Ticket ticket = new Ticket();
+					ticket.setPlace(s);
+					ticket.setStatus(statusDao.getEntityById(1));
+					ticket.setEvent(event);
+					event.getTickets().add(ticket);
+				}
+			} else {
+				event = eventDao.getEntityById(eventId);
+			}
+
+			event.setPerformance(perfDao.getEntityById(perfId));
+			event.setStartTime(startTime);
+			event.setEndTime(endTime);
+
+			if (eventDao.save(event) != null) {
+				flag = true;
+			}
+		} catch (DaoException e) {
+			log.error("DaoException in AdminLogic. Can't save Event", e);
+			throw new ServiceException(
+					"DaoException in AdminLogic. Can't save Event", e);
+		}
+		return flag;
+	}
+
+	public int deleteExpiredBookings() throws ServiceException {
+		Calendar currentDate = Calendar.getInstance();
+		List<Booking> expiredBookingList;
+
+		try {
+
+			expiredBookingList = bookingDao.findByCriteria(Restrictions.lt(
+					"expDate", currentDate));
+			for (Booking b : expiredBookingList) {
+				bookingDao.delEntity(b.getId());
+
+				List<Ticket> tickets = ticketDao.findByCriteria(Restrictions
+						.eq("booking", b));
+				for (Ticket ticket : tickets) {
+
+					ticket.setBooking(null);
+					ticket.setStatus(statusDao.getEntityById(1));
+					ticketDao.save(ticket);
+				}
+			}
+		} catch (DaoException e) {
+			log.error(
+					"DaoException in AdminLogic. Can't delete Expired Bookings",
+					e);
+			throw new ServiceException(
+					"DaoException in AdminLogic. Can't delete Expired Bookings",
+					e);
+		}
+		return expiredBookingList.size();
+
+	}
+
+	public boolean deleteTicketFromBooking(int bookingId, int ticketId,
+			int langId) throws ServiceException {
+
+		boolean flag = false;
+		try {
+			Booking booking = bookingDao.getEntityById(bookingId);
+			Ticket ticket = ticketDao.getEntityById(ticketId);
+
+			if (booking != null && ticket == null) {
+
+				booking.deleteTicket(ticket);
+				ticket.setStatus(statusDao.getEntityById(1));
+				ticket.setBooking(null);
+				ticketDao.save(ticket);
+				flag = true;
+				bookingDao.save(booking);
+			}
+		} catch (DaoException e) {
+			log.error(
+					"DaoException in AdminLogic. Can't delete ticket from booking",
+					e);
+			throw new ServiceException(
+					"DaoException in AdminLogic. Can't delete ticket from booking",
+					e);
+		}
+		return flag;
+	}
+
+	public boolean editTicketsPriceForPerformance(
+			Set<TicketsPrice> ticketsPrices) throws ServiceException {
+		boolean flag = false;
+		for (TicketsPrice tp : ticketsPrices) {
+			try {
+				ticketsPriceDao.save(tp);
+			} catch (DaoException e) {
+				log.error(
+						"DaoException in AdminLogic. Can't save tickets price for performance",
+						e);
+				throw new ServiceException(
+						"DaoException in AdminLogic. Can't save tickets price for performance",
+						e);
+			}
+			flag = true;
+		}
+		return flag;
+
+	}
+
+	@Override
+	public boolean deleteEvent(Integer eventId) throws ServiceException {
+		boolean flag = false;
+
+		try {
+			flag = eventDao.delEntity(eventId);
+		} catch (DaoException e) {
+			log.error("DaoException in AdminLogic. Can't delete Event", e);
+			throw new ServiceException(
+					"DaoException in AdminLogic. Can't delete Event", e);
+		}
+
+		return flag;
+	}
 
 }

@@ -14,10 +14,10 @@ public interface IAdminService {
 
     boolean editTicketsPriceForPerformance(Set<TicketsPrice> ticketsPrices) throws ServiceException;
 
-	boolean deleteEvent(Integer eventId);
+	boolean deleteEvent(Integer eventId) throws ServiceException;
 
-	boolean deletePerformance(Integer performanceId);
+	boolean deletePerformance(Integer performanceId) throws ServiceException;
 
 	boolean saveOrUpdateEvent(Integer eventId, Integer performanceId,
-			long timeInMillis, long timeInMillis2);
+			long timeInMillis, long timeInMillis2) throws ServiceException;
 }

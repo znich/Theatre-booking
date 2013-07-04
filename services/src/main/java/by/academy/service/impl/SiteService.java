@@ -63,7 +63,7 @@ public class SiteService implements ISiteService {
         return perfSet;
     }
 
-    public Set<Performance> getAllPerformances(Integer langId) throws ServiceException {
+    public List<Performance> getAllPerformances(Integer langId) throws ServiceException {
         try {
             Set<Performance> performances = new HashSet<Performance>(perfDao.findAll());
             for (Performance p : performances) {
@@ -76,17 +76,20 @@ public class SiteService implements ISiteService {
         }
     }
 
-    private Set<Property> sortPropertyByLang(Set<Property> propSet, Integer langId) {
-        for (Property prop : propSet) {
+     public Integer sortPropertyByLang(Set<Property> propSet, Integer langId) {
+    	 Integer result = 0;
+    	 for (Property prop : propSet) {
             Set<Property> sortedProperties = new HashSet<Property>();
             for (Property childProp : prop.getChildProperties()) {
                 if (childProp.getLangId().equals(langId)) {
-                    sortedProperties.add(childProp);
+                	if (sortedProperties.add(childProp)) {
+						result++;
+					}
                 }
             }
             prop.setChildProperties(sortedProperties);
         }
-        return propSet;
+        return result;
     }
 
     public Event getEventById(int id, int langId) throws ServiceException {
@@ -99,7 +102,7 @@ public class SiteService implements ISiteService {
         }
     }
 
-    public List<Event> getAllEvents(Integer langId) throws ServiceException {
+    public List<Event> getAllEvents(int langId) throws ServiceException {
         try {
             List<Event> events = eventDao.findAll();
             return events;
@@ -310,4 +313,14 @@ public class SiteService implements ISiteService {
         }
         return result;
     }
+
+	
+
+	@Override
+	public Event getEventById(Integer eventId, int langId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 }
