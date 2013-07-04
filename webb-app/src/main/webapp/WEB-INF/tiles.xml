@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+
+    <definition name="main.page" template="/WEB-INF/tiles/index.jsp">
+        <put-attribute name="header" value="/WEB-INF/tiles/header.jsp"/>
+    </definition>
+
+    <definition name="showPerformances" template="/WEB-INF/tiles/performances.jsp">
+        <put-attribute name="header" value="/WEB-INF/tiles/header.jsp"/>
+    </definition>
+
+    <definition name="singlePerformance.page" template="/WEB-INF/tiles/performance.jsp">
+        <put-attribute name="header" value="/WEB-INF/tiles/header.jsp"/>
+    </definition>
+
+    <definition name="eventList.page" template="/WEB-INF/tiles/events.jsp">
+        <put-attribute name="header" value="/WEB-INF/tiles/header.jsp"/>
+    </definition>
+
+    <definition name="login.page" template="/WEB-INF/tiles/login.jsp">
+        <put-attribute name="header" value="/WEB-INF/tiles/header.jsp"/>
+    </definition>
+
+    <definition name="registration.page" template="/WEB-INF/tiles/registration.jsp">
+        <put-attribute name="header" value="/WEB-INF/tiles/header.jsp"/>
+    </definition>
+
+</tiles-definitions>

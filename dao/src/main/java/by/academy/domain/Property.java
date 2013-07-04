@@ -1,22 +1,18 @@
 package by.academy.domain;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Class for Property entity.
- * @author Siarhei Poludvaranin
- *
  */
 public class Property implements Serializable {
     private static final long serialVersionUID = 2606555166542056213L;
-
     private Integer id;
     private PropertyNameEnum name;
     private String value;
     private Integer langId;
-
     private Property rootProperty;
     private Set<Property> childProperties = new HashSet<Property>();
 

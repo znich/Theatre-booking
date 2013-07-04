@@ -1,5 +1,6 @@
 package by.academy.domain;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,7 +9,6 @@ import java.util.Set;
  */
 public class Event implements Serializable {
     private static final long serialVersionUID = 6587162487503777904L;
-
     private Integer id;
     private Performance performance;
     private long startTime;

@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="navbar">
-            <%@include file="../jspf/mainMenu.jspf"%>
+            <%@include file="../WEB-INF/tiles/mainMenu.jspf"%>
         </div>
         <div class="contentWrapper" id="userProfile">
             <ul class="nav nav-pills">

@@ -1,18 +1,19 @@
 package by.academy.domain;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
  */
 public class Ticket implements Serializable {
     private static final long serialVersionUID = -7762125850874268760L;
-
     private Integer id;
     private Event event;
-    private int price;
     private Status status;
     private Booking booking;
     private Seat place;
+
+    private int price;
 
     public Ticket() {
     }

@@ -1,22 +1,16 @@
 package by.academy.domain;
 
+import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Siarhei Poludvaranin
- * Date: 31.05.13
- * Time: 14:50
- * To change this template use File | Settings | File Templates.
  */
 public class Seat implements Serializable {
     private static final long serialVersionUID = -6231252818283198055L;
-
     private Integer id;
     private int row;
     private int seatNumber;
-    private TicketsPrice priceCategory;
+    private Integer priceCategory;
     private int sector;
 
     public Seat() {
@@ -47,11 +41,11 @@ public class Seat implements Serializable {
         this.seatNumber = seatNumber;
     }
 
-    public TicketsPrice getPriceCategory() {
+    public Integer getPriceCategory() {
         return priceCategory;
     }
 
-    public void setPriceCategory(TicketsPrice priceCategory) {
+    public void setPriceCategory(Integer priceCategory) {
         this.priceCategory = priceCategory;
     }
 
@@ -78,5 +72,14 @@ public class Seat implements Serializable {
     @Override
     public int hashCode() {
         return id.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Seat{" +
+                "row=" + row +
+                ", seatNumber=" + seatNumber +
+                ", sector=" + sector +
+                '}';
     }
 }

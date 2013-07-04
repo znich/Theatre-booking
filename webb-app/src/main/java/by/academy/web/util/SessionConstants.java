@@ -5,9 +5,6 @@ package by.academy.web.util;
 public enum SessionConstants {
     LOCALE_ATTRIBUTE("lang"),
     LOCALE_ID_ATTRIBUTE("langId"),
-    PERFORMANCE_ID_ATTRIBUTE("performanceId"),
-    PERFORMANCE_ATTRIBUTE("performance"),
-    PERFORMANCES_ATTRIBUTE("performances"),
     PERFORMANCE_LIST_ATTRIBUTE("performanceList"),
     EDIT_PERF_ANSWER_ATTRIBUTE("editPerformance"),
     EDIT_PERF_LIST_ANSWER_ATTRIBUTE("editPerformanceList"),
@@ -21,7 +18,6 @@ public enum SessionConstants {
     EVENT_DATE("eventsDate"),
     EDIT_EVENT_ANSWER_ATTRIBUTE("editEvent"),
     INPUT_LANG_ID("inputLangId"),
-    CATEGORIES_LIST_ATTRIBUTE("categories"),
     INPUT_START_TIME_ATTRIBUTE("inputStartTime"),
     INPUT_END_TIME_ATTRIBUTE("inputEndTime"),
     INPUT_NAME_ATTRIBUTE("inputName"),

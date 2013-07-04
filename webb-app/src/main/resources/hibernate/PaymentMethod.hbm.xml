@@ -1,0 +1,19 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="by.academy.domain">
+    <class name="PaymentMethod">
+        <id name="id">
+            <generator class="sequence">
+                <param name="sequence">PM_SEQ</param>
+            </generator>
+        </id>
+        <property name="name" not-null="true" />
+        <property name="langId" not-null="true" />
+        <set name="childPaymentMethod" inverse="true" fetch="select" cascade="save-update">
+            <key column="F_PARENT_ID" not-null="true" />
+            <one-to-many class="PaymentMethod" />
+        </set>
+        <many-to-one name="parentPaymentMethod" column="F_PARENT_ID" class="PaymentMethod" fetch="select" />
+    </class>
+</hibernate-mapping>

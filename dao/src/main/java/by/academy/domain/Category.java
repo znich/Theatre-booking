@@ -1,18 +1,13 @@
 package by.academy.domain;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Siarhei Poludvaranin
- * Date: 30.05.13
- * Time: 14:22
- * To change this template use File | Settings | File Templates.
  */
 public class Category implements Serializable {
     private static final long serialVersionUID = -6296850408268982290L;
-
     private Integer id;
     private String name;
     private Integer langId;

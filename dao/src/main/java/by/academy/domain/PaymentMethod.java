@@ -1,14 +1,10 @@
 package by.academy.domain;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Siarhei Poludvaranin
- * Date: 31.05.13
- * Time: 20:14
- * To change this template use File | Settings | File Templates.
  */
 public class PaymentMethod implements Serializable {
     private static final long serialVersionUID = -7681565045835513129L;
@@ -16,7 +12,8 @@ public class PaymentMethod implements Serializable {
     private Integer id;
     private String name;
     private int langId;
-    private int pid;
+    private PaymentMethod parentPaymentMethod;
+    private Set<PaymentMethod> childPaymentMethod;
 
     public PaymentMethod() {
 
@@ -46,12 +43,20 @@ public class PaymentMethod implements Serializable {
         this.langId = langId;
     }
 
-    public int getPid() {
-        return pid;
+    public PaymentMethod getParentPaymentMethod() {
+        return parentPaymentMethod;
     }
 
-    public void setPid(int pid) {
-        this.pid = pid;
+    public void setParentPaymentMethod(PaymentMethod parentPaymentMethod) {
+        this.parentPaymentMethod = parentPaymentMethod;
+    }
+
+    public Set<PaymentMethod> getChildPaymentMethod() {
+        return childPaymentMethod;
+    }
+
+    public void setChildPaymentMethod(Set<PaymentMethod> childPaymentMethod) {
+        this.childPaymentMethod = childPaymentMethod;
     }
 
     @Override

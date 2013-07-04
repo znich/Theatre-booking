@@ -1,5 +1,6 @@
 package by.academy.domain;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
@@ -7,19 +8,22 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Class for Performance entity.
- * @author Siarhei Poludvaranin
- *
  */
 public class Performance implements Serializable {
     private static final long serialVersionUID = -8226959475559515701L;
 
     private Integer id;
+
     private Calendar startDate;
+
     private Calendar endDate;
+
     private Category category;
+
     private Set<Event> events;
+
     private Set<Property> properties = new HashSet<Property>();
+
     private Set<TicketsPrice> ticketsPrices;
 
     public Performance() {

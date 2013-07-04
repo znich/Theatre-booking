@@ -1,5 +1,6 @@
 package by.academy.domain;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -9,7 +10,8 @@ public class Status implements Serializable {
     private static final long serialVersionUID = 6845922418703306184L;
 
     private Integer id;
-    private Integer pid;
+    private Status parentStatus;
+    private Set<PaymentMethod> childStatus;
     private Integer langId;
     private String value;
     private Set<Ticket> tickets;
@@ -48,12 +50,20 @@ public class Status implements Serializable {
         this.tickets = tickets;
     }
 
-    public Integer getPid() {
-        return pid;
+    public Status getParentStatus() {
+        return parentStatus;
     }
 
-    public void setPid(Integer pid) {
-        this.pid = pid;
+    public void setParentStatus(Status parentStatus) {
+        this.parentStatus = parentStatus;
+    }
+
+    public Set<PaymentMethod> getChildStatus() {
+        return childStatus;
+    }
+
+    public void setChildStatus(Set<PaymentMethod> childStatus) {
+        this.childStatus = childStatus;
     }
 
     @Override

@@ -1,17 +1,13 @@
 package by.academy.domain;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Set;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Siarhei Poludvaranin
- * Date: 31.05.13
- * Time: 19:33
- * To change this template use File | Settings | File Templates.
  */
+
 public class Booking implements Serializable {
     private static final long serialVersionUID = -7726509784741040741L;
 

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-3.0.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+        <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+            <property name="url" value="jdbc:oracle:thin:@//localhost:1521/XE" />
+            <property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
+            <property name="username" value="sergey"/>
+            <property name="password" value="1234"/>
+            <property name="removeAbandoned" value="true" />
+            <property name="initialSize" value="20"/>
+            <property name="maxActive" value="30"/>
+        </bean>
+
+    <bean id="hibernateSessionFactory"
+          class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mappingLocations">
+            <list>
+                <value>classpath:/hibernate/Booking.hbm.xml</value>
+                <value>classpath:/hibernate/Category.hbm.xml</value>
+                <value>classpath:/hibernate/Event.hbm.xml</value>
+                <value>classpath:/hibernate/PaymentMethod.hbm.xml</value>
+                <value>classpath:/hibernate/Performance.hbm.xml</value>
+                <value>classpath:/hibernate/Property.hbm.xml</value>
+                <value>classpath:/hibernate/Seat.hbm.xml</value>
+                <value>classpath:/hibernate/Status.hbm.xml</value>
+                <value>classpath:/hibernate/Ticket.hbm.xml</value>
+                <value>classpath:/hibernate/TicketsPrice.hbm.xml</value>
+                <value>classpath:/hibernate/User.hbm.xml</value>
+            </list>
+        </property>
+        <property name="namingStrategy">
+            <bean class="by.academy.dao.util.CustomNamingStrategy"/>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="debug">true</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+                <prop key="hibernate.cglib.use_reflection_optimizer">true</prop>
+<!--                <prop key="hibernate.hbm2ddl.auto">create-drop</prop>-->
+            </props>
+        </property>
+    </bean>
+
+    <bean id="perfDao" class="by.academy.dao.GenericDaoImpl">
+        <constructor-arg>
+            <value>by.academy.domain.Performance</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="hibernateSessionFactory"/>
+    </bean>
+
+    <bean id="eventDao" class="by.academy.dao.GenericDaoImpl">
+        <constructor-arg>
+            <value>by.academy.domain.Event</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="hibernateSessionFactory"/>
+    </bean>
+
+    <bean id="categoryDao" class="by.academy.dao.GenericDaoImpl">
+        <constructor-arg>
+            <value>by.academy.domain.Category</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="hibernateSessionFactory"/>
+    </bean>
+
+    <bean id="ticketDao" class="by.academy.dao.GenericDaoImpl">
+        <constructor-arg>
+            <value>by.academy.domain.Ticket</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="hibernateSessionFactory"/>
+    </bean>
+
+    <bean id="statusDao" class="by.academy.dao.GenericDaoImpl">
+        <constructor-arg>
+            <value>by.academy.domain.Status</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="hibernateSessionFactory"/>
+    </bean>
+
+    <bean id="seatDao" class="by.academy.dao.GenericDaoImpl">
+        <constructor-arg>
+            <value>by.academy.domain.Seat</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="hibernateSessionFactory"/>
+    </bean>
+
+    <bean id="bookingDao" class="by.academy.dao.GenericDaoImpl">
+        <constructor-arg>
+            <value>by.academy.domain.Booking</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="hibernateSessionFactory"/>
+    </bean>
+
+    <bean id="ticketsPriceDao" class="by.academy.dao.GenericDaoImpl">
+        <constructor-arg>
+            <value>by.academy.domain.TicketsPrice</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="hibernateSessionFactory"/>
+    </bean>
+
+    <bean id="siteService" class="by.academy.service.impl.SiteService">
+        <property name="perfDao" ref="perfDao"/>
+        <property name="eventDao" ref="eventDao"/>
+        <property name="categoryDao" ref="categoryDao"/>
+        <property name="ticketDao" ref="ticketDao"/>
+        <property name="statusDao" ref="statusDao"/>
+    </bean>
+
+    <bean id="adminService" class="by.academy.service.impl.AdminService">
+        <property name="perfDao" ref="perfDao"/>
+        <property name="statusDao" ref="statusDao"/>
+        <property name="seatDao" ref="seatDao"/>
+        <property name="eventDao" ref="eventDao"/>
+        <property name="ticketDao" ref="ticketDao"/>
+        <property name="bookingDao" ref="bookingDao"/>
+        <property name="ticketsPriceDao" ref="ticketsPriceDao"/>
+    </bean>
+
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="hibernateSessionFactory"/>
+    </bean>
+
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="*" propagation="REQUIRED"/>
+            <tx:method name="get" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="*" propagation="REQUIRED" rollback-for="ServiceException"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <aop:advisor pointcut="execution(* by.academy.service.impl.AdminService.*(..))"
+                     advice-ref="txAdvice"/>
+        <aop:advisor pointcut="execution(* by.academy.service.UserLogic.*(..))"
+                     advice-ref="txAdvice"/>
+        <aop:advisor pointcut="execution(* by.academy.service.LoginLogic.*(..))"
+                     advice-ref="txAdvice"/>
+        <aop:advisor pointcut="execution(* by.academy.service.RegistratorLogic.*(..))"
+                     advice-ref="txAdvice"/>
+        <aop:advisor pointcut="execution(* by.academy.service.impl.SiteService.*(..))"
+                     advice-ref="txAdvice"/>
+    </aop:config>
+
+    <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+        <property name="transactionManager" ref="transactionManager"/>
+    </bean>
+</beans>

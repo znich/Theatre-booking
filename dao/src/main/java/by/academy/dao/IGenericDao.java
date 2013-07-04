@@ -2,32 +2,32 @@ package by.academy.dao;
 
 import by.academy.dao.exception.DaoException;
 import org.hibernate.Query;
+import org.hibernate.criterion.Criterion;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
 /**
- * This is a generic interface that exposes generic methods  for common CRUD functionality.
- * This methods include CRUD operations with ability to get all entity.
- *
- * @param <T> Domain class to work with
- * @author Siarhei Poludvaranin
  */
 public interface IGenericDao<T, ID extends Serializable> {
 
-    void delEntity(ID id) throws IllegalArgumentException, DaoException;
+    void delEntity(ID id) throws DaoException;
 
-    void delEntity(T entity) throws IllegalArgumentException, DaoException;
+    void delEntity(T entity) throws DaoException;
 
-    T save(T entity) throws IllegalArgumentException, DaoException;
+    T save(T entity) throws DaoException;
 
-    T getEntityById(ID id) throws IllegalArgumentException, DaoException;
+    T getEntityById(ID id) throws DaoException;
 
-    T getEntityById(ID id, int langId) throws IllegalArgumentException, DaoException;
+    T getEntityById(ID id, int langId) throws DaoException;
 
     List<T> findAll() throws DaoException;
 
     List<T> getParentEntities() throws DaoException;
+
+    List<T> findByCriteria(Criterion... criterion) throws DaoException;
+
+    T findOneByCriteria(Criterion... criterion) throws DaoException;
 
 }

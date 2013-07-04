@@ -1,0 +1,24 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="by.academy.domain">
+    <class name="Status">
+        <id name="id">
+            <generator class="sequence">
+                <param name="sequence">TICKET_SEQ</param>
+            </generator>
+        </id>
+
+        <property name="value" />
+        <property name="langId" />
+        <set name="childStatus" inverse="true" fetch="select" cascade="save-update">
+            <key column="F_PARENT_ID" not-null="true" />
+            <one-to-many class="Status" />
+        </set>
+        <many-to-one name="parentStatus" column="F_PARENT_ID" class="Status" fetch="select" />
+        <set name="tickets" inverse="true" fetch="select">
+            <key column="STATUS_ID" not-null="true"/>
+            <one-to-many class="Ticket" />
+        </set>
+    </class>
+</hibernate-mapping>

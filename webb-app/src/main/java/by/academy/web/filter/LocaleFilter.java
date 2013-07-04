@@ -6,13 +6,9 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Locale;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Siarhei Poludvaranin
- * Date: 20.05.13
- * Time: 11:28
- *  Фильтр. �?зменяет кодировку запроса.
  */
 public class LocaleFilter implements Filter {
     public enum Languages {
@@ -36,6 +32,7 @@ public class LocaleFilter implements Filter {
                          FilterChain chain) throws IOException, ServletException {
         request.setCharacterEncoding("UTF8");
         response.setCharacterEncoding("UTF8");
+        Locale.setDefault(Locale.US);
         HttpServletRequest httpReq = (HttpServletRequest) request;
         HttpSession session = httpReq.getSession();
         String lang;
