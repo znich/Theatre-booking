@@ -21,8 +21,7 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
-
-    <dependency>
+      <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
       <version>3.0-alpha-1</version>
@@ -70,8 +69,8 @@
               <artifactId>tomcat-maven-plugin</artifactId>
               <configuration>
                   <url>http://localhost:8081/manager/text</url>
-                  <username>managerScript</username>
-                  <password>123</password>
+                  <username>root</username>
+                  <password>root</password>
                   <path>/${project.build.finalName}</path>
                   <warFile>target/${project.build.finalName}.war</warFile>
               </configuration>

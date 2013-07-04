@@ -16,7 +16,7 @@ public interface ISiteService {
 
     Set<Performance> getPerformancesByCategory(Integer selectedCategory, Integer langId) throws ServiceException;
 
-    Set<Performance> getAllPerformances(Integer langId) throws ServiceException;
+    List<Performance> getAllPerformances(Integer langId) throws ServiceException;
 
     Performance getPerformancesById(Integer id, Integer langId) throws ServiceException;
 
@@ -25,4 +25,8 @@ public interface ISiteService {
     List<Event> getEventsInDateInterval(Calendar date1, Calendar date2, Integer langId) throws ServiceException;
 
     List<Event> sortEventsByCategory(List<Event> eventList, Category category);
+
+	List<Event> getAllEvents(int langId);
+
+	Event getEventById(Integer eventId, int langId);
 }

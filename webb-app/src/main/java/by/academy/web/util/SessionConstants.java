@@ -35,7 +35,11 @@ public enum SessionConstants {
     LEGEND_ATTRIBUTE("legend"),
     LEGEND("Добавление события"),
     START_TIME_ATTRIBUTE("startTime"),
-    END_TIME_ATTRIBUTE("endTime");
+    END_TIME_ATTRIBUTE("endTime"),
+    CATEGORIES_LIST_ATTRIBUTE ("categories"),
+    PERFORMANCE_ID_ATTRIBUTE("performanceId"),
+    PERFORMANCES_ATTRIBUTE("performances"), 
+    PERFORMANCE_ATTRIBUTE("performance");
     private String name;
 
     private SessionConstants(String content) {
