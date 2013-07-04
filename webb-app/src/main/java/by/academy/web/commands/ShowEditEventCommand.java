@@ -4,6 +4,7 @@ package by.academy.web.commands;
  */
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.ServletException;
@@ -45,7 +46,7 @@ public class ShowEditEventCommand implements ICommand {
         Integer eventId = Integer.parseInt(request.getParameter(SessionConstants.EVENT_ID_ATTRIBUTE.getName()));
 
         Event event;
-        Set<Performance> performances;
+        List<Performance> performances;
         try {
             SiteLogic siteLogic = new SiteLogic();
             event = siteLogic.getEventById(eventId, langId);

@@ -16,8 +16,8 @@
     <c:forEach var="event" items="${eventList}">
         <jsp:setProperty name="startTime" property="time" value="${event.startTime}" />
         <jsp:setProperty name="endTime" property="time" value="${event.endTime}" />
-        <tr class=<c:if test="${startTime < today}">"warning"</c:if><c:if
-            test="${startTime >= today}">"success"</c:if> onclick="location.href='Controller?action=PERFORMANCE_SHOW&eventId=${event.id}'">
+        <tr class=<c:if test="${startTime < today}">"warning"</c:if><c:if 
+            test="${startTime >= today}">"success"</c:if> onclick="location.href='Controller?action=show_perf_list&performanceId=${event.performance.id}'">
         <td>
             <fmt:formatDate value="${startTime}" pattern="MM/dd/yyyy"/>
         </td>

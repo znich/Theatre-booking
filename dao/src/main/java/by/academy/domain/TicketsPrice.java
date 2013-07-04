@@ -5,7 +5,7 @@ import java.util.Set;
 
 /**
  */
-public class TicketsPrice implements Serializable, Comparable {
+public class TicketsPrice implements Serializable, Comparable<Object> {
 	private static final long serialVersionUID = 3226097319160868426L;
 
 	private Integer id;

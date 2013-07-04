@@ -11,7 +11,7 @@ import java.util.Set;
  * @author Siarhei Poludvaranin
  *
  */
-public class Performance implements Serializable {
+public class Performance implements Serializable, Comparable<Object> {
     private static final long serialVersionUID = -8226959475559515701L;
 
     private Integer id;
@@ -112,4 +112,12 @@ public class Performance implements Serializable {
                 ", properties=" + properties +
                 '}';
     }
+
+	@Override
+	public int compareTo(Object o) {
+		Performance entry = (Performance) o;
+		
+		int result = this.startDate.compareTo(entry.startDate);
+		return result;
+	}
 }

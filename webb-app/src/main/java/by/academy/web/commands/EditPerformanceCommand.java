@@ -54,7 +54,7 @@ public class EditPerformanceCommand implements ICommand {
 		log.info("input lang id="+inputLangId);
 		Integer langId = null;
 
-		if (inputLangId != null) {
+		if (inputLangId != null && inputLangId.length()>0) {
 
 			langId = Integer.parseInt(inputLangId);
 		}

@@ -35,6 +35,7 @@
                                                                     type="text" name="dateInterval" id="reservation"
                                                                     value="${dateInterval}" />
                         </div>
+                        <button class="btn btn-small" type="submit"><fmt:message key="lbl.showButton" bundle="${bundle}"/></button>
                     </div>
                 </div>
             </fieldset>
@@ -99,10 +100,9 @@
                     key="lbl.rubles" bundle="${bundle}" /></br> ${event.freeTicketsCount}
                 <fmt:message key="lbl.ticketsAvailable" bundle="${bundle}" />
                 <div class="dropdown">
-
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                     <li><a tabindex="-1"
-                           href="/webb-app/Controller?action=PERFORMANCE_SHOW&eventId=${event.id}">Просмотреть</a></li>
+                           href="/webb-app/Controller?action=show_perf_list&performanceId=${event.performance.id}">Просмотреть</a></li>
                     <li><a tabindex="-1"
                            href="/webb-app/Controller?action=show_edit_event&eventId=${event.id}">Редактировать</a></li>
                     <li><a tabindex="-1"

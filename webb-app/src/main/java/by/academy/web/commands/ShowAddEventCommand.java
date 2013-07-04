@@ -1,6 +1,7 @@
 package by.academy.web.commands;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.ServletException;
@@ -46,7 +47,7 @@ public class ShowAddEventCommand implements ICommand {
             langId = 1;
         }
 
-        Set<Performance> performances = siteLogic.getAllPerformances(langId);
+        List<Performance> performances = siteLogic.getAllPerformances(langId);
         String startTime = "current";
         String endTime = "current";
 

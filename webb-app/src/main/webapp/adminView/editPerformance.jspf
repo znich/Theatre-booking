@@ -119,7 +119,8 @@
 
 
 				</div>
-
+				
+				<c:if test="${not empty inputLangId}">
 				<div class="span3">
 					<div class="control-group">
 						<div class="row">
@@ -138,6 +139,7 @@
 							</div>
 						</div>
 					</div>
+					</c:if>
 
 					<div class="control-group">
 						<div class="row">

@@ -6,7 +6,7 @@ import java.util.Set;
 
 /**
  */
-public class Event implements Serializable {
+public class Event implements Serializable, Comparable<Object> {
     private static final long serialVersionUID = 6587162487503777904L;
 
     private Integer id;
@@ -113,11 +113,24 @@ public class Event implements Serializable {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (performance != null ? performance.hashCode() : 0);
         result = 31 * result + (int) (startTime ^ (startTime >>> 32));
-        result = 31 * result + (int) (endTime ^ (endTime >>> 32));
-        result = 31 * result + (tickets != null ? tickets.hashCode() : 0);
-        result = 31 * result + (freeTicketsCount != null ? freeTicketsCount.hashCode() : 0);
-        result = 31 * result + (maxTicketPrice != null ? maxTicketPrice.hashCode() : 0);
-        result = 31 * result + (minTicketPrice != null ? minTicketPrice.hashCode() : 0);
+        result = 31 * result + (int) (endTime ^ (endTime >>> 32));       
         return result;
+   
     }
+
+
+	@Override
+	public int compareTo(Object o) {
+		Event entry = (Event) o;
+		
+		Long result =  this.startTime - entry.startTime;
+		
+		if (result<0){
+			return -1;
+		} else if (result>0){
+			return 1;
+		}
+			
+		return 0;
+	}
 }

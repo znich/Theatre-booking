@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -108,7 +109,7 @@ public class AdminShowEventsCommand implements ICommand {
 					eventList, category);
 			log.info("sorting events list");
 			eventList = sortedEventList;
-		}
+		}		
 
 		request.setAttribute(RequestConstants.EVENTS_LIST_ATTRIBUTE.getName(),
 				eventList);

@@ -55,6 +55,7 @@
                                             <input type="hidden" id="action" name="action" value="show_event_list"/>
                                             <input class="input-medium" type="text" name="dateInterval" id="reservation" value="${dateInterval}" />
                                         </div>
+                                        <button class="btn btn-small" type="submit"><fmt:message key="lbl.showButton" bundle="${bundle}"/></button>
                                     </div>
                                 </div>
                             </fieldset>
