@@ -19,7 +19,7 @@
     <!--[if lt IE 9]>
     <script src="../static/js/html5shiv.js"></script>
     <![endif]-->
-    <link href="../static/css/style.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
     <script type="text/javascript" src="/static/ckeditor/ckeditor.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
     <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
