@@ -1,6 +1,0 @@
-<div class="span3">
-    <ul>
-        <li><a href="./Controller?lang=en"><fmt:message key="lbl.lang.eng" bundle="${bundle}"/></a></li>
-        <li><a href="./Controller?lang=ru"><fmt:message key="lbl.lang.ru" bundle="${bundle}"/></a></li>
-    </ul>
-</div>

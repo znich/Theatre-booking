@@ -3,6 +3,7 @@ package by.academy.service;
 import by.academy.domain.Category;
 import by.academy.domain.Event;
 import by.academy.domain.Performance;
+import by.academy.domain.Property;
 import by.academy.exception.ServiceException;
 
 import java.util.Calendar;
@@ -16,7 +17,7 @@ public interface ISiteService {
 
     Set<Performance> getPerformancesByCategory(Integer selectedCategory, Integer langId) throws ServiceException;
 
-    Set<Performance> getAllPerformances(Integer langId) throws ServiceException;
+    List<Performance> getAllPerformances(Integer langId) throws ServiceException;
 
     Performance getPerformancesById(Integer id, Integer langId) throws ServiceException;
 
@@ -25,4 +26,10 @@ public interface ISiteService {
     List<Event> getEventsInDateInterval(Calendar date1, Calendar date2, Integer langId) throws ServiceException;
 
     List<Event> sortEventsByCategory(List<Event> eventList, Category category);
+
+    List<Event> getAllEvents(int langId) throws ServiceException;
+
+    Event getEventById(Integer eventId, int langId);
+
+    Integer sortPropertyByLang(Set<Property> properties, Integer langId);
 }

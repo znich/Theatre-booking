@@ -22,7 +22,7 @@
 </head>
 <body id="body">
 <div class="container">
-    <%@include file="WEB-INF/tiles/head.jspf" %>
+    <%@include file="WEB-INF/tiles/header.jsp" %>
 </div>
 <table class="table table-bordered" border=1>
     <tr>

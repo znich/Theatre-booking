@@ -1,6 +1,9 @@
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${lang}"/>
+<fmt:setBundle basename="messages" var="bundle" scope="page"/>
 <div class="row" id="user-nav">
-		   <%@include file="../../jspf/userLogin.jspf"%>
-           <%@include file="../../jspf/lang.jspf"%>
+		   <%@include file="userLogin.jspf"%>
+           <%@include file="lang.jspf"%>
 		  <div class="span4">
 			<form class="form-search">
 			  <div class="input-append">

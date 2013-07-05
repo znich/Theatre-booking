@@ -6,7 +6,7 @@ import java.util.Set;
 
 /**
  */
-public class TicketsPrice implements Serializable {
+public class TicketsPrice implements Serializable, Comparable<Object> {
     private static final long serialVersionUID = 3226097319160868426L;
 
     private Integer id;
@@ -74,4 +74,16 @@ public class TicketsPrice implements Serializable {
     public int hashCode() {
         return id.hashCode();
     }
+
+    @Override
+    public int compareTo(Object obj) {
+        TicketsPrice entry = (TicketsPrice) obj;
+
+        int result = priceCategory - entry.priceCategory;
+        if (result != 0) {
+            return (int) result / Math.abs(result);
+        }
+        return 0;
+    }
+
 }

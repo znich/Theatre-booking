@@ -1,6 +1,6 @@
-<%@page language="java" contentType="text/html; UTF-8"
-        pageEncoding="UTF-8"%>
-<a href="/webb-app/Controller?action=show_add_performance"
+<%@page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<a href="/webb-app/addPerformance"
    class="btn btn-primary">Добавить представление</a>
 <c:forEach var="performance" items="${performanceList}">
     <div class="row-fluid">
@@ -35,9 +35,9 @@
         <div class="span1">
             <div class="btn-group">
                 <a class="btn"
-                   href="/webb-app/Controller?action=show_edit_performance&performanceId=${performance.id}"><i
+                   href="/webb-app/editPerformance?performanceId=${performance.id}"><i
                         class="icon-edit icon-large"></i></a> <a class="btn"
-                                                                 href="/webb-app/Controller?action=delete_performance&performanceId=${performance.id}"><i
+                                                                 href="/webb-app//deletePerformance?performanceId=${performance.id}"><i
                     class="icon-trash icon-large"></i></a>
             </div>
         </div>

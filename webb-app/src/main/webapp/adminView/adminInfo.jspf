@@ -1,2 +1,0 @@
-
-<fmt:message key="message.adminGreeting" bundle="${bundle}"/>

@@ -21,7 +21,7 @@
 <body>
     <div class="container">
         <div class="row" id="user-nav">
-            <%@include file="../jspf/userLogin.jspf"%>
+            <%@include file="../WEB-INF/tiles/userLogin.jspf"%>
             <div class="span4">
                 <form class="form-search">
                     <div class="input-append">

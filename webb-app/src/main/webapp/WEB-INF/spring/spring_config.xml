@@ -103,11 +103,32 @@
         <property name="sessionFactory" ref="hibernateSessionFactory"/>
     </bean>
 
+    <bean id="paymentDao" class="by.academy.dao.GenericDaoImpl">
+        <constructor-arg>
+            <value>by.academy.domain.PaymentMethod</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="hibernateSessionFactory"/>
+    </bean>
+
+    <bean id="userDao" class="by.academy.dao.GenericDaoImpl">
+        <constructor-arg>
+            <value>by.academy.domain.User</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="hibernateSessionFactory"/>
+    </bean>
+
     <bean id="ticketsPriceDao" class="by.academy.dao.GenericDaoImpl">
         <constructor-arg>
             <value>by.academy.domain.TicketsPrice</value>
         </constructor-arg>
         <property name="sessionFactory" ref="hibernateSessionFactory"/>
+    </bean>
+
+    <bean id="userService" class="by.academy.service.impl.UserService">
+        <property name="userDao" ref="userDao"/>
+        <property name="ticketDao" ref="ticketDao"/>
+        <property name="bookingDao" ref="bookingDao"/>
+        <property name="paymentDao" ref="paymentDao"/>
     </bean>
 
     <bean id="siteService" class="by.academy.service.impl.SiteService">
@@ -128,6 +149,8 @@
         <property name="ticketsPriceDao" ref="ticketsPriceDao"/>
     </bean>
 
+    <bean id="userValidator" class="by.academy.web.validator.UserValidator">
+    </bean>
 
     <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
         <property name="sessionFactory" ref="hibernateSessionFactory"/>
@@ -144,11 +167,7 @@
     <aop:config>
         <aop:advisor pointcut="execution(* by.academy.service.impl.AdminService.*(..))"
                      advice-ref="txAdvice"/>
-        <aop:advisor pointcut="execution(* by.academy.service.UserLogic.*(..))"
-                     advice-ref="txAdvice"/>
-        <aop:advisor pointcut="execution(* by.academy.service.LoginLogic.*(..))"
-                     advice-ref="txAdvice"/>
-        <aop:advisor pointcut="execution(* by.academy.service.RegistratorLogic.*(..))"
+        <aop:advisor pointcut="execution(* by.academy.service.impl.UserService.*(..))"
                      advice-ref="txAdvice"/>
         <aop:advisor pointcut="execution(* by.academy.service.impl.SiteService.*(..))"
                      advice-ref="txAdvice"/>

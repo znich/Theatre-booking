@@ -1,0 +1,9 @@
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${lang}"/>
+<fmt:setBundle basename="messages" var="bundle" scope="page"/>
+<div class="span3">
+    <ul>
+        <li><a href="?lang=en"><fmt:message key="lbl.lang.eng" bundle="${bundle}"/></a></li>
+        <li><a href="?lang=ru"><fmt:message key="lbl.lang.ru" bundle="${bundle}"/></a></li>
+    </ul>
+</div>

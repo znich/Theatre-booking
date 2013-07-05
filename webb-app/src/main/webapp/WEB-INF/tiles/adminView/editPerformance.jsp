@@ -91,7 +91,7 @@
                         <c:forEach var="property" items="${performance.properties}">
                             <c:if test="${property.name=='IMAGE'}">
                                 <c:forEach var="childProperty" items="${property.childProperties}">
-                                    src="../static/img/thumbnail/${childProperty.value}"
+                                    src="/static/img/thumbnail/${childProperty.value}"
                                 </c:forEach>
                             </c:if>
                         </c:forEach>                                      class="img-rounded" width="300" height="200">

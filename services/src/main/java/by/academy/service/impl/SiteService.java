@@ -54,6 +54,7 @@ public class SiteService implements ISiteService {
         }
     }
 
+
     public Set<Performance> getPerformancesByCategory(Integer categoryId, Integer langId) throws ServiceException {
         Category selectedCategory = getCategoryById(categoryId);
         Set<Performance> perfSet = selectedCategory.getPerformances();
@@ -63,9 +64,9 @@ public class SiteService implements ISiteService {
         return perfSet;
     }
 
-    public Set<Performance> getAllPerformances(Integer langId) throws ServiceException {
+    public List<Performance> getAllPerformances(Integer langId) throws ServiceException {
         try {
-            Set<Performance> performances = new HashSet<Performance>(perfDao.findAll());
+            List<Performance> performances = perfDao.findAll();
             for (Performance p : performances) {
                 sortPropertyByLang(p.getProperties(), langId);
             }
@@ -76,17 +77,20 @@ public class SiteService implements ISiteService {
         }
     }
 
-    private Set<Property> sortPropertyByLang(Set<Property> propSet, Integer langId) {
+    public Integer sortPropertyByLang(Set<Property> propSet, Integer langId) {
+        Integer result = 0;
         for (Property prop : propSet) {
             Set<Property> sortedProperties = new HashSet<Property>();
             for (Property childProp : prop.getChildProperties()) {
                 if (childProp.getLangId().equals(langId)) {
-                    sortedProperties.add(childProp);
+                    if (sortedProperties.add(childProp)) {
+                        result++;
+                    }
                 }
             }
             prop.setChildProperties(sortedProperties);
         }
-        return propSet;
+        return result;
     }
 
     public Event getEventById(int id, int langId) throws ServiceException {
@@ -99,7 +103,7 @@ public class SiteService implements ISiteService {
         }
     }
 
-    public List<Event> getAllEvents(Integer langId) throws ServiceException {
+    public List<Event> getAllEvents(int langId) throws ServiceException {
         try {
             List<Event> events = eventDao.findAll();
             return events;
@@ -112,6 +116,9 @@ public class SiteService implements ISiteService {
     public List<Event> getEventsInDateInterval(Calendar begin, Calendar end, Integer langId) throws ServiceException {
         try {
             List<Event> events = eventDao.findByCriteria(Restrictions.between("startTime", begin.getTimeInMillis(), end.getTimeInMillis()));
+            if(events.isEmpty()){
+                return events;
+            }
 
             for (Event e : events) {
                 log.info("Event Id: " + e.getId() + "; " + "Start time: " + e.getStartTime() + "; " + "Start time: " + e.getEndTime() + "; " + "Perf ID: " + e.getPerformance().getId());
@@ -125,10 +132,11 @@ public class SiteService implements ISiteService {
 
             return events;
         } catch (DaoException e) {
-            log.error("DaoException in SiteLogic. Can't collect Events", e);
-            throw new ServiceException("DaoException in SiteLogic. Can't collect Events", e);
+            log.error("DaoException in SiteService. Can't collect Events", e);
+            throw new ServiceException("DaoException in SiteService. Can't collect Events", e);
         }
     }
+
 
     public List<Event> sortEventsByCategory(List<Event> events, Category category) {
 
@@ -220,8 +228,7 @@ public class SiteService implements ISiteService {
         try {
             Status status = statusDao.getEntityById(statusId);
             Criterion ticketByStatusCondition =
-                    Restrictions.conjunction().add(Restrictions.eq("event", event))
-                            .add(Restrictions.eq("status", status));
+                    Restrictions.conjunction().add(Restrictions.eq("event", event)).add(Restrictions.eq("status", status));
             List<Ticket> tickets = ticketDao.findByCriteria(ticketByStatusCondition);
             return tickets;
         } catch (DaoException e) {
@@ -236,7 +243,7 @@ public class SiteService implements ISiteService {
             List<Ticket> tickets = getTicketsByStatusId(event, freeTicketsStatus);
             return tickets;
         } catch (ServiceException e) {
-            log.error("ServiceException in SiteLogic. Can't collect Tickets", e);
+            log.error("ServiceException in SiteService. Can't collect Tickets", e);
             throw new ServiceException("ServiceException in SiteLogic. Can't collect Tickets", e);
         }
     }
@@ -310,4 +317,13 @@ public class SiteService implements ISiteService {
         }
         return result;
     }
+
+
+
+    @Override
+    public Event getEventById(Integer eventId, int langId) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

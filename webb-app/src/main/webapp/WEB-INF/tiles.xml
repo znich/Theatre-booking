@@ -4,28 +4,53 @@
         "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
 <tiles-definitions>
 
-    <definition name="main.page" template="/WEB-INF/tiles/index.jsp">
+    <!--Site-->
+
+    <definition name="showPerformances" template="/WEB-INF/tiles/siteTemplate.jsp">
         <put-attribute name="header" value="/WEB-INF/tiles/header.jsp"/>
+        <put-attribute name="maincontent" value="/WEB-INF/tiles/performancesList.jsp"/>
     </definition>
 
-    <definition name="showPerformances" template="/WEB-INF/tiles/performances.jsp">
+    <definition name="showPerformance" template="/WEB-INF/tiles/siteTemplate.jsp">
         <put-attribute name="header" value="/WEB-INF/tiles/header.jsp"/>
+        <put-attribute name="maincontent" value="/WEB-INF/tiles/performance.jsp"/>
     </definition>
 
-    <definition name="singlePerformance.page" template="/WEB-INF/tiles/performance.jsp">
+    <definition name="showEvents" template="/WEB-INF/tiles/siteTemplate.jsp">
         <put-attribute name="header" value="/WEB-INF/tiles/header.jsp"/>
+        <put-attribute name="maincontent" value="/WEB-INF/tiles/eventsList.jsp"/>
     </definition>
 
-    <definition name="eventList.page" template="/WEB-INF/tiles/events.jsp">
+    <definition name="showLoginForm" template="/WEB-INF/tiles/siteTemplate.jsp">
         <put-attribute name="header" value="/WEB-INF/tiles/header.jsp"/>
+        <put-attribute name="maincontent" value="/WEB-INF/tiles/login.jsp"/>
     </definition>
 
-    <definition name="login.page" template="/WEB-INF/tiles/login.jsp">
+    <definition name="showRegistrationForm" template="/WEB-INF/tiles/siteTemplate.jsp">
         <put-attribute name="header" value="/WEB-INF/tiles/header.jsp"/>
+        <put-attribute name="maincontent" value="/WEB-INF/tiles/registration.jsp"/>
     </definition>
 
-    <definition name="registration.page" template="/WEB-INF/tiles/registration.jsp">
-        <put-attribute name="header" value="/WEB-INF/tiles/header.jsp"/>
+    <!--Admin-->
+
+    <definition name="adminInfo" template="/WEB-INF/tiles/adminTemplate.jsp">
+        <put-attribute name="adminmaincontent" value="/WEB-INF/tiles/adminView/adminInfo.jsp"/>
+    </definition>
+
+    <definition name="editPerformancesList" template="/WEB-INF/tiles/adminTemplate.jsp">
+        <put-attribute name="adminmaincontent" value="/WEB-INF/tiles/adminView/editPerformancesList.jsp"/>
+    </definition>
+
+    <definition name="editEventsList" template="/WEB-INF/tiles/adminTemplate.jsp">
+        <put-attribute name="adminmaincontent" value="/WEB-INF/tiles/adminView/editEventsList.jsp"/>
+    </definition>
+
+    <definition name="editEvent" template="/WEB-INF/tiles/adminTemplate.jsp">
+        <put-attribute name="adminmaincontent" value="/WEB-INF/tiles/adminView/editEvent.jsp"/>
+    </definition>
+
+    <definition name="editPerformance" template="/WEB-INF/tiles/adminTemplate.jsp">
+        <put-attribute name="adminmaincontent" value="/WEB-INF/tiles/adminView/editPerformance.jsp"/>
     </definition>
 
 </tiles-definitions>
