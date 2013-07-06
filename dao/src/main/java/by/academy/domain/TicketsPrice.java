@@ -1,11 +1,11 @@
 package by.academy.domain;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
 /**
  */
+
 public class TicketsPrice implements Serializable, Comparable<Object> {
     private static final long serialVersionUID = 3226097319160868426L;
 
@@ -59,20 +59,46 @@ public class TicketsPrice implements Serializable, Comparable<Object> {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof TicketsPrice)) return false;
-
-        TicketsPrice that = (TicketsPrice) o;
-
-        if (!id.equals(that.id)) return false;
-
-        return true;
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((perfId == null) ? 0 : perfId.hashCode());
+        result = prime * result + price;
+        result = prime * result + priceCategory;
+        result = prime * result + ((seats == null) ? 0 : seats.hashCode());
+        return result;
     }
 
     @Override
-    public int hashCode() {
-        return id.hashCode();
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof TicketsPrice))
+            return false;
+        TicketsPrice other = (TicketsPrice) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        if (perfId == null) {
+            if (other.perfId != null)
+                return false;
+        } else if (!perfId.equals(other.perfId))
+            return false;
+        if (price != other.price)
+            return false;
+        if (priceCategory != other.priceCategory)
+            return false;
+        if (seats == null) {
+            if (other.seats != null)
+                return false;
+        } else if (!seats.equals(other.seats))
+            return false;
+        return true;
     }
 
     @Override

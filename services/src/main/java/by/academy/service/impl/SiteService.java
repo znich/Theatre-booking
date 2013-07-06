@@ -47,13 +47,13 @@ public class SiteService implements ISiteService {
         try {
             Performance perf = perfDao.getEntityById(id);
             sortPropertyByLang(perf.getProperties(), langId);
+           log.info("tp count "+ perf.getTicketsPrices().size());
             return perf;
         } catch (DaoException e) {
             log.error("DaoException in SiteLogic. Can't collect Performance for id" + id, e);
             throw new ServiceException("DaoException in SiteLogic. Can't collect Performance for id" + id, e);
         }
     }
-
 
     public Set<Performance> getPerformancesByCategory(Integer categoryId, Integer langId) throws ServiceException {
         Category selectedCategory = getCategoryById(categoryId);
@@ -116,9 +116,6 @@ public class SiteService implements ISiteService {
     public List<Event> getEventsInDateInterval(Calendar begin, Calendar end, Integer langId) throws ServiceException {
         try {
             List<Event> events = eventDao.findByCriteria(Restrictions.between("startTime", begin.getTimeInMillis(), end.getTimeInMillis()));
-            if(events.isEmpty()){
-                return events;
-            }
 
             for (Event e : events) {
                 log.info("Event Id: " + e.getId() + "; " + "Start time: " + e.getStartTime() + "; " + "Start time: " + e.getEndTime() + "; " + "Perf ID: " + e.getPerformance().getId());
@@ -132,11 +129,10 @@ public class SiteService implements ISiteService {
 
             return events;
         } catch (DaoException e) {
-            log.error("DaoException in SiteService. Can't collect Events", e);
-            throw new ServiceException("DaoException in SiteService. Can't collect Events", e);
+            log.error("DaoException in SiteLogic. Can't collect Events", e);
+            throw new ServiceException("DaoException in SiteLogic. Can't collect Events", e);
         }
     }
-
 
     public List<Event> sortEventsByCategory(List<Event> events, Category category) {
 
@@ -228,7 +224,8 @@ public class SiteService implements ISiteService {
         try {
             Status status = statusDao.getEntityById(statusId);
             Criterion ticketByStatusCondition =
-                    Restrictions.conjunction().add(Restrictions.eq("event", event)).add(Restrictions.eq("status", status));
+                    Restrictions.conjunction().add(Restrictions.eq("event", event))
+                            .add(Restrictions.eq("status", status));
             List<Ticket> tickets = ticketDao.findByCriteria(ticketByStatusCondition);
             return tickets;
         } catch (DaoException e) {
@@ -243,7 +240,7 @@ public class SiteService implements ISiteService {
             List<Ticket> tickets = getTicketsByStatusId(event, freeTicketsStatus);
             return tickets;
         } catch (ServiceException e) {
-            log.error("ServiceException in SiteService. Can't collect Tickets", e);
+            log.error("ServiceException in SiteLogic. Can't collect Tickets", e);
             throw new ServiceException("ServiceException in SiteLogic. Can't collect Tickets", e);
         }
     }
@@ -321,9 +318,14 @@ public class SiteService implements ISiteService {
 
 
     @Override
-    public Event getEventById(Integer eventId, int langId) {
-        // TODO Auto-generated method stub
-        return null;
+    public Event getEventById(Integer eventId, int langId) throws ServiceException {
+        try {
+            return eventDao.getEntityById(eventId);
+        } catch (DaoException e) {
+            log.error("can't get event by id");
+            throw new ServiceException("can't get event by id", e);
+        }
     }
+
 
 }

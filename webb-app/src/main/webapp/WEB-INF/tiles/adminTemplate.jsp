@@ -17,9 +17,9 @@
     <link href="/static/css/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css" />
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
-    <script src="../static/js/html5shiv.js"></script>
+    <script src="/static/js/html5shiv.js"></script>
     <![endif]-->
-    <link href="../static/css/style.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
     <script type="text/javascript" src="/static/ckeditor/ckeditor.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
     <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>

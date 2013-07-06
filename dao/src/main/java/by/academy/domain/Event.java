@@ -22,6 +22,11 @@ public class Event implements Serializable {
     public Event() {
     }
 
+    public Event(long startTime, long endTime){
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
     public Integer getFreeTicketsCount() {
         return freeTicketsCount;
     }

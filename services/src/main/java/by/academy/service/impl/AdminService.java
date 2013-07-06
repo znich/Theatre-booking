@@ -19,17 +19,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  */
 public class AdminService implements IAdminService {
-    private static Log log = LogFactory.getLog(AdminService.class);
+
     @Autowired
     private ISiteService siteService;
 
-    private IGenericDao<Performance, Integer>perfDao;
-    private IGenericDao<Status, Integer>statusDao;
-    private IGenericDao<Seat, Integer>seatDao;
-    private IGenericDao<Event, Integer>eventDao;
-    private IGenericDao<Ticket, Integer>ticketDao;
-    private IGenericDao<Booking, Integer>bookingDao;
-    private IGenericDao<TicketsPrice, Integer>ticketsPriceDao;
+    private static Log log = LogFactory.getLog(AdminService.class);
+
+    private IGenericDao<Performance, Integer> perfDao;
+    private IGenericDao<Status, Integer> statusDao;
+    private IGenericDao<Seat, Integer> seatDao;
+    private IGenericDao<Event, Integer> eventDao;
+    private IGenericDao<Ticket, Integer> ticketDao;
+    private IGenericDao<Booking, Integer> bookingDao;
+    private IGenericDao<TicketsPrice, Integer> ticketsPriceDao;
 
     public void setPerfDao(IGenericDao<Performance, Integer> perfDao) {
         this.perfDao = perfDao;
@@ -51,13 +53,15 @@ public class AdminService implements IAdminService {
         this.ticketDao = ticketDao;
     }
 
-    public void setTicketsPriceDao(IGenericDao<TicketsPrice, Integer> ticketsPriceDao) {
+    public void setTicketsPriceDao(
+            IGenericDao<TicketsPrice, Integer> ticketsPriceDao) {
         this.ticketsPriceDao = ticketsPriceDao;
     }
 
     public void setBookingDao(IGenericDao<Booking, Integer> bookingDao) {
         this.bookingDao = bookingDao;
     }
+
     public boolean saveOrUpdatePerformance(Integer id, String title,
                                            String shortDescription, String description, Calendar startDate,
                                            Calendar endDate, String image, Category category,
@@ -210,10 +214,9 @@ public class AdminService implements IAdminService {
 
         try {
             perfDao.delEntity(perfId);
-            if(perfDao.getEntityById(perfId) == null ){
+            if(perfDao.getEntityById(perfId) ==null){
                 flag = true;
             }
-
         } catch (DaoException e) {
             log.error("DaoException in AdminLogic. Can't delete Performance", e);
             throw new ServiceException(
@@ -347,7 +350,7 @@ public class AdminService implements IAdminService {
 
         try {
             eventDao.delEntity(eventId);
-            if(eventDao.getEntityById(eventId) == null){
+            if(perfDao.getEntityById(eventId) ==null){
                 flag = true;
             }
         } catch (DaoException e) {

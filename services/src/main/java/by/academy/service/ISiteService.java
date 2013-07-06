@@ -29,7 +29,7 @@ public interface ISiteService {
 
     List<Event> getAllEvents(int langId) throws ServiceException;
 
-    Event getEventById(Integer eventId, int langId);
+    Event getEventById(Integer eventId, int langId) throws ServiceException;
 
     Integer sortPropertyByLang(Set<Property> properties, Integer langId);
 }

@@ -12,7 +12,7 @@
         <property name="endTime" type="long" not-null="true" />
         <many-to-one name="performance" class="Performance" column="EVENT_NAME" fetch="select" />
 
-        <set name="tickets" table="T_TICKET" inverse="true" fetch="select" cascade="save-update">
+        <set name="tickets" table="T_TICKET" inverse="true" fetch="select" cascade="all">
             <key column="EVENT_ID" not-null="true" />
             <one-to-many class="Ticket" />
         </set>

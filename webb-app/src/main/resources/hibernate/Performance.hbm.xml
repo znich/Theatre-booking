@@ -12,15 +12,15 @@
         <property name="endDate" not-null="true" />
 
         <many-to-one name="category" column="F_CATEGORY_ID" class="Category" fetch="select" />
-        <set name="properties" table="PERFORMANCE_PROPERTIES" fetch="select" cascade="save-update">
+        <set name="properties" table="PERFORMANCE_PROPERTIES" fetch="select" cascade="all">
             <key column="PERFORMANCE_ID" not-null="true"/>
             <many-to-many class="Property" column="PROPERTY_ID"/>
         </set>
-        <set name="events" table="T_EVENT" inverse="true" fetch="select" cascade="save-update">
+        <set name="events" table="T_EVENT" inverse="true" fetch="select" cascade="all">
             <key column="EVENT_NAME" not-null="true" />
             <one-to-many class="Event" />
         </set>
-        <set name="ticketsPrices" table="T_TICKETSPRICE" inverse="true" fetch="select" cascade="save-update">
+        <set name="ticketsPrices" table="T_TICKETSPRICE" inverse="true" fetch="select" cascade="all">
             <key column="F_PERFORMANCE_ID" not-null="true" />
             <one-to-many class="TicketsPrice" />
         </set>

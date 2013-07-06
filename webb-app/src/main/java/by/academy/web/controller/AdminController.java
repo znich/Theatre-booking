@@ -1,9 +1,6 @@
 package by.academy.web.controller;
 
-import by.academy.domain.Category;
-import by.academy.domain.Event;
-import by.academy.domain.Performance;
-import by.academy.domain.TicketsPrice;
+import by.academy.domain.*;
 import by.academy.exception.ServiceException;
 import by.academy.service.IAdminService;
 import by.academy.service.ISiteService;
@@ -14,9 +11,8 @@ import by.academy.web.util.SessionConstants;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -63,324 +59,6 @@ public class AdminController {
 
     }
 
-    @RequestMapping(value = "/showEvents", method = {RequestMethod.GET})
-    public String showEvents(Map<String, Object> model,
-                             @RequestParam(value = "dateInterval", required = false) String dateInterval,
-                             HttpServletRequest request) throws UIException, IOException {
-
-        int langId = 1;
-
-        HttpSession session = request.getSession();
-        Calendar date1 = new GregorianCalendar();
-        Calendar date2 = new GregorianCalendar();
-        String dateFirst;
-        String dateLast;
-        String format = "MM/dd/yyyy";
-        int sutki = 86400000;
-
-        if (dateInterval != null) {
-
-            session.setAttribute(RequestConstants.DATE_INTERVAL.getName(), dateInterval);
-        }
-
-        dateInterval = (String) session.getAttribute(RequestConstants.DATE_INTERVAL.getName());
-        if (dateInterval != null && dateInterval.length() > 0) {
-            String[] dates = dateInterval.split(" - ");
-            dateFirst = dates[0];
-            dateLast = dates[1];
-
-            try {
-                date1.setTime(new SimpleDateFormat(format).parse(dateFirst));
-                date2.setTime(new SimpleDateFormat(format).parse(dateLast));
-            } catch (ParseException e) {
-                log.error("Wrong date format error", e);
-                throw new UIException("Wrong date format error", e);
-            }
-
-        } else {
-            date1.setTime(new Date());
-            date2.setTime(new Date());
-            date1.set(Calendar.DATE, 1);
-            date2.set(Calendar.MONTH, date2.get(Calendar.MONTH) + 1);
-            date2.setTimeInMillis(date2.getTimeInMillis() - sutki);
-        }
-
-        log.info("date1=" + date1.get(Calendar.DAY_OF_MONTH) + "/"
-                + date1.get(Calendar.MONTH) + "/" + date1.get(Calendar.YEAR));
-        log.info("date2=" + date2.get(Calendar.DAY_OF_MONTH) + "/"
-                + date2.get(Calendar.MONTH) + "/" + date2.get(Calendar.YEAR));
-
-        try {
-            List<Event> eventList = siteService.getEventsInDateInterval(date1, date2, langId);
-
-            Category category = getCategory(langId, request);
-
-            log.info("active category" + category.getName());
-            if (category != null && category.getId() != 0) {
-
-                List<Event> sortedEventList = siteService.sortEventsByCategory(eventList, category);
-                log.info("sorting events list");
-                eventList = sortedEventList;
-            }
-
-            model.put(RequestConstants.EVENTS_LIST_ATTRIBUTE.getName(), eventList);
-            model.put(SessionConstants.MENU_ITEM_ATTRIBUTE.getName(), SessionConstants.EVENTS_ATTRIBUTE.getName());
-            model.put(SessionConstants.ANSWER_ATTRIBUTE.getName(), SessionConstants.EVENT_ANSWER_ATTRIBUTE.getName());
-
-
-            session.setAttribute(RequestConstants.CATEGORIES_LIST_ATTRIBUTE.getName(),
-                    siteService.getAllCategories(langId));
-        } catch (ServiceException e) {
-            log.error("Cant get all categories" + e);
-            throw new UIException(e);
-        }
-
-        return "editEventsList";
-
-    }
-
-    @RequestMapping(value = "/deleteEvent", method = {RequestMethod.GET, RequestMethod.POST})
-    public String deleteEvent(Map<String, Object> model,
-                              @RequestParam(value = "eventId", required = false) String idOfEvent,
-                              HttpServletRequest request) throws UIException, IOException {
-
-        try {
-            int langId = 1;
-
-            String message = null;
-            if (idOfEvent == null) {
-                message = MessagesProperties.createPathProperties().getProperties(
-                        MessagesProperties.EVENT_DEL_ERROR, "ru");
-            } else {
-                Integer eventId = Integer.parseInt(idOfEvent);
-
-                if (adminService.deleteEvent(eventId)) {
-                    message = MessagesProperties.createPathProperties()
-                            .getProperties(MessagesProperties.EVENT_DEL_SUCCESS, "ru");
-                    log.info(message);
-                }
-            }
-            model.put(RequestConstants.EVENTS_LIST_ATTRIBUTE.getName(), siteService.getAllEvents(langId));
-            model.put(SessionConstants.MENU_ITEM_ATTRIBUTE.getName(), SessionConstants.EVENTS_ATTRIBUTE.getName());
-            model.put(SessionConstants.MESSAGE_ATTRIBUTE.getName(), message);
-            model.put(SessionConstants.ANSWER_ATTRIBUTE.getName(), SessionConstants.EVENT_ANSWER_ATTRIBUTE.getName());
-
-            return "editEventsList";
-        } catch (ServiceException e) {
-            log.error("Cannot delete event");
-            throw new UIException("Cannot delete event", e);
-        }
-
-    }
-
-    @RequestMapping(value = "/deletePerformance", method = {RequestMethod.GET, RequestMethod.POST})
-    public String deletPerformance(Map<String, Object> model,
-                                   @RequestParam(value = "performanceId", required = false) String idOfPerformance,
-                                   HttpServletRequest request) throws UIException, IOException {
-
-        int langId = 1;
-        String locale = "ru";
-
-        String message = null;
-        try {
-            if (idOfPerformance == null) {
-                message = MessagesProperties.createPathProperties().getProperties(
-                        MessagesProperties.PERF_DEL_ERROR, locale);
-            } else {
-                Integer performanceId = Integer.parseInt(idOfPerformance);
-                if (adminService.deletePerformance(performanceId)) {
-                    message = MessagesProperties.createPathProperties()
-                            .getProperties(MessagesProperties.PERF_DEL_SUCCESS, locale);
-                }
-            }
-
-            request.setAttribute(SessionConstants.PERFORMANCE_LIST_ATTRIBUTE.getName(),
-                    siteService.getAllPerformances(langId));
-        } catch (ServiceException e) {
-            log.info("Error while getting all performances" + e);
-            throw new UIException("Error while getting all performances", e);
-        }
-        model.put(SessionConstants.MENU_ITEM_ATTRIBUTE.getName(), RequestConstants.PERFORMANCES_ATTRIBUTE.getName());
-        model.put(SessionConstants.MESSAGE_ATTRIBUTE.getName(), message);
-        model.put(SessionConstants.ANSWER_ATTRIBUTE.getName(), SessionConstants.EDIT_PERF_LIST_ANSWER_ATTRIBUTE.getName());
-
-        return "editPerformancesList";
-
-    }
-
-    @RequestMapping(value = "/editEvent", method = {RequestMethod.GET,
-            RequestMethod.POST})
-    public String editEvent(Map<String, Object> model,
-                            @RequestParam(value = "inputDate", required = false) String inputedDate,
-                            @RequestParam(value = "inputStartTime", required = false) String inputedStartTime,
-                            @RequestParam(value = "inputEndTime", required = false) String inputedEndTime,
-                            @RequestParam(value = "eventId", required = false) String idOfEvent,
-                            @RequestParam(value = "performanceId", required = false) String idOfPerformance,
-                            HttpServletRequest request) throws UIException, IOException {
-
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy HH:mm");
-        Calendar eventsStartDate = GregorianCalendar.getInstance();
-        Calendar eventsEndDate = GregorianCalendar.getInstance();
-        if (inputedDate != null && inputedDate.length() > 0) {
-            try {
-                eventsStartDate.setTime(sdf.parse(inputedDate + " " + inputedStartTime));
-                eventsEndDate.setTime(sdf.parse(inputedDate + " " + inputedEndTime));
-            } catch (ParseException e) {
-                log.error("Wrong date format error", e);
-                throw new UIException("Wrong date format error", e);
-            }
-        } else {
-            eventsStartDate = Calendar.getInstance();
-            eventsEndDate = Calendar.getInstance();
-        }
-
-        Integer eventId = null;
-        if (idOfEvent.length() > 0) {
-            eventId = Integer.parseInt(idOfEvent);
-        }
-
-        Integer performanceId = 0;
-        if (idOfPerformance.length() > 0) {
-            performanceId = Integer.parseInt(idOfPerformance);
-        }
-
-        boolean flag;
-        try {
-            flag = adminService.saveOrUpdateEvent(eventId, performanceId, eventsStartDate.getTimeInMillis(),
-                    eventsEndDate.getTimeInMillis());
-        } catch (ServiceException e) {
-            log.error("Cannot save or update event", e);
-            throw new UIException("Cannot save or update event", e);
-        }
-        String message = null;
-
-        if (flag) {
-            message = MessagesProperties.createPathProperties().getProperties(
-                    MessagesProperties.REGISTER_SUCCESSFUL, "ru");
-        }
-
-        model.put(SessionConstants.MENU_ITEM_ATTRIBUTE.getName(), SessionConstants.EVENTS_ATTRIBUTE.getName());
-        model.put(SessionConstants.ANSWER_ATTRIBUTE.getName(), SessionConstants.EVENT_ANSWER_ATTRIBUTE.getName());
-        model.put(SessionConstants.MESSAGE_ATTRIBUTE.getName(), message);
-        return "editEventsList";
-
-    }
-
-    @RequestMapping(value = "/editPerformance", method = {RequestMethod.GET, RequestMethod.POST})
-    public String editPerformance(Map<String, Object> model,
-                                  @RequestParam(value = "inputDateInteval", required = true) String dateInterval,
-                                  @RequestParam(value = "performanceId", required = true) String idOfPerformance,
-                                  @RequestParam(value = "inputCategoryId", required = true) String inputCategoryId,
-                                  @RequestParam(value = "inputName", required = true) String name,
-                                  @RequestParam(value = "inputShortDescription", required = true) String shortDescription,
-                                  @RequestParam(value = "inputDescription", required = false) String description,
-                                  @RequestParam(value = "inputImage", required = true) String image,
-                                  @RequestParam(value = "inputPrice", required = true) String inputPrice,
-                                  @RequestParam(value = "inputLangId", required = false) String inputLangId,
-                                  HttpServletRequest request) throws UIException, IOException {
-
-        String DATE_FORMAT = "MM/dd/yyyy";
-
-        log.info("input lang id=" + inputLangId);
-        Integer langId = null;
-
-        if (inputLangId != null && inputLangId.length() > 0) {
-
-            langId = Integer.parseInt(inputLangId);
-        }
-        if (langId == null) {
-
-            langId = 1;
-        }
-
-        Calendar date1 = Calendar.getInstance();
-        Calendar date2 = Calendar.getInstance();
-
-        if (dateInterval != null && dateInterval.length() > 0) {
-            String[] dates = dateInterval.split(" - ");
-
-            try {
-                date1.setTime(new SimpleDateFormat(DATE_FORMAT).parse(dates[0]));
-                date2.setTime(new SimpleDateFormat(DATE_FORMAT).parse(dates[1]));
-            } catch (ParseException e) {
-                log.error("Wrong date format error", e);
-                throw new UIException("Wrong date format error", e);
-            }
-        }
-
-        Integer performanceId = null;
-        if (idOfPerformance.length() > 0) {
-            performanceId = Integer.parseInt(idOfPerformance);
-        }
-        Integer categoryId = Integer.parseInt(inputCategoryId);
-        Set<TicketsPrice> ticketsPrices = new HashSet<TicketsPrice>();
-
-        for (int i = 1; i <= 5; i++) {
-            TicketsPrice ticketsPrice = new TicketsPrice();
-            ticketsPrice.setPriceCategory(i);
-            ticketsPrice.setPrice(Integer.parseInt(inputPrice + ticketsPrice.getPriceCategory()));
-            ticketsPrices.add(ticketsPrice);
-
-        }
-
-        Category category;
-        try {
-            category = siteService.getCategoryById(categoryId);
-        } catch (ServiceException e) {
-            log.error("Error with getting Category" + e);
-            throw new UIException(e);
-        }
-
-        boolean flag;
-        try {
-            flag = adminService.saveOrUpdatePerformance(performanceId, name,
-                    shortDescription, description, date1, date2, image,
-                    category, ticketsPrices, langId);
-        } catch (ServiceException e) {
-            log.error("Error while saving performance" + e);
-            throw new UIException(e);
-        }
-        String message = null;
-
-        if (flag) {
-            message = MessagesProperties.createPathProperties().getProperties(
-                    MessagesProperties.REGISTER_SUCCESSFUL, "ru");
-        }
-
-        model.put(SessionConstants.MENU_ITEM_ATTRIBUTE.getName(),RequestConstants.PERFORMANCES_ATTRIBUTE.getName());
-        model.put(SessionConstants.ANSWER_ATTRIBUTE.getName(),SessionConstants.EDIT_PERF_LIST_ANSWER_ATTRIBUTE.getName());
-        model.put(SessionConstants.MESSAGE_ATTRIBUTE.getName(),message);
-
-        return "editPerformancesList";
-
-    }
-
-    @RequestMapping(value = "/showAddEvent", method = {RequestMethod.GET, RequestMethod.POST})
-    public String showAddEvent(Map<String, Object> model,
-                               HttpServletRequest request) throws UIException, IOException {
-
-        int langId = 1;
-        List<Performance> performances;
-        try {
-            performances = siteService.getAllPerformances(langId);
-        } catch (ServiceException e) {
-            log.error("Error while getting all performances" + e);
-            throw new UIException(e);
-        }
-        String startTime = "current";
-        String endTime = "current";
-
-        model.put(SessionConstants.PERFORMANCE_LIST_ATTRIBUTE.getName(), performances);
-        model.put(SessionConstants.START_TIME_ATTRIBUTE.getName(), startTime);
-        model.put(SessionConstants.END_TIME_ATTRIBUTE.getName(), endTime);
-        model.put(SessionConstants.MENU_ITEM_ATTRIBUTE.getName(), SessionConstants.EVENTS_ATTRIBUTE.getName());
-        model.put(SessionConstants.ANSWER_ATTRIBUTE.getName(), SessionConstants.EDIT_EVENT_ANSWER_ATTRIBUTE.getName());
-        model.put(SessionConstants.LEGEND_ATTRIBUTE.getName(), SessionConstants.LEGEND.getName());
-
-        return "editEvent";
-
-    }
-
     @RequestMapping(value = "/addPerformance", method = {RequestMethod.GET, RequestMethod.POST})
     public String addPerformance(Map<String, Object> model,
                                  @RequestParam(value = "inputLangId", required = false) String inputLangId,
@@ -412,7 +90,7 @@ public class AdminController {
             ticketsPrices.add(ticketsPrice);
         }
 
-        model.put(RequestConstants.CATEGORIES_LIST_ATTRIBUTE.getName(),categoryList);
+        model.put(RequestConstants.CATEGORIES_LIST_ATTRIBUTE.getName(), categoryList);
         model.put(SessionConstants.MENU_ITEM_ATTRIBUTE.getName(), RequestConstants.PERFORMANCES_ATTRIBUTE.getName());
         model.put(SessionConstants.ANSWER_ATTRIBUTE.getName(), SessionConstants.EDIT_PERF_ANSWER_ATTRIBUTE.getName());
         model.put(SessionConstants.LEGEND_ATTRIBUTE.getName(), SessionConstants.LEGEND.getName());
@@ -421,42 +99,57 @@ public class AdminController {
 
     }
 
-    @RequestMapping(value = "/showEditEvent", method = {RequestMethod.GET})
-    public String showEditEvent(Map<String, Object> model,
-                                @RequestParam(value = "eventId", required = true) String eId,
-                                HttpServletRequest request) throws UIException, IOException {
+    @RequestMapping(value = "/editPerformance/{id}", method = {RequestMethod.GET})
+    public String showEditPerformance(Model model, @RequestParam(value = "inputLangId", required = false) String inputLangId,
+                                      @PathVariable("id") Integer id) throws UIException, IOException {
 
-        int langId = 1;
-
-        Integer eventId = Integer.parseInt(eId);
-
-        Event event;
-        List<Performance> performances;
         try {
 
-            event = siteService.getEventById(eventId, langId);
-            performances = siteService.getAllPerformances(langId);
+            Integer langId = null;
+            if (inputLangId != null) {
+
+                langId = Integer.parseInt(inputLangId);
+            }
+
+            if (langId == null) {
+
+                langId = 1;
+            }
+
+            Performance performance = siteService.getPerformancesById(id, langId);
+            List<TicketsPrice> pricesList = new ArrayList<>(performance.getTicketsPrices());
+            Collections.sort(pricesList);
+
+            Calendar cal;
+            StringBuilder dateIntervalBulder = new StringBuilder();
+            cal = performance.getStartDate();
+            dateIntervalBulder.append((cal.get(Calendar.MONTH) + 1) + "/"
+                    + cal.get(Calendar.DATE) + "/" + cal.get(Calendar.YEAR));
+            dateIntervalBulder.append(" - ");
+            cal = performance.getEndDate();
+            dateIntervalBulder.append((cal.get(Calendar.MONTH) + 1) + "/"
+                    + cal.get(Calendar.DATE) + "/" + cal.get(Calendar.YEAR));
+            String dateInterval = dateIntervalBulder.toString();
+
+            model.addAttribute("performance", performance);
+            model.addAttribute("dateInterval", dateInterval);
+            model.addAttribute(SessionConstants.INPUT_LANG_ID.getName(), langId);
+            model.addAttribute("categories", siteService.getAllCategories(langId));
+            model.addAttribute(SessionConstants.TICKETS_PRICE_ATTRIBUTE.getName(), pricesList);
+            model.addAttribute("legend", "Редактирование спектакля");
         } catch (ServiceException e) {
-            log.error("Can't collect entities by siteLogic", e);
-            throw new UIException("Can't collect entities by siteLogic", e);
+            log.error("ServiceException.Cannot get performance by id");
+            throw new UIException("ServiceException.Cannot get performance by id", e);
         }
-
-        model.put(SessionConstants.EVENT_ATTRIBUTE.getName(), event);
-        model.put(SessionConstants.PERFORMANCE_LIST_ATTRIBUTE.getName(), performances);
-        model.put(SessionConstants.MENU_ITEM_ATTRIBUTE.getName(), SessionConstants.EVENTS_ATTRIBUTE.getName());
-        model.put(SessionConstants.ANSWER_ATTRIBUTE.getName(), SessionConstants.EDIT_EVENT_ANSWER_ATTRIBUTE.getName());
-        model.put(SessionConstants.LEGEND_ATTRIBUTE.getName(), SessionConstants.LEGEND.getName());
-
-        return "editEvent";
-
+        return "editPerformance";
     }
 
-    @RequestMapping(value = "/showEditPerformance", method = {
-            RequestMethod.GET, RequestMethod.POST})
-    public String showEditPerformance(Map<String, Object> model,
-                                      @RequestParam(value = "inputLangId", required = false) String inputLangId,
-                                      @RequestParam(value = "performanceId", required = true) String perfId,
-                                      HttpServletRequest request) throws UIException, IOException {
+    @RequestMapping(value = "/editPerformance/{id}", method = {RequestMethod.POST})
+    public String editPerformance(Map<String, Object> model,
+                                  @RequestParam(value = "inputLangId", required = false) String inputLangId,
+                                  @RequestParam(value = "performanceId", required = true) String perfId,
+                                  HttpServletRequest request) throws UIException, IOException {
+
         Integer langId = null;
         if (inputLangId != null) {
 
@@ -505,7 +198,211 @@ public class AdminController {
         model.put(SessionConstants.MENU_ITEM_ATTRIBUTE.getName(), RequestConstants.PERFORMANCES_ATTRIBUTE.getName());
         model.put(SessionConstants.ANSWER_ATTRIBUTE.getName(), SessionConstants.EDIT_PERF_ANSWER_ATTRIBUTE.getName());
 
-        return "editPerformance";
+        return "redirect:/admin/showPerformances";
+
+    }
+
+    @RequestMapping(value = "/showEvents", method = {RequestMethod.GET})
+    public String showEvents(Map<String, Object> model,
+                             @RequestParam(value = "dateInterval", required = false) String dateInterval,
+                             HttpServletRequest request) throws UIException, IOException {
+
+        int langId = 1;
+
+        HttpSession session = request.getSession();
+        Calendar begin = Calendar.getInstance();
+        Calendar end = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+
+        if (dateInterval != null) {
+            session.setAttribute(RequestConstants.DATE_INTERVAL.getName(), dateInterval);
+        }
+
+        dateInterval = (String) session.getAttribute(RequestConstants.DATE_INTERVAL.getName());
+
+        if (dateInterval != null && dateInterval.length() > 0) {
+            String[] dates = dateInterval.split(" - ");
+
+            try {
+                begin.setTime(sdf.parse(dates[0]));
+                end.setTime(sdf.parse(dates[1]));
+            } catch (ParseException e) {
+                log.error("Wrong date format error", e);
+                throw new UIException("Wrong date format error", e);
+            }
+
+        } else {
+            begin.add(Calendar.DAY_OF_YEAR, -14);
+            end.add(Calendar.DAY_OF_YEAR, 14);
+        }
+
+        log.info("date1=" + begin.get(Calendar.DAY_OF_MONTH) + "/"
+                + begin.get(Calendar.MONTH) + "/" + begin.get(Calendar.YEAR));
+        log.info("date2=" + end.get(Calendar.DAY_OF_MONTH) + "/"
+                + end.get(Calendar.MONTH) + "/" + end.get(Calendar.YEAR));
+
+        try {
+            List<Event> eventList = siteService.getEventsInDateInterval(begin, end, langId);
+
+            Category category = getCategory(langId, request);
+
+            if (category != null && category.getId() != 0) {
+
+                List<Event> sortedEventList = siteService.sortEventsByCategory(eventList, category);
+                log.info("sorting events list");
+                eventList = sortedEventList;
+            }
+
+            model.put(RequestConstants.EVENTS_LIST_ATTRIBUTE.getName(), eventList);
+            model.put(SessionConstants.MENU_ITEM_ATTRIBUTE.getName(), SessionConstants.EVENTS_ATTRIBUTE.getName());
+            session.setAttribute(RequestConstants.CATEGORIES_LIST_ATTRIBUTE.getName(),
+                    siteService.getAllCategories(langId));
+        } catch (ServiceException e) {
+            log.error("Cant get all categories" + e);
+            throw new UIException(e);
+        }
+
+        return "editEventsList";
+
+    }
+
+    @RequestMapping(value = "/deleteEvent", method = {RequestMethod.GET, RequestMethod.POST})
+    public String deleteEvent(Map<String, Object> model,
+                              @RequestParam(value = "eventId", required = false) String idOfEvent,
+                              HttpServletRequest request) throws UIException, IOException {
+
+        try {
+            int langId = 1;
+
+            String message = null;
+            if (idOfEvent == null) {
+                message = MessagesProperties.createPathProperties().getProperties(
+                        MessagesProperties.EVENT_DEL_ERROR, "ru");
+            } else {
+                Integer eventId = Integer.parseInt(idOfEvent);
+
+                if (adminService.deleteEvent(eventId)) {
+                    message = MessagesProperties.createPathProperties()
+                            .getProperties(MessagesProperties.EVENT_DEL_SUCCESS, "ru");
+                    log.info(message);
+                }
+            }
+            model.put(RequestConstants.EVENTS_LIST_ATTRIBUTE.getName(), siteService.getAllEvents(langId));
+            model.put(SessionConstants.MENU_ITEM_ATTRIBUTE.getName(), SessionConstants.EVENTS_ATTRIBUTE.getName());
+            model.put(SessionConstants.MESSAGE_ATTRIBUTE.getName(), message);
+            return "editEventsList";
+        } catch (ServiceException e) {
+            log.error("Cannot delete event");
+            throw new UIException("Cannot delete event", e);
+        }
+
+    }
+
+    @RequestMapping(value = "/deletePerformance", method = {RequestMethod.GET, RequestMethod.POST})
+    public String deletPerformance(Map<String, Object> model,
+                                   @RequestParam(value = "performanceId", required = true) String idOfPerformance,
+                                   HttpServletRequest request) throws UIException, IOException {
+
+        int langId = 1;
+        String locale = "ru";
+
+        String message = null;
+        try {
+            if (idOfPerformance == null) {
+                message = MessagesProperties.createPathProperties().getProperties(
+                        MessagesProperties.PERF_DEL_ERROR, locale);
+            } else {
+                Integer performanceId = Integer.parseInt(idOfPerformance);
+                if (adminService.deletePerformance(performanceId)) {
+                    message = MessagesProperties.createPathProperties()
+                            .getProperties(MessagesProperties.PERF_DEL_SUCCESS, locale);
+                }
+            }
+
+            request.setAttribute(SessionConstants.PERFORMANCE_LIST_ATTRIBUTE.getName(),
+                    siteService.getAllPerformances(langId));
+        } catch (ServiceException e) {
+            log.info("Error while getting all performances" + e);
+            throw new UIException("Error while getting all performances", e);
+        }
+
+        return "redirect:/admin/showPerformances";
+
+    }
+
+    @RequestMapping(value = "/addEvent", method = {RequestMethod.GET})
+    public String addEvent(Model model) throws UIException, IOException {
+        try {
+            long currentTime = Calendar.getInstance().getTimeInMillis();
+            model.addAttribute("event", new Event(currentTime, currentTime));
+            model.addAttribute("performanceList", siteService.getAllPerformances(1));
+            model.addAttribute("legend", "Добавление события");
+            return "editEvent";
+        }catch (ServiceException e){
+            log.info("Service Exception. Cannot collect entities for 'showEditEvent' page");
+            throw new UIException("Cannot collect entities for 'showEditEvent' page", e);
+        }
+    }
+
+    @RequestMapping(value = "/editEvent/{id}", method = {RequestMethod.GET})
+    public String showEditEvent(Model model,
+                                @PathVariable("id") Integer id) throws UIException, IOException {
+        try {
+            model.addAttribute("event", siteService.getEventById(id, 1));
+            model.addAttribute("performanceList", siteService.getAllPerformances(1));
+            model.addAttribute("legend", "Редактирование события");
+
+            return "editEvent";
+        }catch (ServiceException e){
+            log.info("Service Exception. Cannot collect entities for 'showEditEvent' page");
+            throw new UIException("Cannot collect entities for 'showEditEvent' page", e);
+        }
+    }
+
+    @RequestMapping(value = "/editEvent/{id}", method = {RequestMethod.POST})
+    public String editEvent(@ModelAttribute("event") Event event,
+                            @RequestParam(value = "inputDate", required = false) String inputedDate,
+                            @RequestParam(value = "inputStartTime", required = false) String inputedStartTime,
+                            @RequestParam(value = "inputEndTime", required = false) String inputedEndTime,
+                            @RequestParam(value = "performanceId", required = false) String idOfPerformance) throws UIException, IOException {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy HH:mm");
+        Calendar eventsStartDate = GregorianCalendar.getInstance();
+        Calendar eventsEndDate = GregorianCalendar.getInstance();
+        if (inputedDate != null && inputedDate.length() > 0) {
+            try {
+                eventsStartDate.setTime(sdf.parse(inputedDate + " " + inputedStartTime));
+                eventsEndDate.setTime(sdf.parse(inputedDate + " " + inputedEndTime));
+            } catch (ParseException e) {
+                log.error("Wrong date format error", e);
+                throw new UIException("Wrong date format error", e);
+            }
+        } else {
+            eventsStartDate = Calendar.getInstance();
+            eventsEndDate = Calendar.getInstance();
+        }
+
+        Integer performanceId = 0;
+        if (idOfPerformance.length() > 0) {
+            performanceId = Integer.parseInt(idOfPerformance);
+        }
+
+        boolean flag;
+        try {
+            flag = adminService.saveOrUpdateEvent(event.getId(), performanceId, eventsStartDate.getTimeInMillis(),
+                    eventsEndDate.getTimeInMillis());
+        } catch (ServiceException e) {
+            log.error("Cannot save or update event", e);
+            throw new UIException("Cannot save or update event", e);
+        }
+        String message = null;
+
+        if (flag) {
+            message = MessagesProperties.createPathProperties().getProperties(
+                    MessagesProperties.REGISTER_SUCCESSFUL, "ru");
+        }
+
+        return "redirect:/admin/showEvents";
 
     }
 

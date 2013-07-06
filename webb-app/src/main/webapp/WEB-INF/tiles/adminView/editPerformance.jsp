@@ -1,16 +1,14 @@
 <%@page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8"%>
-
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <p class="text-error">
     <c:out value="${message}" />
 </p>
 
-<form class="form-horizontal" method="POST"
-      action="/webb-app/Controller">
+<f:form class="form-horizontal" method="POST" modelAttribute="performance">
 <fieldset>
 <legend>${legend}</legend>
-<input type="hidden" name="action" value="edit_performance">
-<input type="hidden" name="performanceId" value="${performance.id}">
-
 
 <div class="control-group">
     <div class="row-fluid">
@@ -25,13 +23,13 @@
                         <div class="input-prepend">
                             <span class="add-on"><i class="icon-file"></i></span>
                             <input type="text" class="input-large" name="inputName" id="inputName"
-                            <c:forEach var="property" items="${performance.properties}">
-                                <c:if test="${property.name == 'NAME'}">
-                                    <c:forEach var="childProperty" items="${property.childProperties}">
-                                        value="${childProperty.value}"
+                                    <c:forEach var="property" items="${performance.properties}">
+                                        <c:if test="${property.name == 'NAME'}">
+                                            <c:forEach var="childProperty" items="${property.childProperties}">
+                                                value="${childProperty.value}"
+                                            </c:forEach>
+                                        </c:if>
                                     </c:forEach>
-                                </c:if>
-                            </c:forEach>
                                     />
                         </div>
                     </div>
@@ -89,23 +87,23 @@
                     <div class="controls">
                         <img
                         <c:forEach var="property" items="${performance.properties}">
-                            <c:if test="${property.name=='IMAGE'}">
-                                <c:forEach var="childProperty" items="${property.childProperties}">
-                                    src="/static/img/thumbnail/${childProperty.value}"
-                                </c:forEach>
-                            </c:if>
+                        <c:if test="${property.name=='IMAGE'}">
+                        <c:forEach var="childProperty" items="${property.childProperties}">
+                                src="/static/img/thumbnail/${childProperty.value}"
+                        </c:forEach>
+                        </c:if>
                         </c:forEach>                                      class="img-rounded" width="300" height="200">
 
                         <div class="input-prepend">
                             <span class="add-on"><i class="icon-camera"></i></span>
                             <input type="text" class="input-large" name="inputImage" id="inputImage"
-                        <c:forEach var="property" items="${performance.properties}">
+                            <c:forEach var="property" items="${performance.properties}">
                             <c:if test="${property.name=='IMAGE'}">
-                                <c:forEach var="childProperty" items="${property.childProperties}">
-                                        value= "../static/img/thumbnail/${childProperty.value}"
-                                </c:forEach>
+                            <c:forEach var="childProperty" items="${property.childProperties}">
+                                   value= "/static/img/thumbnail/${childProperty.value}"
+                            </c:forEach>
                             </c:if>
-                        </c:forEach>>
+                            </c:forEach>>
                         </div>
                     </div>
                 </div>
@@ -120,8 +118,8 @@
                     <div class="btn-group">
                         <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Выберите язык <span class="caret"></span></button><p></p>
                         <ul class="dropdown-menu">
-                            <li><a href="/webb-app/Controller?action=show_edit_performance&performanceId=${performance.id}&&inputLangId=1">RU</a></li>
-                            <li><a href="/webb-app/Controller?action=show_edit_performance&performanceId=${performance.id}&&inputLangId=2">EN</a></li>
+                            <li><a href="/webb-app/admin/editPerformance/${performance.id}?inputLangId=1">RU</a></li>
+                            <li><a href="/webb-app/admin/editPerformance/${performance.id}?inputLangId=2">EN</a></li>
                         </ul></div>
                 </div>
             </div>
@@ -157,7 +155,7 @@
 
 
 <div class="control-group">
-    <label class="control-label"> Краткое описание:</label>
+    <label class="control-label">Краткое описание:</label>
 
     <div class="controls">
         <div class="input-prepend">
@@ -212,4 +210,4 @@
     </div>
 </div>
 </fieldset>
-</form>
+</f:form>

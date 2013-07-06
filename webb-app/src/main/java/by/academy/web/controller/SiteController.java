@@ -69,14 +69,14 @@ public class SiteController {
     public String showEvents(Map<String, Object> model, HttpServletRequest request,
                              @RequestParam(value = "dateInterval", required = false) String dateInterval,
                              @RequestParam(value = "categoryId", required = false) String categoryId
-                             ) throws UIException, ServiceException {
-
-        Integer langId = (Integer)request.getSession().getAttribute(SessionConstants.LOCALE_ID_ATTRIBUTE.getName());
+                             ) throws UIException {
+        HttpSession session = request.getSession();
+        Integer langId = (Integer)session.getAttribute(SessionConstants.LOCALE_ID_ATTRIBUTE.getName());
 
         Calendar begin = Calendar.getInstance();
         Calendar end = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-        HttpSession session = request.getSession();
+
         if (dateInterval != null) {
             session.setAttribute(RequestConstants.DATE_INTERVAL.getName(), dateInterval);
         }
@@ -91,7 +91,7 @@ public class SiteController {
                 end.setTime(sdf.parse(dates[1]));
             } catch (ParseException e) {
                 log.error("Wrong date format error", e);
-                throw new ServiceException("Wrong date format error", e);
+                throw new UIException("Wrong date format error", e);
             }
 
         } else {
@@ -101,10 +101,7 @@ public class SiteController {
         List<Event> eventList;
         try {
             eventList = siteService.getEventsInDateInterval(begin, end, langId);
-        } catch (ServiceException e) {
-            log.error("Can't get events", e);
-            throw new ServiceException("Can't get events", e);
-        }
+
         if(categoryId != null){
             session.setAttribute(RequestConstants.CATEGORY_ID.getName(), Integer.parseInt(categoryId));
         }
@@ -124,7 +121,10 @@ public class SiteController {
 
         model.put(RequestConstants.EVENTS_LIST_ATTRIBUTE.getName(), eventList);
         model.put(RequestConstants.CATEGORIES_LIST_ATTRIBUTE.getName(), siteService.getAllCategories(langId));
-
+        } catch (ServiceException e) {
+            log.error("Can't get events", e);
+            throw new UIException("Can't get events", e);
+        }
         return "showEvents";
 
     }
@@ -137,8 +137,8 @@ public class SiteController {
             model.put(RequestConstants.PERFORMANCE_LIST_ATTRIBUTE.getName(), siteService.getPerformancesById(Integer.parseInt(performanceId), langId));
             return "showPerformance";
         } catch (ServiceException e) {
-            log.error("ServiceException.Cannot collect performances");
-            throw new UIException(e);
+            log.error("ServiceException.Cannot get performance by id");
+            throw new UIException("ServiceException.Cannot get performance by id", e);
         }
 
     }

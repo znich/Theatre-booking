@@ -1,20 +1,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <ul class="nav nav-list">				
 					<li  <c:if test="${menuItem==\"main\"}">class="active"</c:if> >
-					<a href="/webb-app/Controller?action=admin_show_main">Администрирование</a></li>
-				
-					<li  <c:if test="${menuItem==\"users\"}">class="active"</c:if>>
-					<a href="/webb-app/Controller?action=admin_show_users">Пользователи</a></li>
+					<a href="/webb-app/admin/">Администрирование</a></li>
 					
 					<li <c:if test="${menuItem==\"performances\"}">class="active"</c:if>>
 					<a href="/webb-app/admin/showPerformances">Представления</a></li>
 					
 					<li <c:if test="${menuItem==\"events\"}">class="active"</c:if>>
-					<a href="/webb-app/showEvents">События</a></li>
+					<a href="/webb-app/admin/showEvents">События</a></li>
 					
 					<li  <c:if test="${menuItem==\"tickets\"}">class="active"</c:if>>
 					<a href="/webb-app/Controller?action=admin_show_events">Билеты</a></li>
 
-                    <li><a href="/webb-app/Controller" target="_blank">Перейти на Главную</a></li>
-                    <li><a href="/webb-app/Controller?action=logout">Выход</a></li>
+                    <li><a href="/webb-app/" target="_blank">Перейти на Главную</a></li>
+                    <li><a href="/webb-app/admin?logout">Выход</a></li>
 </ul>  

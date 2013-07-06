@@ -24,8 +24,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="dao" />
-    <orderEntry type="library" name="Maven: com.oracle:orai18n:11.2.0.3" level="project" />
-    <orderEntry type="library" name="Maven: com.oracle:ojdbc5:11.2.0.3.0" level="project" />
     <orderEntry type="library" name="Maven: com.thoughtworks.xstream:xstream:1.4" level="project" />
     <orderEntry type="library" name="Maven: net.sf.kxml:kxml2-min:2.3.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-core:3.2.3.RELEASE" level="project" />
@@ -72,6 +70,7 @@
     <orderEntry type="library" name="Maven: asm:asm:3.1" level="project" />
     <orderEntry type="library" name="Maven: javassist:javassist:3.9.0.GA" level="project" />
     <orderEntry type="library" name="Maven: com.oracle:ojdbc6:11.2.0.1.0" level="project" />
+    <orderEntry type="library" name="Maven: com.oracle:orai18n:11.2.0.3" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.7.1" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-core-asl:1.7.1" level="project" />
     <orderEntry type="library" name="Maven: net.sourceforge.htmlcleaner:htmlcleaner:2.2" level="project" />

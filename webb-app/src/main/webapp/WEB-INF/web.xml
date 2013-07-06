@@ -48,6 +48,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <filter-name>LoginFilter</filter-name>
         <url-pattern>/userView/userProfile.jsp</url-pattern>
     </filter-mapping>
+<!--    <filter>
+        <filter-name>AdminFilter</filter-name>
+        <filter-class>by.academy.web.filter.AdminFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>/login</url-pattern>
+    </filter-mapping>-->
     <session-config>
         <session-timeout>
             30

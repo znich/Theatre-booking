@@ -1,4 +1,8 @@
 <%@page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${lang}"/>
+<fmt:setBundle basename="messages" var="bundle" scope="page"/>
 <jsp:useBean id="startTime" class="java.util.Date" scope="page"/>
 <jsp:useBean id="endTime" class="java.util.Date" scope="page"/>
 
@@ -12,12 +16,12 @@
             <c:if test="${not empty categories}">
                 <c:forEach var="category" items="${categories}">
                     <c:forEach var="childCategory" items="${category.childCategories}">
-                        <li><a tabindex="-1" href="/webb-app/Controller?action=admin_show_events&categoryId=${childCategory.parent.id}">${childCategory.name}</a></li>
+                        <li><a tabindex="-1" href="/webb-app/admin/showEvents?categoryId=${childCategory.parent.id}">${childCategory.name}</a></li>
                     </c:forEach>
                 </c:forEach>
             </c:if>
             <li class="divider"></li>
-            <li><a tabindex="-1" href="/webb-app/Controller?action=admin_show_events&categoryId=0">
+            <li><a tabindex="-1" href="/webb-app/admin/showEvents?categoryId=0">
                 <fmt:message key="lbl.category.all" bundle="${bundle}"/></a></li>
         </ul>
     </li>
@@ -39,7 +43,7 @@
             </fieldset>
         </form>
     </li>
-    <li><a href="/webb-app/Controller?action=show_add_event"
+    <li><a href="/webb-app/admin/addEvent"
            class="btn btn-primary">Добавить новое событие</a></li>
 </ul>
 
@@ -86,7 +90,7 @@
                 <fmt:message key="lbl.noticket" bundle="${bundle}" />
             </c:if> <c:if test="${event.freeTicketsCount>0}">
                 <a
-                        href="/webb-app/Controller?action=BOOKING_TICKETS_SHOW&eventId=${event.id}"><fmt:message
+                        href="#"><fmt:message
                         key="btn.buyTicket" bundle="${bundle}" /></a>
             </c:if></td>
             <td>${event.minTicketPrice} - ${event.maxTicketPrice} <fmt:message
@@ -96,9 +100,7 @@
 
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                     <li><a tabindex="-1"
-                           href="/webb-app/Controller?action=PERFORMANCE_SHOW&eventId=${event.id}">Просмотреть</a></li>
-                    <li><a tabindex="-1"
-                           href="/webb-app/Controller?action=show_edit_event&eventId=${event.id}">Редактировать</a></li>
+                           href="/webb-app/admin/editEvent/${event.id}">Редактировать</a></li>
                     <li><a tabindex="-1"
                            href="/webb-app/Controller?action=delete_event&eventId=${event.id}">Удалить</a></li>
                     <li class="divider"></li>

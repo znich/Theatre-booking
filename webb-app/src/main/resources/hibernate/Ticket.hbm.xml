@@ -9,7 +9,7 @@
             </generator>
         </id>
 
-        <many-to-one name="booking" class="Booking" fetch="select" column="F_BOOKING_ID" />
+        <many-to-one name="booking" class="Booking" cascade="all" fetch="select" column="F_BOOKING_ID" />
         <many-to-one name="event" class="Event" fetch="select" column="EVENT_ID" />
         <many-to-one name="status" class="Status" fetch="select" column="STATUS_ID" />
         <many-to-one name="place" class="Seat" fetch="select" column="TICKET_PLACE" />
